@@ -8,9 +8,9 @@ public class FilesWalkTest01 {
 
     public static void main(String[] args) throws IOException {
 
-        String path = "D:\\Download";
+        String path = "D:\\Softwares";
 
-        Stream<Path> pathStream = Files.walk(Paths.get(path));
-        pathStream.forEach(System.out::println);
+        Stream<Path> pathStream = Files.walk(Paths.get(path), 1);
+        pathStream.filter(Files::isDirectory).forEach(System.out::println);
     }
 }
