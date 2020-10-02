@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Objects;
 
 public class MainFrame extends JFrame {
 
@@ -32,6 +33,8 @@ public class MainFrame extends JFrame {
 
     public boolean isExternalLibraryExist = false;
     public static File externalLibrary;
+    public boolean isInternalLibraryExist = false;
+    public static File internalLibrary;
 
     public MainFrame(String title) throws HeadlessException {
         super(title);
@@ -73,17 +76,43 @@ public class MainFrame extends JFrame {
         this.inputToJson.addActionListener(this.inputToJsonListener);
     }
 
+    //Initialize the directories required for internal and external vocabularies list.
     private void initialize() {
         File directory = FileUtils.getDirectoryFile(this);
-        File[] files = directory.listFiles();
-        externalLibrary = new File(directory.getAbsolutePath() + "/ExternalLibrary");
-        for (File file : files) {
-            if (file.isDirectory() && "ExternalLibrary".equals(file.getName())) {
-                this.isExternalLibraryExist = true;
+        if (directory != null) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                externalLibrary = new File(directory.getAbsolutePath() + "/ExternalLibrary");
+                internalLibrary = new File(directory.getAbsolutePath() + "/InternalLibrary");
+                for (File file : files) {
+                    if (file.isDirectory() && "ExternalLibrary".equals(file.getName())) {
+                        for (File subFile : Objects.requireNonNull(file.listFiles())) {
+                            boolean success = subFile.delete();
+                            if (success) System.out.println("File deletion failed");
+                        }
+                        this.isExternalLibraryExist = true;
+                    }
+                    if (file.isDirectory() && "InternalLibrary".equals(file.getName())) {
+                        for (File subFile : Objects.requireNonNull(file.listFiles())) {
+                            boolean success = subFile.delete();
+                            if (success) System.out.println("File deletion failed");
+                        }
+                        this.isInternalLibraryExist = true;
+                    }
+                }
+                if (!this.isExternalLibraryExist) {
+                    boolean success = externalLibrary.mkdir();
+                    if (!success) {
+                        System.out.println("Creating ExternalLibrary Fails!");
+                    }
+                }
+                if (!this.isInternalLibraryExist) {
+                    boolean success = internalLibrary.mkdir();
+                    if (!success) {
+                        System.out.println("Creating InternalLibrary Fails!");
+                    }
+                }
             }
-        }
-        if (!this.isExternalLibraryExist) {
-            boolean success = externalLibrary.mkdir();
         }
     }
 

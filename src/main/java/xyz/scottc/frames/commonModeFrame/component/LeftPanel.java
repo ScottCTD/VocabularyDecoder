@@ -11,9 +11,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -47,8 +50,10 @@ public class LeftPanel extends UtilJPanel {
         this.setLayout(new CommonModeTopPanelLayout());
 
         this.add(this.importButton);
+        this.importButton.setToolTipText("Import the customized VD File which can be acquired by using \"Tools\" menu in the Main windows.");
         this.importButton.addActionListener(e -> this.importFile());
         this.add(this.exportButton);
+        this.exportButton.setToolTipText("Export your answer report.");
 
         this.add(this.internalFileListLabel);
         this.add(this.internalFileListScrollPane);
@@ -76,6 +81,7 @@ public class LeftPanel extends UtilJPanel {
 
         //backButton
         this.add(this.backButton);
+        this.backButton.setToolTipText("Go back to the Main windows.");
         this.backButton.addActionListener(e -> this.goBackToMainFrame());
     }
 
@@ -128,23 +134,6 @@ public class LeftPanel extends UtilJPanel {
     }
 
     private void addInternalVocabularyPool() {
-        //create the InternalLibrary directory
-        File directory = FileUtils.getDirectoryFile(this);
-        File internalLibrary = new File(directory.getAbsolutePath() + "/InternalLibrary");
-        if (internalLibrary.exists()) {
-            for (File file : internalLibrary.listFiles()) {
-                boolean success = file.delete();
-                if (!success) {
-                    System.out.println("File deleting in InternalLibrary Fail!");
-                }
-            }
-        } else {
-            boolean success = internalLibrary.mkdir();
-            if (!success) {
-                System.out.println("Creating InternalLibrary Fails!");
-            }
-        }
-
         //copy the internal json file to the InternalLibrary directory
         String jarPath = FileUtils.getJarFilePath(this);
         JarFile jarFile;
@@ -157,16 +146,9 @@ public class LeftPanel extends UtilJPanel {
                 String innerPath = jarEntry.getName();
                 if (innerPath.startsWith(internalPath) && !innerPath.equals(internalPath)) {
                     InputStream inputStream = this.getClass().getResourceAsStream("/" + innerPath);
-                    String target = internalLibrary.getAbsolutePath() + innerPath.substring(28);
-                    OutputStream outputStream = new FileOutputStream(target);
-                    int length;
-                    byte[] buffer = new byte[1024];
-                    while ((length = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, length);
-                    }
-                    outputStream.flush();
+                    String target = MainFrame.internalLibrary.getAbsolutePath() + innerPath.substring(28);
+                    Files.copy(inputStream, Paths.get(target));
                     inputStream.close();
-                    outputStream.close();
                 }
             }
         } catch (IOException e) {
@@ -174,7 +156,7 @@ public class LeftPanel extends UtilJPanel {
         }
 
         //add all the file in InternalLibrary directory to list
-        for (File file : internalLibrary.listFiles()) {
+        for (File file : Objects.requireNonNull(MainFrame.internalLibrary.listFiles())) {
             this.internalVocabularyPool.add(file);
             this.internalFileListModel.addElement(file.getName());
         }

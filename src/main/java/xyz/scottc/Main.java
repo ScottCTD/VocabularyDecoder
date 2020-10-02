@@ -13,12 +13,12 @@ public class Main {
     }
 
     private static void initFrame() {
-/*        try {
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException |
                 IllegalAccessException e) {
             e.printStackTrace();
-        }*/
+        }
         MainFrame frame = new MainFrame("Vocabulary Decoder");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(1000, 1000));
