@@ -1,10 +1,16 @@
 package xyz.scottc.utils;
 
 import java.io.*;
-import java.net.FileNameMap;
 import java.net.URLDecoder;
 
 public class FileUtils {
+
+    public static String getJarFilePath(Object object) {
+        if (object != null) {
+            return object.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        }
+        return null;
+    }
 
     public static File getDirectoryFile(Object object) {
         if (object != null) {

@@ -1,7 +1,7 @@
 package xyz.scottc.frames.commonModeFrame.component;
 
-import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
 import org.json.JSONObject;
+import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
 import xyz.scottc.frames.mainFrame.MainFrame;
 import xyz.scottc.utils.*;
 
@@ -10,12 +10,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class LeftPanel extends UtilJPanel {
@@ -37,8 +36,6 @@ public class LeftPanel extends UtilJPanel {
     private final JList<String> externalFileList = new JList<>(this.externalFileListModel);
     private final JScrollPane externalFileListScrollPane = new JScrollPane(this.externalFileList);
     private final UtilJButton backButton = new UtilJButton("Go Back", 45);
-
-    private File internalLibrary;
 
     private final List<File> internalVocabularyPool = new ArrayList<>();
     private final List<File> externalVocabularyPool = new ArrayList<>();
@@ -131,35 +128,55 @@ public class LeftPanel extends UtilJPanel {
     }
 
     private void addInternalVocabularyPool() {
-/*        File directory = FileUtils.getDirectoryFile(this);
-        File[] files = directory.listFiles();
-        this.internalLibrary = new File(directory.getAbsolutePath() + "/InternalLibrary");
-        boolean isInternalLibraryExist = false;
-        for (File file : files) {
-            if (file.isDirectory() && "InternalLibrary".equals(file.getName())) {
-                isInternalLibraryExist = true;
-            }
-        }
-        if (!isInternalLibraryExist) {
-            boolean success = internalLibrary.mkdir();
-        }*/
-       try {
-            this.internalVocabularyPool.clear();
-            this.internalFileListModel.clear();
-            String path = this.getClass().getResource("/xyz/scottc/internalVocabPool").getPath();
-            System.out.println(path);
-            //this.getClass().getResourceAsStream("/xyz/scottc/internalVocabPool");
-            path = URLDecoder.decode(path, "UTF-8");
-            File directory = new File(path);
-            File[] files = directory.listFiles();
-            if (files != null && files.length != 0) {
-                for (File file : files) {
-                    this.internalVocabularyPool.add(file);
-                    this.internalFileListModel.addElement(file.getName());
+        //create the InternalLibrary directory
+        File directory = FileUtils.getDirectoryFile(this);
+        File internalLibrary = new File(directory.getAbsolutePath() + "/InternalLibrary");
+        if (internalLibrary.exists()) {
+            for (File file : internalLibrary.listFiles()) {
+                boolean success = file.delete();
+                if (!success) {
+                    System.out.println("File deleting in InternalLibrary Fail!");
                 }
             }
-        } catch (UnsupportedEncodingException e) {
+        } else {
+            boolean success = internalLibrary.mkdir();
+            if (!success) {
+                System.out.println("Creating InternalLibrary Fails!");
+            }
+        }
+
+        //copy the internal json file to the InternalLibrary directory
+        String jarPath = FileUtils.getJarFilePath(this);
+        JarFile jarFile;
+        String internalPath = "xyz/scottc/internalVocabPool/";
+        try {
+            jarFile = new JarFile(new File(jarPath));
+            Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                JarEntry jarEntry = entries.nextElement();
+                String innerPath = jarEntry.getName();
+                if (innerPath.startsWith(internalPath) && !innerPath.equals(internalPath)) {
+                    InputStream inputStream = this.getClass().getResourceAsStream("/" + innerPath);
+                    String target = internalLibrary.getAbsolutePath() + innerPath.substring(28);
+                    OutputStream outputStream = new FileOutputStream(target);
+                    int length;
+                    byte[] buffer = new byte[1024];
+                    while ((length = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, length);
+                    }
+                    outputStream.flush();
+                    inputStream.close();
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        //add all the file in InternalLibrary directory to list
+        for (File file : internalLibrary.listFiles()) {
+            this.internalVocabularyPool.add(file);
+            this.internalFileListModel.addElement(file.getName());
         }
     }
 
