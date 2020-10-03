@@ -55,28 +55,20 @@ public class DataPanel extends UtilJPanel {
         this.addRenderers();
     }
 
-    public void addData(ReviewData... data) {
-        for (ReviewData datum : data) {
-            Vector<Object> dataList = new Vector<>();
-            dataList.add(datum.getSerialNumber());
-            dataList.add(datum.getQuestion());
-            dataList.add(datum.getAnswer());
-            dataList.add(datum.getInput());
-            dataList.add(datum.isCorrect());
-            this.allDataModel.addRow(dataList);
-            allDataList.add(datum);
-        }
+    private Vector<Object> dataHandler(ReviewData datum) {
+        Vector<Object> dataList = new Vector<>();
+        dataList.add(datum.getSerialNumber());
+        dataList.add(datum.getQuestion());
+        dataList.add(datum.getAnswer());
+        dataList.add(datum.getInput());
+        dataList.add(datum.isCorrect());
+        return dataList;
     }
 
-    private void addIncorrectData(ReviewData... incorrectData) {
-        for (ReviewData datum : incorrectData) {
-            Vector<Object> dataList = new Vector<>();
-            dataList.add(datum.getSerialNumber());
-            dataList.add(datum.getQuestion());
-            dataList.add(datum.getAnswer());
-            dataList.add(datum.getInput());
-            dataList.add(datum.isCorrect());
-            this.incorrectDataModel.addRow(dataList);
+    public void addData(ReviewData... data) {
+        for (ReviewData datum : data) {
+            this.allDataModel.addRow(this.dataHandler(datum));
+            this.allDataList.add(datum);
         }
     }
 
@@ -86,7 +78,13 @@ public class DataPanel extends UtilJPanel {
         dataModel.setValueAt(data.getAnswer(), row, 2);
         dataModel.setValueAt(data.getInput(), row, 3);
         dataModel.setValueAt(data.isCorrect(), row, 4);
-        allDataList.set(row, data);
+        this.allDataList.set(row, data);
+    }
+
+    private void addIncorrectData(ReviewData... incorrectData) {
+        for (ReviewData datum : incorrectData) {
+            this.incorrectDataModel.addRow(this.dataHandler(datum));
+        }
     }
 
     public void incorrectDataHandler() {

@@ -85,10 +85,22 @@ public class FunctionPanel extends UtilJPanel {
         this.add(this.standardAScrollPane);
 
         this.add(this.previousButton);
-        this.previousButton.addActionListener(e -> this.previous());
+        this.previousButton.addActionListener(e -> {
+            try {
+                this.previous();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
 
         this.add(this.nextButton);
-        this.nextButton.addActionListener(e -> this.next());
+        this.nextButton.addActionListener(e -> {
+            try {
+                this.next();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
 
         this.add(this.answerButton);
         this.answerButton.addActionListener(e -> this.answer());
@@ -179,7 +191,7 @@ public class FunctionPanel extends UtilJPanel {
                 this.A.setText(VDConstantsUtils.EMPTY);
                 this.standardA.setText(VDConstantsUtils.EMPTY);
 
-                //diable the input area
+                //disable the input area
                 this.A.setEnabled(false);
 
                 //clear all the lists
@@ -190,7 +202,7 @@ public class FunctionPanel extends UtilJPanel {
                 //stop the timer
                 this.topPanel.timer.stop();
 
-                //stop the amount displayer
+                //stop the amount display
                 this.topPanel.amountDisplay.stop();
 
                 //clear the review
@@ -244,7 +256,7 @@ public class FunctionPanel extends UtilJPanel {
         this.inputList.set(this.index, this.A.getText());
     }
 
-    private void next() {
+    private void next() throws Exception {
         if (this.init) {
             //index have not increase yet -> current question
             //save current input answer
@@ -281,7 +293,7 @@ public class FunctionPanel extends UtilJPanel {
         }
     }
 
-    private void previous() {
+    private void previous() throws Exception {
         if (this.init && this.index > 0) {
             //save the current input
             this.save();
@@ -324,13 +336,12 @@ public class FunctionPanel extends UtilJPanel {
                 //if the answer did not shown yet, then make it appear
                 this.updateAnswer();
 
-                this.A.grabFocus();
             } else {
                 //if the answer is shown, just make it disappear
                 this.disableAnswer();
 
-                this.A.grabFocus();
             }
+            this.A.grabFocus();
         }
     }
 
@@ -379,12 +390,10 @@ public class FunctionPanel extends UtilJPanel {
 
     private void review() {
         if (this.init) {
-
+            this.review.setSize(1000, 700);
+            this.review.setLocation(this.parentFrame.getLocation());
+            this.review.setVisible(true);
         }
-
-        this.review.setSize(1000, 700);
-        this.review.setLocation(this.parentFrame.getLocation());
-        this.review.setVisible(true);
     }
 
     private void initReviewData() {
@@ -395,7 +404,7 @@ public class FunctionPanel extends UtilJPanel {
         }
     }
 
-    private ReviewData generateReviewData() {
+    private ReviewData generateReviewData() throws Exception{
         switch (this.selectionValue.toString()) {
             case "Vocabulary - Meaning":
                 return new ReviewData(this.index + 1, this.questionList.get(this.index).toString(),
@@ -404,7 +413,7 @@ public class FunctionPanel extends UtilJPanel {
                 return new ReviewData(this.index + 1, this.questionList.get(this.index).toString(),
                         this.answerList.get(this.index).toString(), this.inputList.get(index), this.judgeEnglish());
         }
-        return null;
+        throw new Exception("Invalid Mode Selection");
     }
 
     private void doTransition() {
@@ -430,10 +439,18 @@ public class FunctionPanel extends UtilJPanel {
                 switch (e.getKeyCode()) {
                     case 10:
                     case 40:
-                        next();
+                        try {
+                            next();
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
                         break;
                     case 38:
-                        previous();
+                        try {
+                            previous();
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
                         break;
                 }
 
@@ -446,7 +463,13 @@ public class FunctionPanel extends UtilJPanel {
                 }
 
                 //set the review data
-                review.dataPanel.setData(review.dataPanel.allDataModel, generateReviewData(), index);
+                try {
+                    review.dataPanel.setData(review.dataPanel.allDataModel, generateReviewData(), index);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                //add incorrect data
+                review.dataPanel.incorrectDataHandler();
             }
         }
     }

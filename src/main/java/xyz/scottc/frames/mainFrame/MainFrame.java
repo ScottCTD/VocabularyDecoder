@@ -88,14 +88,14 @@ public class MainFrame extends JFrame {
                     if (file.isDirectory() && "ExternalLibrary".equals(file.getName())) {
                         for (File subFile : Objects.requireNonNull(file.listFiles())) {
                             boolean success = subFile.delete();
-                            if (success) System.out.println("File deletion failed");
+                            if (success) System.out.println("ExternalLibrary File deletion failed");
                         }
                         this.isExternalLibraryExist = true;
                     }
                     if (file.isDirectory() && "InternalLibrary".equals(file.getName())) {
                         for (File subFile : Objects.requireNonNull(file.listFiles())) {
                             boolean success = subFile.delete();
-                            if (success) System.out.println("File deletion failed");
+                            if (success) System.out.println("InternalLibrary File deletion failed");
                         }
                         this.isInternalLibraryExist = true;
                     }
