@@ -26,30 +26,21 @@ public class UniversalCellRenderer extends UtilJPanel implements TableCellRender
 
         this.setOpaque(true);
         if (isSelected) {
-            this.setBackground(table.getSelectionBackground());
+            this.setBackground(new Color(0xD9EBF9));
             this.setForeground(table.getSelectionForeground());
         } else {
-            this.setBackground(table.getBackground());
+            this.setBackground(Color.WHITE);
             this.setForeground(table.getForeground());
         }
 
         boolean correct = (boolean) table.getValueAt(row, 4);
         if (hasFocus) {
-            if (correct) {
-                this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(),
-                        BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0x00A74A))));
-            } else {
-                this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(),
-                        BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0xFE4365))));
-            }
+            this.setBackGround(new Color(0xBCDCF4));
+        }
+        if (correct) {
+            this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0x00A74A)));
         } else {
-            if (correct) {
-                this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
-                        BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0x00A74A))));
-            } else {
-                this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
-                        BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0xFE4365))));
-            }
+            this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0xFE4365)));
         }
         return this;
     }
