@@ -88,29 +88,25 @@ public class MainFrame extends JFrame {
                     if (file.isDirectory() && "ExternalLibrary".equals(file.getName())) {
                         for (File subFile : Objects.requireNonNull(file.listFiles())) {
                             boolean success = subFile.delete();
-                            if (success) System.out.println("ExternalLibrary File deletion failed");
+                            if (!success) System.out.println("ExternalLibrary File deletion failed");
                         }
                         this.isExternalLibraryExist = true;
                     }
                     if (file.isDirectory() && "InternalLibrary".equals(file.getName())) {
                         for (File subFile : Objects.requireNonNull(file.listFiles())) {
                             boolean success = subFile.delete();
-                            if (success) System.out.println("InternalLibrary File deletion failed");
+                            if (!success) System.out.println("InternalLibrary File deletion failed");
                         }
                         this.isInternalLibraryExist = true;
                     }
                 }
                 if (!this.isExternalLibraryExist) {
                     boolean success = externalLibrary.mkdir();
-                    if (!success) {
-                        System.out.println("Creating ExternalLibrary Fails!");
-                    }
+                    if (!success) System.out.println("Creating ExternalLibrary Fails!");
                 }
                 if (!this.isInternalLibraryExist) {
                     boolean success = internalLibrary.mkdir();
-                    if (!success) {
-                        System.out.println("Creating InternalLibrary Fails!");
-                    }
+                    if (!success) System.out.println("Creating InternalLibrary Fails!");
                 }
             }
         }
