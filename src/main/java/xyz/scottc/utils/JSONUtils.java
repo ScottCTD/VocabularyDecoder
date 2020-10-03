@@ -9,12 +9,12 @@ import java.util.List;
 
 public class JSONUtils {
 
-    public static void toFile(Object json, File file, String encoding){
+    public static void toFile(Object json, File file, String encoding) {
         String jsonString;
         //判断是否为json对象
         if (json instanceof JSONObject) {
             jsonString = ((JSONObject) json).toString(2);
-        } else if(json instanceof JSONArray) {
+        } else if (json instanceof JSONArray) {
             jsonString = ((JSONArray) json).toString(2);
         } else {
             System.out.println("[ERROR] Invalid Json Object! (Shoule be JSONObject or JSONArray)");
@@ -27,8 +27,7 @@ public class JSONUtils {
             outputStream = new FileOutputStream(file);
             // UTF-8写入BOM头部
             encoding = encoding.toUpperCase();
-            if("UTF-8".equals(encoding))
-            {
+            if ("UTF-8".equals(encoding)) {
                 byte[] bom = {(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
                 outputStream.write(bom);
             }
@@ -60,9 +59,9 @@ public class JSONUtils {
 
             int offset = 0;
             encoding = encoding.toUpperCase();
-            if(length > 3 && "UTF-8".equals(encoding))
-            {
-                if (buffer[0] == (byte)0xEF && buffer[1]==(byte)0xBB && buffer[2] == (byte)0xBF) offset = 3; // 前3个字节是BOM
+            if (length > 3 && "UTF-8".equals(encoding)) {
+                if (buffer[0] == (byte) 0xEF && buffer[1] == (byte) 0xBB && buffer[2] == (byte) 0xBF)
+                    offset = 3; // 前3个字节是BOM
             }
             String jsonString = new String(buffer, offset, length - offset, encoding);
 

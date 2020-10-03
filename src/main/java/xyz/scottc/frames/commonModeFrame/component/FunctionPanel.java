@@ -49,7 +49,7 @@ public class FunctionPanel extends UtilJPanel {
     private boolean suspend = false;
     private boolean isAnswerShown = false;
 
-    private int index  = 0;
+    private int index = 0;
 
     public List<Object> questionList;
     public List<Object> answerList;
@@ -67,7 +67,7 @@ public class FunctionPanel extends UtilJPanel {
         this.scrollBarPolicyHandler();
         this.topPanelHandler();
     }
-    
+
     private void rootPanelHandler() {
         this.add(this.previousQLabel);
         this.add(this.previousQScrollPane);
@@ -416,7 +416,7 @@ public class FunctionPanel extends UtilJPanel {
         }
     }
 
-    private ReviewData generateReviewData() throws Exception{
+    private ReviewData generateReviewData() throws Exception {
         switch (this.selectionValue.toString()) {
             case "Vocabulary - Meaning":
                 return new ReviewData(this.index + 1, this.questionList.get(this.index).toString(),

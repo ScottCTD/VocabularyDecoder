@@ -61,7 +61,7 @@ public class ModeSelectionPanel extends UtilJPanel {
         }
     }
 
-    private class ModeSelectionPanelLayout implements LayoutManager{
+    private class ModeSelectionPanelLayout implements LayoutManager {
 
         @Override
         public void layoutContainer(Container parent) {

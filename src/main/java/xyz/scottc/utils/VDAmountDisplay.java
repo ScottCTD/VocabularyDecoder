@@ -2,7 +2,7 @@ package xyz.scottc.utils;
 
 import java.awt.*;
 
-public class VDAmountDisplay extends UtilJLabel{
+public class VDAmountDisplay extends UtilJLabel {
 
     private int currentAmount = 0;
     private int totalAmount = 0;

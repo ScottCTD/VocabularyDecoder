@@ -184,7 +184,7 @@ public class LeftPanel extends UtilJPanel {
             Dimension importButtonSize = importButton.getPreferredSize();
             int widthSum01 = exportButtonSize.width + importButtonSize.width + marginX;
             //importButton
-            importButton.setBounds((parentFrame.separator02.getX() - widthSum01 ) / 2 - 10, 0, importButtonSize.width, importButtonSize.height);
+            importButton.setBounds((parentFrame.separator02.getX() - widthSum01) / 2 - 10, 0, importButtonSize.width, importButtonSize.height);
             //exportButton
             exportButton.setBounds(importButton.getX() + importButtonSize.width + marginX, 0,
                     exportButtonSize.width, exportButtonSize.height);

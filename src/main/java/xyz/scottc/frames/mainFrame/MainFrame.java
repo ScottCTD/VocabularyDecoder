@@ -127,7 +127,7 @@ public class MainFrame extends JFrame {
         this.createVDFileByInputDialog.setVisible(true);
     };
 
-    private class MainFrameLayout implements LayoutManager{
+    private class MainFrameLayout implements LayoutManager {
 
         @Override
         public void layoutContainer(Container parent) {

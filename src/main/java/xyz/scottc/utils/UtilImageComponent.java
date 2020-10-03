@@ -87,7 +87,7 @@ public class UtilImageComponent extends JPanel {
         this.type = type;
     }
 
-    public enum FitTypes{
-        FIT_CENTER, FIT_TOP_LEFT, FIT_TOP_RIGHT, FIT_BOTTOM_LEFT, FIT_BOTTOM_RIGHT;
+    public enum FitTypes {
+        FIT_CENTER, FIT_TOP_LEFT, FIT_TOP_RIGHT, FIT_BOTTOM_LEFT, FIT_BOTTOM_RIGHT
     }
 }

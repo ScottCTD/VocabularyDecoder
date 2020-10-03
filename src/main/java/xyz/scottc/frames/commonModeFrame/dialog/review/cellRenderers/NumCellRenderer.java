@@ -5,7 +5,7 @@ import xyz.scottc.VocabularyState;
 import javax.swing.*;
 import java.awt.*;
 
-public class NumCellRenderer extends UniversalCellRenderer{
+public class NumCellRenderer extends UniversalCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,

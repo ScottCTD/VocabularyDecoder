@@ -5,7 +5,7 @@ import xyz.scottc.VocabularyState;
 import javax.swing.*;
 import java.awt.*;
 
-public class CorrectCellRenderer extends UniversalCellRenderer{
+public class CorrectCellRenderer extends UniversalCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {

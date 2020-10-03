@@ -18,7 +18,7 @@ public class CreateVDFileByTXTDialog extends JDialog {
             "file which can be used in all the modes. You should first choose a file only contains " +
             "the vocabularies, and then choose a file only contains the answers. Finally, hitting the " +
             "\"generate\" button will help you to generate the valid file.";
-    
+
     private final VDTextArea helpText = new VDTextArea(HELP_TEXT, 5, 33, VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
     private final UtilJLabel vocabLabel = new UtilJLabel("Vocabulary File", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
     private final UtilJButton chooseVocabFile = new UtilJButton("Choose", 20);
@@ -132,8 +132,8 @@ public class CreateVDFileByTXTDialog extends JDialog {
             }
         }
     }
-    
-    private class CreateVDFileLayout implements LayoutManager{
+
+    private class CreateVDFileLayout implements LayoutManager {
 
         @Override
         public void layoutContainer(Container parent) {
@@ -177,10 +177,10 @@ public class CreateVDFileByTXTDialog extends JDialog {
             generate.setBounds(marginX, answerFilePathScrollPane.getY() + answerFilePathScrollPaneSize.height + marginY * 2,
                     generateSize.width, generateSize.height);
         }
-        
+
         @Override
         public void addLayoutComponent(String name, Component comp) {
-            
+
         }
 
         @Override
