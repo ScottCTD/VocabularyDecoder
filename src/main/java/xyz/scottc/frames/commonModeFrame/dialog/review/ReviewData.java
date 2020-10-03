@@ -1,17 +1,19 @@
 package xyz.scottc.frames.commonModeFrame.dialog.review;
 
+import xyz.scottc.VocabularyState;
+
 public class ReviewData {
 
     private int serialNumber;
     private String question;
     private String answer;
     private String input;
-    private boolean correct;
+    private VocabularyState correct;
 
     public ReviewData() {
     }
 
-    public ReviewData(int serialNumber, String question, String answer, String input, boolean correct) {
+    public ReviewData(int serialNumber, String question, String answer, String input, VocabularyState correct) {
         this.serialNumber = serialNumber;
         this.question = question;
         this.answer = answer;
@@ -51,11 +53,11 @@ public class ReviewData {
         this.input = input;
     }
 
-    public boolean isCorrect() {
+    public VocabularyState getCorrect() {
         return correct;
     }
 
-    public void setCorrect(boolean correct) {
+    public void setCorrect(VocabularyState correct) {
         this.correct = correct;
     }
 }

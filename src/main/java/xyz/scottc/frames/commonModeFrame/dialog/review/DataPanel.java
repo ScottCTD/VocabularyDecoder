@@ -1,5 +1,6 @@
 package xyz.scottc.frames.commonModeFrame.dialog.review;
 
+import xyz.scottc.VocabularyState;
 import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.CorrectCellRenderer;
 import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.NumCellRenderer;
 import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.UniversalCellRenderer;
@@ -61,7 +62,7 @@ public class DataPanel extends UtilJPanel {
         dataList.add(datum.getQuestion());
         dataList.add(datum.getAnswer());
         dataList.add(datum.getInput());
-        dataList.add(datum.isCorrect());
+        dataList.add(datum.getCorrect());
         return dataList;
     }
 
@@ -77,7 +78,7 @@ public class DataPanel extends UtilJPanel {
         dataModel.setValueAt(data.getQuestion(), row, 1);
         dataModel.setValueAt(data.getAnswer(), row, 2);
         dataModel.setValueAt(data.getInput(), row, 3);
-        dataModel.setValueAt(data.isCorrect(), row, 4);
+        dataModel.setValueAt(data.getCorrect(), row, 4);
         this.allDataList.set(row, data);
     }
 
@@ -90,7 +91,7 @@ public class DataPanel extends UtilJPanel {
     public void incorrectDataHandler() {
         this.clearIncorrectDataModel();
         for (ReviewData datum : this.allDataList) {
-            if (!datum.isCorrect()) {
+            if (datum.getCorrect() == VocabularyState.INCORRECT) {
                 this.addIncorrectData(datum);
             }
         }

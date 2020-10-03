@@ -1,5 +1,6 @@
 package xyz.scottc.frames.commonModeFrame.component;
 
+import xyz.scottc.VocabularyState;
 import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
 import xyz.scottc.frames.commonModeFrame.dialog.review.Review;
 import xyz.scottc.frames.commonModeFrame.dialog.review.ReviewData;
@@ -365,12 +366,18 @@ public class FunctionPanel extends UtilJPanel {
         this.isAnswerShown = false;
     }
 
-    private boolean judgeEnglish() {
-        return this.answerList.get(this.index).toString().equals(this.inputList.get(this.index));
+    private VocabularyState judgeEnglish() {
+        if (this.inputList.get(this.index).equals(this.answerList.get(this.index).toString())) {
+            return VocabularyState.CORRECT;
+        } else if (this.inputList.get(this.index).equals(VDConstantsUtils.EMPTY)) {
+            return VocabularyState.EMPTY;
+        } else {
+            return VocabularyState.INCORRECT;
+        }
     }
 
-    private boolean judgeChinese() {
-        return this.answerList.get(this.index).toString().equals(this.inputList.get(this.index));
+    private VocabularyState judgeChinese() {
+        return VocabularyState.EMPTY;
     }
 
     private void updateBorder() {
@@ -380,10 +387,15 @@ public class FunctionPanel extends UtilJPanel {
             System.out.println("WIP");
         } else {
             //judge the vocabulary
-            if (!this.judgeEnglish()) {
-                this.AScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xFE4365), 5, false));
-            } else {
-                this.AScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0x00A74A), 5, false));
+            switch (this.judgeEnglish()) {
+                case CORRECT:
+                    this.AScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0x00A74A), 5, false));
+                    break;
+                case INCORRECT:
+                    this.AScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xFE4365), 5, false));
+                    break;
+                case EMPTY:
+                    break;
             }
         }
     }
@@ -400,7 +412,7 @@ public class FunctionPanel extends UtilJPanel {
         for (int i = 0; i < this.questionList.size(); i++) {
             this.review.dataPanel.addData(new ReviewData(i + 1,
                     this.questionList.get(i).toString(), this.answerList.get(i).toString(),
-                    this.inputList.get(i), false));
+                    this.inputList.get(i), VocabularyState.EMPTY));
         }
     }
 

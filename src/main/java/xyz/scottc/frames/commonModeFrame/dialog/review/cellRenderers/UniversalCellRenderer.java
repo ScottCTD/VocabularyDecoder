@@ -1,5 +1,6 @@
 package xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers;
 
+import xyz.scottc.VocabularyState;
 import xyz.scottc.utils.UtilJLabel;
 import xyz.scottc.utils.UtilJPanel;
 import xyz.scottc.utils.VDConstantsUtils;
@@ -33,14 +34,20 @@ public class UniversalCellRenderer extends UtilJPanel implements TableCellRender
             this.setForeground(table.getForeground());
         }
 
-        boolean correct = (boolean) table.getValueAt(row, 4);
+        VocabularyState correct = (VocabularyState) table.getValueAt(row, 4);
         if (hasFocus) {
             this.setBackGround(new Color(0xBCDCF4));
         }
-        if (correct) {
-            this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0x00A74A)));
-        } else {
-            this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0xFE4365)));
+        switch (correct) {
+            case CORRECT:
+                this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0x00A74A)));
+                break;
+            case INCORRECT:
+                this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0xFE4365)));
+                break;
+            case EMPTY:
+                this.setBorder(BorderFactory.createEmptyBorder());
+                break;
         }
         return this;
     }
