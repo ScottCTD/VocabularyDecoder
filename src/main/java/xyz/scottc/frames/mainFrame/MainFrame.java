@@ -86,16 +86,11 @@ public class MainFrame extends JFrame {
                 internalLibrary = new File(directory.getAbsolutePath() + "/InternalLibrary");
                 for (File file : files) {
                     if (file.isDirectory() && "ExternalLibrary".equals(file.getName())) {
-                        for (File subFile : Objects.requireNonNull(file.listFiles())) {
-                            boolean success = subFile.delete();
-                            if (!success) System.out.println("ExternalLibrary File deletion failed");
-                        }
                         this.isExternalLibraryExist = true;
                     }
                     if (file.isDirectory() && "InternalLibrary".equals(file.getName())) {
                         for (File subFile : Objects.requireNonNull(file.listFiles())) {
-                            boolean success = subFile.delete();
-                            if (!success) System.out.println("InternalLibrary File deletion failed");
+                            if (!subFile.delete()) System.out.println("Internal Library deletion fails");
                         }
                         this.isInternalLibraryExist = true;
                     }

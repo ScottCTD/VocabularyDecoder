@@ -137,7 +137,7 @@ public class LeftPanel extends UtilJPanel {
         //copy the internal json file to the InternalLibrary directory
         String jarPath = FileUtils.getJarFilePath(this);
         JarFile jarFile;
-        String internalPath = "xyz/scottc/internalVocabPool/";
+        String internalPath = "internalVocabPool/";
         try {
             jarFile = new JarFile(new File(jarPath));
             Enumeration<JarEntry> entries = jarFile.entries();
@@ -146,7 +146,7 @@ public class LeftPanel extends UtilJPanel {
                 String innerPath = jarEntry.getName();
                 if (innerPath.startsWith(internalPath) && !innerPath.equals(internalPath)) {
                     InputStream inputStream = this.getClass().getResourceAsStream("/" + innerPath);
-                    String target = MainFrame.internalLibrary.getAbsolutePath() + innerPath.substring(28);
+                    String target = MainFrame.internalLibrary.getAbsolutePath() + innerPath.substring(17);
                     Files.copy(inputStream, Paths.get(target));
                     inputStream.close();
                 }
@@ -154,7 +154,6 @@ public class LeftPanel extends UtilJPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         //add all the file in InternalLibrary directory to list
         for (File file : Objects.requireNonNull(MainFrame.internalLibrary.listFiles())) {
             this.internalVocabularyPool.add(file);
