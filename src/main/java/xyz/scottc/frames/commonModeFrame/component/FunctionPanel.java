@@ -273,6 +273,12 @@ public class FunctionPanel extends UtilJPanel {
             //save current input answer
             this.save();
 
+            //handle ending stuff
+            if (this.index + 1 == this.questionList.size()) {
+                this.atEnd();
+                return;
+            }
+
             //update the previousA&Q
             this.previousQ.setText(this.questionList.get(this.index).toString());
             this.previousA.setText(this.inputList.get(this.index));
@@ -302,6 +308,12 @@ public class FunctionPanel extends UtilJPanel {
             //do some common stuff
             this.doTransition();
         }
+    }
+
+    private void atEnd() {
+        VDConstantsUtils.showInfoMessage(this.parentFrame, "You've completed the entire vocabulary list!\n" +
+                "Click \"Review\" to check your answers!\n" +
+                "Click \"Export\" to export your report.");
     }
 
     private void previousLogicHandler() {
