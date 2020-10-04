@@ -3,6 +3,7 @@ package xyz.scottc.frames.commonModeFrame.dialog.review;
 import xyz.scottc.VocabularyState;
 import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.CorrectCellRenderer;
 import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.NumCellRenderer;
+import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.StandardAnswerCellRenderer;
 import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.UniversalCellRenderer;
 import xyz.scottc.utils.AfColumnLayout;
 import xyz.scottc.utils.UtilJPanel;
@@ -100,15 +101,9 @@ public class DataPanel extends UtilJPanel {
     public void addRenderers() {
         this.reviewTable.getColumnModel().getColumn(0).setCellRenderer(new NumCellRenderer());
         this.reviewTable.getColumnModel().getColumn(1).setCellRenderer(new UniversalCellRenderer());
-        this.reviewTable.getColumnModel().getColumn(2).setCellRenderer(new UniversalCellRenderer());
+        this.reviewTable.getColumnModel().getColumn(2).setCellRenderer(new StandardAnswerCellRenderer());
         this.reviewTable.getColumnModel().getColumn(3).setCellRenderer(new UniversalCellRenderer());
         this.reviewTable.getColumnModel().getColumn(4).setCellRenderer(new CorrectCellRenderer());
-    }
-
-    private void clearIncorrectDataModel() {
-        for (int i = this.incorrectDataModel.getRowCount(); i > 0; i--) {
-            this.incorrectDataModel.removeRow(i - 1);
-        }
     }
 
     public void clear() {
@@ -117,5 +112,11 @@ public class DataPanel extends UtilJPanel {
             this.allDataModel.removeRow(i - 1);
         }
         this.clearIncorrectDataModel();
+    }
+
+    private void clearIncorrectDataModel() {
+        for (int i = this.incorrectDataModel.getRowCount(); i > 0; i--) {
+            this.incorrectDataModel.removeRow(i - 1);
+        }
     }
 }

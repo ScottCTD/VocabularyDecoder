@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,6 +110,14 @@ public class FunctionPanel extends UtilJPanel {
 
         this.add(this.reviewButton);
         this.reviewButton.addActionListener(e -> this.review());
+        this.review.dataPanel.reviewTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    jumpToSelectedReviewItem(review.dataPanel.reviewTable);
+                }
+            }
+        });
     }
 
     private void topPanelHandler() {
@@ -336,11 +346,9 @@ public class FunctionPanel extends UtilJPanel {
             if (!this.isAnswerShown) {
                 //if the answer did not shown yet, then make it appear
                 this.updateAnswer();
-
             } else {
                 //if the answer is shown, just make it disappear
                 this.disableAnswer();
-
             }
             this.A.grabFocus();
         }
@@ -414,6 +422,43 @@ public class FunctionPanel extends UtilJPanel {
                     this.questionList.get(i).toString(), this.answerList.get(i).toString(),
                     this.inputList.get(i), VocabularyState.EMPTY));
         }
+    }
+
+    private void jumpToSelectedReviewItem(JTable table) {
+        int row = table.getSelectedRow();
+        int index = (int) table.getModel().getValueAt(row, 0);
+
+        this.index = index - 1;
+
+        //update the Q and A
+        this.Q.setText(this.questionList.get(this.index).toString());
+        this.A.setText(this.inputList.get(this.index));
+
+        //update the previousQ and A
+        if (this.index >= 1) {
+            //set the previous Q&A
+            this.previousQ.setText(this.questionList.get(this.index - 1).toString());
+            this.previousA.setText(this.inputList.get(this.index - 1));
+        } else {
+            this.previousQ.setText(VDConstantsUtils.EMPTY);
+            this.previousA.setText(VDConstantsUtils.EMPTY);
+        }
+
+        //handle the answer
+        if (this.isAnswerShown) {
+            if (!VDConstantsUtils.EMPTY.equals(this.inputList.get(this.index))) {
+                /*if the answer is already shown and the selected vocabulary was answered,
+                just update the answer! */
+                this.updateAnswer();
+            } else {
+                /*if the answer is already shown but the selected vocabulary was not answered,
+                just disable the answer! */
+                this.disableAnswer();
+            }
+        }
+
+        //close the review panel
+        this.review.setVisible(false);
     }
 
     private ReviewData generateReviewData() throws Exception {
