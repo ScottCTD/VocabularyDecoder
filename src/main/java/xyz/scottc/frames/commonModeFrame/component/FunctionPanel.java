@@ -304,6 +304,23 @@ public class FunctionPanel extends UtilJPanel {
         }
     }
 
+    private void previousLogicHandler() {
+        //set the Q&A
+        this.Q.setText(this.questionList.get(this.index).toString());
+        this.A.setText(this.inputList.get(this.index));
+
+        //index = 0 means that there is no previous one anymore
+        //index = 1 means that the previous one of index = 1 that is index = 0 have no previous one
+        if (this.index >= 1) {
+            //set the previous Q&A
+            this.previousQ.setText(this.questionList.get(this.index - 1).toString());
+            this.previousA.setText(this.inputList.get(this.index - 1));
+        } else {
+            this.previousQ.setText(VDConstantsUtils.EMPTY);
+            this.previousA.setText(VDConstantsUtils.EMPTY);
+        }
+    }
+
     private void previous() throws Exception {
         if (this.init && this.index > 0) {
             //save the current input
@@ -315,20 +332,7 @@ public class FunctionPanel extends UtilJPanel {
             //back to the previous index
             index--;
 
-            //set the Q&A
-            this.Q.setText(this.questionList.get(this.index).toString());
-            this.A.setText(this.inputList.get(this.index));
-
-            //index = 0 means that there is no previous one anymore
-            //index = 1 means that the previous one of index = 1 that is index = 0 have no previous one
-            if (index >= 1) {
-                //set the previous Q&A
-                this.previousQ.setText(this.questionList.get(this.index - 1).toString());
-                this.previousA.setText(this.inputList.get(this.index - 1));
-            } else {
-                this.previousQ.setText(VDConstantsUtils.EMPTY);
-                this.previousA.setText(VDConstantsUtils.EMPTY);
-            }
+            this.previousLogicHandler();
 
             //handle the answer
             if (this.isAnswerShown) {
@@ -430,19 +434,7 @@ public class FunctionPanel extends UtilJPanel {
 
         this.index = index - 1;
 
-        //update the Q and A
-        this.Q.setText(this.questionList.get(this.index).toString());
-        this.A.setText(this.inputList.get(this.index));
-
-        //update the previousQ and A
-        if (this.index >= 1) {
-            //set the previous Q&A
-            this.previousQ.setText(this.questionList.get(this.index - 1).toString());
-            this.previousA.setText(this.inputList.get(this.index - 1));
-        } else {
-            this.previousQ.setText(VDConstantsUtils.EMPTY);
-            this.previousA.setText(VDConstantsUtils.EMPTY);
-        }
+        this.previousLogicHandler();
 
         //handle the answer
         if (this.isAnswerShown) {
