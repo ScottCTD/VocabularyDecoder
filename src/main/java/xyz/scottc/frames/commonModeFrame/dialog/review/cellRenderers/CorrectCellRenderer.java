@@ -20,10 +20,15 @@ public class CorrectCellRenderer extends UniversalCellRenderer {
                 this.label.setText("Incorrect");
                 this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, new Color(0xFE4365)));
                 break;
-            case EMPTY:
+            case NOT_ANSWERED:
                 this.label.setText("Not Answer");
                 this.setBorder(BorderFactory.createEmptyBorder());
                 break;
+            case ANSWERED:
+                this.label.setText("Answer");
+                this.setBorder(BorderFactory.createEmptyBorder());
+                break;
+
         }
         return this;
     }

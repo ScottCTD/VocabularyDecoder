@@ -1,5 +1,5 @@
 package xyz.scottc;
 
 public enum VocabularyState {
-    CORRECT, INCORRECT, EMPTY
+    CORRECT, INCORRECT, NOT_ANSWERED, ANSWERED
 }

@@ -17,9 +17,10 @@ public class StandardAnswerCellRenderer extends UniversalCellRenderer {
         switch (correct) {
             case CORRECT:
             case INCORRECT:
+            case ANSWERED:
                 this.label.setText(value.toString());
                 break;
-            case EMPTY:
+            case NOT_ANSWERED:
                 this.label.setText(VDConstantsUtils.EMPTY);
                 break;
         }

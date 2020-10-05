@@ -20,7 +20,8 @@ public class NumCellRenderer extends UniversalCellRenderer {
             case INCORRECT:
                 this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, new Color(0xFE4365)));
                 break;
-            case EMPTY:
+            case ANSWERED:
+            case NOT_ANSWERED:
                 this.setBorder(BorderFactory.createEmptyBorder());
                 break;
         }

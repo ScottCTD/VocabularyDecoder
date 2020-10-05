@@ -45,7 +45,8 @@ public class UniversalCellRenderer extends UtilJPanel implements TableCellRender
             case INCORRECT:
                 this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0xFE4365)));
                 break;
-            case EMPTY:
+            case ANSWERED:
+            case NOT_ANSWERED:
                 this.setBorder(BorderFactory.createEmptyBorder());
                 break;
         }

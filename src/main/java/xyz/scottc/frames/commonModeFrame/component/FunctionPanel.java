@@ -394,14 +394,18 @@ public class FunctionPanel extends UtilJPanel {
         if (this.inputList.get(this.index).equals(this.answerList.get(this.index).toString())) {
             return VocabularyState.CORRECT;
         } else if (this.inputList.get(this.index).equals(VDConstantsUtils.EMPTY)) {
-            return VocabularyState.EMPTY;
+            return VocabularyState.NOT_ANSWERED;
         } else {
             return VocabularyState.INCORRECT;
         }
     }
 
     private VocabularyState judgeChinese() {
-        return VocabularyState.EMPTY;
+        if (this.inputList.get(this.index).equals(VDConstantsUtils.EMPTY)) {
+            return VocabularyState.NOT_ANSWERED;
+        }else {
+            return VocabularyState.ANSWERED;
+        }
     }
 
     private void updateBorder() {
@@ -418,7 +422,7 @@ public class FunctionPanel extends UtilJPanel {
                 case INCORRECT:
                     this.AScrollPane.setBorder(BorderFactory.createLineBorder(new Color(0xFE4365), 5, false));
                     break;
-                case EMPTY:
+                case NOT_ANSWERED:
                     break;
             }
         }
@@ -436,7 +440,7 @@ public class FunctionPanel extends UtilJPanel {
         for (int i = 0; i < this.questionList.size(); i++) {
             this.review.dataPanel.addData(new ReviewData(i + 1,
                     this.questionList.get(i).toString(), this.answerList.get(i).toString(),
-                    this.inputList.get(i), VocabularyState.EMPTY));
+                    this.inputList.get(i), VocabularyState.NOT_ANSWERED));
         }
     }
 
