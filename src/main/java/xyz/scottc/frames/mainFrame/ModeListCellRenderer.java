@@ -9,22 +9,24 @@ public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer
 
     private final UtilJCheckBox checkBox = new UtilJCheckBox();
     private final UtilJLabel nameLabel = new UtilJLabel(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40);
-    private final UtilJPanel topPanel = new UtilJPanel(new AfRowLayout());
 
     private final VDTextArea description = new VDTextArea(3, 5,
             VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20, false, false);
-    private final JScrollPane descriptionScrollPane = new JScrollPane(this.description);
 
     public ModeListCellRenderer() {
         this.setPreferredSize(new Dimension(400, 200));
         this.setLayout(new AfColumnLayout());
 
-        this.add(this.topPanel, "1w");
-        this.topPanel.add(checkBox, "20px");
-        this.topPanel.add(this.nameLabel, "1w");
+        UtilJPanel topPanel = new UtilJPanel(new AfRowLayout());
+        this.add(topPanel, "1w");
+        topPanel.add(checkBox, "20px");
+        topPanel.add(this.nameLabel, "1w");
         this.nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.add(this.descriptionScrollPane, "2w");
+        this.add(this.description, "2w");
+        this.description.setAlignmentY(CENTER_ALIGNMENT);
+        this.description.setLineWrap(true);
+        this.description.setBorder(BorderFactory.createLineBorder(new Color(0x828790)));
     }
 
     @Override
