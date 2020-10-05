@@ -1,9 +1,9 @@
 package xyz.scottc;
 
-import xyz.scottc.frames.mainFrame.MainFrame;
+import xyz.scottc.frames.EntryFrame;
+import xyz.scottc.utils.VDConstantsUtils;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Main {
 
@@ -19,9 +19,10 @@ public class Main {
                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        MainFrame frame = new MainFrame("Vocabulary Decoder");
+        //MainFrame frame = new MainFrame("Vocabulary Decoder");
+        EntryFrame frame = new EntryFrame("Vocabulary Decoder");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(new Dimension(1000, 1000));
+        frame.setBounds(VDConstantsUtils.getSreenRectangle());
         frame.setVisible(true);
     }
 }

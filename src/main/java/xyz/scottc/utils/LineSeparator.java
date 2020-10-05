@@ -20,6 +20,16 @@ public class LineSeparator extends JPanel {
     }
 
     @Override
+    public Dimension getPreferredSize() {
+        if (this.type == HORIZONTAL) {
+            return new Dimension(length, 1);
+        } else if (this.type == VERTICAL) {
+            return new Dimension(1, length);
+        }
+        return null;
+    }
+
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.width = this.getWidth();
@@ -42,5 +52,23 @@ public class LineSeparator extends JPanel {
                 g.drawLine(widthCenter, 0, widthCenter, this.length);
                 break;
         }
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+        this.repaint();
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+        this.repaint();
     }
 }

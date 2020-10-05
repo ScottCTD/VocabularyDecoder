@@ -7,6 +7,8 @@ import java.util.List;
 
 public class VDConstantsUtils {
 
+    public static final String NAME = "Vocabulary Decoder";
+    public static final String ABOUT = "ScottCTD@outlook.com";
     public static final String HELP = "Common Mode:\nAnswer the meaning of a vocabulary \nor the correspond vocabulary of it's \nmeaning. You can check the answer \nwhen you are answering.";
     public static final String EMPTY = "";
     public static final String SPACE = " ";
@@ -20,6 +22,7 @@ public class VDConstantsUtils {
     public static final Font MICROSOFT_YAHEI_BOLD_40 = new Font("微软雅黑", Font.BOLD, 40);
     public static final Font MICROSOFT_YAHEI_BOLD_60 = new Font("微软雅黑", Font.BOLD, 60);
     public static final Font MICROSOFT_YAHEI_BOLD_80 = new Font("微软雅黑", Font.BOLD, 80);
+    public static final Font MICROSOFT_YAHEI_BOLD_100 = new Font("微软雅黑", Font.BOLD, 100);
 
     public static void showWarningMessage(Component parent, String message) {
         JOptionPane.showConfirmDialog(parent, message, WARNING_TITLE, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -42,4 +45,13 @@ public class VDConstantsUtils {
         list02.addAll(temp);
     }
 
+    public static Rectangle getSreenRectangle() {
+        Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().
+                        getDefaultConfiguration());
+        return new Rectangle(screenInsets.left, screenInsets.top, screenDimension.width -
+                screenInsets.left - screenInsets.right, screenDimension.height -
+                screenInsets.top - screenInsets.bottom);
+    }
 }
