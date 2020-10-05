@@ -6,13 +6,19 @@
 
     <groupId>xyz.socttc</groupId>
     <artifactId>VocabularyDecoder</artifactId>
-    <version>1.0.0</version>
+    <version>0.0.3</version>
     <dependencies>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20200518</version>
         </dependency>
+        <dependency>
+            <groupId>com.weblookandfeel</groupId>
+            <artifactId>weblaf-ui</artifactId>
+            <version>1.2.13</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -21,10 +27,9 @@
     </properties>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}${project.version}</finalName>
 
         <plugins>
-
             <!-- 编译插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -65,7 +70,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
