@@ -2,6 +2,7 @@ package xyz.scottc.frames.commonModeFrame.component;
 
 import org.json.JSONObject;
 import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
+import xyz.scottc.frames.commonModeFrame.dialog.review.ReviewData;
 import xyz.scottc.frames.mainFrame.MainFrame;
 import xyz.scottc.utils.*;
 
@@ -43,6 +44,8 @@ public class LeftPanel extends UtilJPanel {
     private final List<File> internalVocabularyPool = new ArrayList<>();
     private final List<File> externalVocabularyPool = new ArrayList<>();
 
+    protected String selectedListName;
+
     public LeftPanel(CommonModeFrame parent, FunctionPanel functionPanel, TopPanel topPanel) {
         this.parentFrame = parent;
         this.functionPanel = functionPanel;
@@ -52,8 +55,10 @@ public class LeftPanel extends UtilJPanel {
         this.add(this.importButton);
         this.importButton.setToolTipText("Import the customized VD File which can be acquired by using \"Tools\" menu in the Main windows.");
         this.importButton.addActionListener(e -> this.importFile());
+
         this.add(this.exportButton);
         this.exportButton.setToolTipText("Export your answer report.");
+        this.exportButton.addActionListener(e -> this.export());
 
         this.add(this.internalFileListLabel);
         this.add(this.internalFileListScrollPane);
@@ -121,6 +126,39 @@ public class LeftPanel extends UtilJPanel {
         }
     }
 
+    private void export() {
+        if (this.functionPanel.init) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setMultiSelectionEnabled(false);
+            int result = fileChooser.showSaveDialog(this.parentFrame);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                StringBuilder builder = new StringBuilder();
+
+                String title = "VDList: " + this.selectedListName + VDConstantsUtils.SPACE +
+                        "Finishing Time: " + this.topPanel.timer.getText() + "\n";
+                builder.append(title);
+
+                List<ReviewData> dataList = this.functionPanel.review.dataPanel.allDataList;
+                for (ReviewData datum : dataList) {
+                    builder.append(datum.toString()).append("\n");
+                }
+
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath().endsWith(".txt") ?
+                        fileChooser.getSelectedFile().getAbsolutePath() : fileChooser.getSelectedFile().getAbsolutePath() + ".txt");
+                OutputStream outputStream = null;
+                try {
+                    outputStream = new FileOutputStream(file);
+                    outputStream.write(builder.toString().getBytes());
+                    outputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    FileUtils.closeStream(null, outputStream);
+                }
+            }
+        }
+    }
+
     private void addExternalVocabularyPool() {
         this.externalVocabularyPool.clear();
         this.externalFileListModel.clear();
@@ -158,6 +196,7 @@ public class LeftPanel extends UtilJPanel {
         for (File file : Objects.requireNonNull(MainFrame.internalLibrary.listFiles())) {
             this.internalVocabularyPool.add(file);
             this.internalFileListModel.addElement(file.getName());
+            this.selectedListName = file.getName().replace(".json", VDConstantsUtils.EMPTY);
         }
     }
 

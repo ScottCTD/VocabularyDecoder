@@ -1,6 +1,7 @@
 package xyz.scottc.frames.commonModeFrame.dialog.review;
 
 import xyz.scottc.VocabularyState;
+import xyz.scottc.utils.VDConstantsUtils;
 
 public class ReviewData {
 
@@ -59,5 +60,16 @@ public class ReviewData {
 
     public void setCorrect(VocabularyState correct) {
         this.correct = correct;
+    }
+
+    @Override
+    public String toString() {
+        if (this.input.equals(VDConstantsUtils.EMPTY)) {
+            this.input = VDConstantsUtils.SPACE;
+        }
+        return this.serialNumber + VDConstantsUtils.SPACE + this.question + VDConstantsUtils.SPACE +
+                this.answer + VDConstantsUtils.SPACE +
+                this.input + VDConstantsUtils.SPACE +
+                this.correct;
     }
 }

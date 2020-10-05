@@ -60,7 +60,6 @@ public class CreateVDFileByInputDialog extends JDialog {
         }
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showSaveDialog(this);
-        fileChooser.setCurrentDirectory(new File("D:\\Desktop"));
         if (result == JFileChooser.APPROVE_OPTION) {
             File output = new File(fileChooser.getSelectedFile().getAbsolutePath().endsWith(".json") ?
                     fileChooser.getSelectedFile().getAbsolutePath() : fileChooser.getSelectedFile().getAbsolutePath() + ".json");

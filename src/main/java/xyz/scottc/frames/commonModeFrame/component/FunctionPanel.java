@@ -19,7 +19,7 @@ public class FunctionPanel extends UtilJPanel {
 
     private final CommonModeFrame parentFrame;
     private final TopPanel topPanel;
-    private final Review review;
+    protected final Review review;
 
     private final UtilJLabel previousQLabel = new UtilJLabel("Previous Question", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
     private final VDTextArea previousQ = new VDTextArea(1, 11, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30, false, true);
@@ -46,16 +46,16 @@ public class FunctionPanel extends UtilJPanel {
     private final UtilJButton answerButton = new UtilJButton("Answer", 35);
     private final UtilJButton reviewButton = new UtilJButton("Review", 35);
 
-    public boolean isListLoaded = false;
-    public boolean init = false;
+    protected boolean isListLoaded = false;
+    protected boolean init = false;
     private boolean suspend = false;
     private boolean isAnswerShown = false;
 
     private int index = 0;
 
-    public List<Object> questionList;
-    public List<Object> answerList;
-    public List<String> inputList = new ArrayList<>();
+    protected List<Object> questionList;
+    protected List<Object> answerList;
+    protected List<String> inputList = new ArrayList<>();
 
     private final Object[] selectionValues = {"Vocabulary - Meaning", "Meaning - Vocabulary"};
     private Object selectionValue;
