@@ -1,8 +1,8 @@
-package xyz.scottc.frames.mainFrame;
+package xyz.scottc.frames.old.mainFrame;
 
-import xyz.scottc.frames.mainFrame.component.ModeSelectionPanel;
-import xyz.scottc.frames.mainFrame.dialog.CreateVDFileByInputDialog;
-import xyz.scottc.frames.mainFrame.dialog.CreateVDFileByTXTDialog;
+import xyz.scottc.frames.old.mainFrame.component.ModeSelectionPanel;
+import xyz.scottc.frames.old.mainFrame.dialog.CreateVDFileByInputDialog;
+import xyz.scottc.frames.old.mainFrame.dialog.CreateVDFileByTXTDialog;
 import xyz.scottc.utils.*;
 
 import javax.swing.*;

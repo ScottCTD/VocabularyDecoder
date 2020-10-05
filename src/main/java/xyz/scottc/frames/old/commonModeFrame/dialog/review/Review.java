@@ -1,4 +1,4 @@
-package xyz.scottc.frames.commonModeFrame.dialog.review;
+package xyz.scottc.frames.old.commonModeFrame.dialog.review;
 
 
 import xyz.scottc.utils.AfColumnLayout;

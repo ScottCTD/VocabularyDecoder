@@ -1,4 +1,4 @@
-package xyz.scottc.frames.mainFrame;
+package xyz.scottc.frames.entryFrame;
 
 public class ModeListCell {
 

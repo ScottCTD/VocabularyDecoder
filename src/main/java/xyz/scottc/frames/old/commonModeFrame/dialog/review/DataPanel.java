@@ -1,10 +1,10 @@
-package xyz.scottc.frames.commonModeFrame.dialog.review;
+package xyz.scottc.frames.old.commonModeFrame.dialog.review;
 
 import xyz.scottc.VocabularyState;
-import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.CorrectCellRenderer;
-import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.NumCellRenderer;
-import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.StandardAnswerCellRenderer;
-import xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers.UniversalCellRenderer;
+import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.CorrectCellRenderer;
+import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.NumCellRenderer;
+import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.StandardAnswerCellRenderer;
+import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.UniversalCellRenderer;
 import xyz.scottc.utils.AfColumnLayout;
 import xyz.scottc.utils.UtilJPanel;
 import xyz.scottc.utils.VDConstantsUtils;

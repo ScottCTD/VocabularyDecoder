@@ -1,8 +1,8 @@
-package xyz.scottc.frames.commonModeFrame;
+package xyz.scottc.frames.old.commonModeFrame;
 
-import xyz.scottc.frames.commonModeFrame.component.FunctionPanel;
-import xyz.scottc.frames.commonModeFrame.component.LeftPanel;
-import xyz.scottc.frames.commonModeFrame.component.TopPanel;
+import xyz.scottc.frames.old.commonModeFrame.component.FunctionPanel;
+import xyz.scottc.frames.old.commonModeFrame.component.LeftPanel;
+import xyz.scottc.frames.old.commonModeFrame.component.TopPanel;
 import xyz.scottc.utils.LineSeparator;
 import xyz.scottc.utils.UtilJPanel;
 import xyz.scottc.utils.VDMenu;

@@ -1,7 +1,7 @@
-package xyz.scottc.frames.mainFrame.component;
+package xyz.scottc.frames.old.mainFrame.component;
 
-import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
-import xyz.scottc.frames.mainFrame.MainFrame;
+import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
+import xyz.scottc.frames.old.mainFrame.MainFrame;
 import xyz.scottc.utils.*;
 
 import javax.swing.*;

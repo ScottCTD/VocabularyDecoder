@@ -1,6 +1,6 @@
-package xyz.scottc.frames.commonModeFrame.component;
+package xyz.scottc.frames.old.commonModeFrame.component;
 
-import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
+import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
 import xyz.scottc.utils.*;
 
 import java.awt.*;

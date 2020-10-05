@@ -1,4 +1,4 @@
-package xyz.scottc.frames.mainFrame.dialog;
+package xyz.scottc.frames.old.mainFrame.dialog;
 
 import org.json.JSONObject;
 import xyz.scottc.utils.*;

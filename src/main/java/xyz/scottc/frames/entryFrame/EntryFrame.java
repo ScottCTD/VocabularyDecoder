@@ -1,7 +1,5 @@
-package xyz.scottc.frames;
+package xyz.scottc.frames.entryFrame;
 
-import xyz.scottc.frames.mainFrame.ModeListCell;
-import xyz.scottc.frames.mainFrame.ModeListCellRenderer;
 import xyz.scottc.utils.*;
 
 import javax.swing.*;

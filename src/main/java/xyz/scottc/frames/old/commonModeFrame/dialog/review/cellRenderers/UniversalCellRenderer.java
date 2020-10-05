@@ -1,4 +1,4 @@
-package xyz.scottc.frames.commonModeFrame.dialog.review.cellRenderers;
+package xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers;
 
 import xyz.scottc.VocabularyState;
 import xyz.scottc.utils.UtilJLabel;

@@ -1,6 +1,6 @@
 package xyz.scottc;
 
-import xyz.scottc.frames.EntryFrame;
+import xyz.scottc.frames.entryFrame.EntryFrame;
 import xyz.scottc.utils.VDConstantsUtils;
 
 import javax.swing.*;

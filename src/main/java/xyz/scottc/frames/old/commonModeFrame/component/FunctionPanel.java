@@ -1,9 +1,9 @@
-package xyz.scottc.frames.commonModeFrame.component;
+package xyz.scottc.frames.old.commonModeFrame.component;
 
 import xyz.scottc.VocabularyState;
-import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
-import xyz.scottc.frames.commonModeFrame.dialog.review.Review;
-import xyz.scottc.frames.commonModeFrame.dialog.review.ReviewData;
+import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
+import xyz.scottc.frames.old.commonModeFrame.dialog.review.Review;
+import xyz.scottc.frames.old.commonModeFrame.dialog.review.ReviewData;
 import xyz.scottc.utils.*;
 
 import javax.swing.*;

@@ -1,9 +1,9 @@
-package xyz.scottc.frames.commonModeFrame.component;
+package xyz.scottc.frames.old.commonModeFrame.component;
 
 import org.json.JSONObject;
-import xyz.scottc.frames.commonModeFrame.CommonModeFrame;
-import xyz.scottc.frames.commonModeFrame.dialog.review.ReviewData;
-import xyz.scottc.frames.mainFrame.MainFrame;
+import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
+import xyz.scottc.frames.old.commonModeFrame.dialog.review.ReviewData;
+import xyz.scottc.frames.old.mainFrame.MainFrame;
 import xyz.scottc.utils.*;
 
 import javax.swing.*;
