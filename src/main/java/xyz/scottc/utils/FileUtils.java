@@ -2,8 +2,16 @@ package xyz.scottc.utils;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.util.Arrays;
 
 public class FileUtils {
+
+    public static byte[] readFromInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[inputStream.available() + 1024];
+        int length = inputStream.read(buffer);
+        //byte[] result = new byte[length];
+        return Arrays.copyOf(buffer, length);
+    }
 
     public static String getJarFilePath(Class<?> object) {
         if (object != null) {

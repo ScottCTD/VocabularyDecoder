@@ -15,4 +15,7 @@ public class ENText {
 
     public static final String LIST_SELECTION = "VD Lists Selection";
     public static final String LIST_SELECTION_INTRODUCTION = "";
+    public static final String INTERNAL_VD_LISTS = "Internal VD Lists";
+    public static final String EXTERNAL_VD_LISTS = "External VD Lists";
+
 }
