@@ -13,4 +13,6 @@ public class ENText {
             "Answers can be checked during the progress.\n" +
             "No time limit.\n";
 
+    public static final String LIST_SELECTION = "VD Lists Selection";
+    public static final String LIST_SELECTION_INTRODUCTION = "";
 }

@@ -1,87 +1,52 @@
 package xyz.scottc.frames.entryFrame;
 
+import xyz.scottc.frames.ATransitionalFrame;
 import xyz.scottc.utils.ENText;
 import xyz.scottc.utils.VDConstantsUtils;
-import xyz.scottc.utils.components.LineSeparator;
 import xyz.scottc.utils.components.UtilJButton;
 import xyz.scottc.utils.components.UtilJLabel;
-import xyz.scottc.utils.components.UtilJPanel;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class EntryFrame extends JFrame {
+public class EntryFrame extends ATransitionalFrame {
 
-    private static final int MARGIN = 20;
-    private final UtilJPanel rootPanel = new UtilJPanel();
-    private final UtilJLabel titleLabel = new UtilJLabel(VDConstantsUtils.NAME, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_100);
-    private final UtilJLabel introLabel = new UtilJLabel(ENText.MAIN_INTRODUCTION, VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
-    private final UtilJLabel aboutLabel = new UtilJLabel(VDConstantsUtils.ABOUT, VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
     private final UtilJLabel modeSelectionLabel = new UtilJLabel(ENText.MODE_SELECTION, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultListModel<ModeListCell> modeListModel = new DefaultListModel<>();
     private final JList<ModeListCell> modeList = new JList<>(this.modeListModel);
     private final JScrollPane modeListScrollPane = new JScrollPane(this.modeList);
     private final UtilJButton confirmButton = new UtilJButton("Confirm", 60);
-    private final LineSeparator separator01 = new LineSeparator(LineSeparator.VERTICAL, VDConstantsUtils.getSreenRectangle().height);
-    private final LineSeparator separator02 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
-    private final LineSeparator separator03 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
 
     public EntryFrame(String title) throws HeadlessException {
         super(title);
-        this.setContentPane(this.rootPanel);
         this.rootPanelHandler();
     }
 
-    private void rootPanelHandler() {
-        SpringLayout layout = new SpringLayout();
-        this.rootPanel.setLayout(layout);
+    protected void rootPanelHandler() {
+        super.rootPanelHandler();
 
-        this.rootPanel.add(this.titleLabel);
-        layout.putConstraint(SpringLayout.WEST, this.titleLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
-        layout.putConstraint(SpringLayout.NORTH, this.titleLabel, MARGIN, SpringLayout.NORTH, this.rootPanel);
+        super.titleLabel.setText(VDConstantsUtils.NAME);
+        super.introLabel.setText(ENText.MAIN_INTRODUCTION);
 
-        this.rootPanel.add(this.aboutLabel);
-        layout.putConstraint(SpringLayout.WEST, this.aboutLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
-        layout.putConstraint(SpringLayout.SOUTH, this.aboutLabel, -MARGIN, SpringLayout.SOUTH, this.rootPanel);
-
-        this.rootPanel.add(this.separator01);
-        layout.putConstraint(SpringLayout.WEST, this.separator01, MARGIN, SpringLayout.EAST, this.titleLabel);
-
-        this.rootPanel.add(this.separator02);
-        layout.putConstraint(SpringLayout.NORTH, this.separator02, MARGIN, SpringLayout.SOUTH, this.titleLabel);
-        layout.putConstraint(SpringLayout.EAST, this.separator02, 0, SpringLayout.WEST, this.separator01);
-        this.separator02.setBorder(new LineBorder(Color.BLACK, 20));
-
-        this.rootPanel.add(this.separator03);
-        layout.putConstraint(SpringLayout.SOUTH, this.separator03, -MARGIN, SpringLayout.NORTH, this.aboutLabel);
-        layout.putConstraint(SpringLayout.EAST, this.separator03, 0, SpringLayout.WEST, this.separator01);
-
-        this.rootPanel.add(this.introLabel);
-        layout.putConstraint(SpringLayout.NORTH, this.introLabel, MARGIN, SpringLayout.SOUTH, this.separator02);
-        layout.putConstraint(SpringLayout.SOUTH, this.introLabel, -MARGIN, SpringLayout.NORTH, this.separator03);
-        layout.putConstraint(SpringLayout.WEST, this.introLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
-        layout.putConstraint(SpringLayout.EAST, this.introLabel, -MARGIN, SpringLayout.WEST, this.separator01);
-
-        this.rootPanel.add(this.modeSelectionLabel);
+        super.rootPanel.add(this.modeSelectionLabel);
         this.modeSelectionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        layout.putConstraint(SpringLayout.WEST, this.modeSelectionLabel, MARGIN, SpringLayout.EAST, this.separator01);
-        layout.putConstraint(SpringLayout.NORTH, this.modeSelectionLabel, MARGIN, SpringLayout.NORTH, this.rootPanel);
+        super.layout.putConstraint(SpringLayout.WEST, this.modeSelectionLabel, MARGIN, SpringLayout.EAST, super.separator01);
+        super.layout.putConstraint(SpringLayout.NORTH, this.modeSelectionLabel, MARGIN, SpringLayout.NORTH, super.rootPanel);
 
-        this.rootPanel.add(this.confirmButton);
-        layout.putConstraint(SpringLayout.WEST, this.confirmButton, MARGIN, SpringLayout.EAST, this.separator01);
-        layout.putConstraint(SpringLayout.SOUTH, this.confirmButton, -MARGIN, SpringLayout.SOUTH, this.rootPanel);
-        layout.putConstraint(SpringLayout.EAST, this.confirmButton, -MARGIN, SpringLayout.EAST, this.rootPanel);
+        super.rootPanel.add(this.confirmButton);
+        super.layout.putConstraint(SpringLayout.WEST, this.confirmButton, MARGIN, SpringLayout.EAST, super.separator01);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.confirmButton, -MARGIN, SpringLayout.SOUTH, super.rootPanel);
+        super.layout.putConstraint(SpringLayout.EAST, this.confirmButton, -MARGIN, SpringLayout.EAST, super.rootPanel);
 
-        this.rootPanel.add(this.modeListScrollPane);
-        this.modeList.setBackground(this.rootPanel.getBackground());
+        super.rootPanel.add(this.modeListScrollPane);
+        this.modeList.setBackground(super.rootPanel.getBackground());
         this.modeList.setCellRenderer(new ModeListCellRenderer());
         ModeListCell cell01 = new ModeListCell(ENText.ORDERED_MODE_NAME, ENText.ORDERED_MODE_DESCRIPTION);
         this.modeListModel.addElement(cell01);
-        layout.putConstraint(SpringLayout.WEST, this.modeListScrollPane, MARGIN, SpringLayout.EAST, this.separator01);
-        layout.putConstraint(SpringLayout.NORTH, this.modeListScrollPane, MARGIN, SpringLayout.SOUTH, this.modeSelectionLabel);
-        layout.putConstraint(SpringLayout.EAST, this.modeListScrollPane, -MARGIN, SpringLayout.EAST, this.rootPanel);
-        layout.putConstraint(SpringLayout.SOUTH, this.modeListScrollPane, -MARGIN, SpringLayout.NORTH, this.confirmButton);
+        super.layout.putConstraint(SpringLayout.WEST, this.modeListScrollPane, MARGIN, SpringLayout.EAST, super.separator01);
+        super.layout.putConstraint(SpringLayout.NORTH, this.modeListScrollPane, MARGIN, SpringLayout.SOUTH, this.modeSelectionLabel);
+        super.layout.putConstraint(SpringLayout.EAST, this.modeListScrollPane, -MARGIN, SpringLayout.EAST, super.rootPanel);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.modeListScrollPane, -MARGIN, SpringLayout.NORTH, this.confirmButton);
     }
 
 }

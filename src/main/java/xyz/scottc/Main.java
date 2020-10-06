@@ -1,6 +1,6 @@
 package xyz.scottc;
 
-import xyz.scottc.frames.entryFrame.EntryFrame;
+import xyz.scottc.frames.listSelectionFrame.ListSelectionFrame;
 import xyz.scottc.utils.VDConstantsUtils;
 
 import javax.swing.*;
@@ -20,8 +20,8 @@ public class Main {
             e.printStackTrace();
         }
         //MainFrame frame = new MainFrame("Vocabulary Decoder");
-        EntryFrame frame = new EntryFrame("Vocabulary Decoder");
-        //ListSelectionFrame frame = new ListSelectionFrame("List Selection");
+        //EntryFrame frame = new EntryFrame("Vocabulary Decoder");
+        ListSelectionFrame frame = new ListSelectionFrame("List Selection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(VDConstantsUtils.getSreenRectangle());
         frame.setVisible(true);
