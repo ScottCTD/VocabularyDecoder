@@ -1,9 +1,8 @@
 package xyz.scottc.utils.components;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class VDTimer extends JLabel {
+public class VDTimer extends UtilJLabel {
 
     Thread timer;
 
