@@ -92,4 +92,5 @@ public class CommonModeFrame extends JFrame {
         }
 
     }
+
 }
