@@ -4,7 +4,9 @@ import org.json.JSONObject;
 import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
 import xyz.scottc.frames.old.commonModeFrame.dialog.review.ReviewData;
 import xyz.scottc.frames.old.mainFrame.MainFrame;
-import xyz.scottc.utils.*;
+import xyz.scottc.utils.FileUtils;
+import xyz.scottc.utils.JSONUtils;
+import xyz.scottc.utils.VDConstantsUtils;
 import xyz.scottc.utils.components.UtilJButton;
 import xyz.scottc.utils.components.UtilJLabel;
 import xyz.scottc.utils.components.UtilJPanel;
@@ -176,9 +178,9 @@ public class LeftPanel extends UtilJPanel {
 
     private void addInternalVocabularyPool() {
         //copy the internal json file to the InternalLibrary directory
-        String jarPath = FileUtils.getJarFilePath(this);
+        String jarPath = FileUtils.getJarFilePath(LeftPanel.class);
         JarFile jarFile;
-        String internalPath = "internalVocabPool/";
+        String internalPath = "internalLibrary/";
         try {
             jarFile = new JarFile(new File(jarPath));
             Enumeration<JarEntry> entries = jarFile.entries();

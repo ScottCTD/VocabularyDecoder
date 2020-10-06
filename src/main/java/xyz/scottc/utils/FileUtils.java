@@ -5,16 +5,16 @@ import java.net.URLDecoder;
 
 public class FileUtils {
 
-    public static String getJarFilePath(Object object) {
+    public static String getJarFilePath(Class<?> object) {
         if (object != null) {
-            return object.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            return object.getProtectionDomain().getCodeSource().getLocation().getPath();
         }
         return null;
     }
 
-    public static File getDirectoryFile(Object object) {
+    public static File getDirectoryFile(Class<?> object) {
         if (object != null) {
-            String path = object.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            String path = object.getProtectionDomain().getCodeSource().getLocation().getPath();
             try {
                 path = URLDecoder.decode(path, "UTF-8");
                 File file = new File(path);

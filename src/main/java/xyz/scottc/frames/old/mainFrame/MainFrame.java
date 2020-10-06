@@ -3,7 +3,8 @@ package xyz.scottc.frames.old.mainFrame;
 import xyz.scottc.frames.old.mainFrame.component.ModeSelectionPanel;
 import xyz.scottc.frames.old.mainFrame.dialog.CreateVDFileByInputDialog;
 import xyz.scottc.frames.old.mainFrame.dialog.CreateVDFileByTXTDialog;
-import xyz.scottc.utils.*;
+import xyz.scottc.utils.FileUtils;
+import xyz.scottc.utils.VDConstantsUtils;
 import xyz.scottc.utils.components.*;
 
 import javax.swing.*;
@@ -79,7 +80,7 @@ public class MainFrame extends JFrame {
 
     //Initialize the directories required for internal and external vocabularies list.
     private void initialize() {
-        File directory = FileUtils.getDirectoryFile(this);
+        File directory = FileUtils.getDirectoryFile(MainFrame.class);
         if (directory != null) {
             File[] files = directory.listFiles();
             if (files != null) {
