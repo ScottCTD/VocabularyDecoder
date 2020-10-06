@@ -8,7 +8,7 @@ import java.util.List;
 public class VDConstantsUtils {
 
     public static final String NAME = "Vocabulary Decoder";
-    public static final String ABOUT = "ScottCTD@outlook.com";
+    public static final String ABOUT = "Email -> ScottCTD@outlook.com";
     public static final String HELP = "Common Mode:\nAnswer the meaning of a vocabulary \nor the correspond vocabulary of it's \nmeaning. You can check the answer \nwhen you are answering.";
     public static final String EMPTY = "";
     public static final String SPACE = " ";

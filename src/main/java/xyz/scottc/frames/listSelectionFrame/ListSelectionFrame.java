@@ -13,4 +13,10 @@ public class ListSelectionFrame extends JFrame {
         super(title);
         this.setContentPane(this.rootPanel);
     }
+
+    private void rootPanelHandler() {
+        SpringLayout layout = new SpringLayout();
+        this.rootPanel.setLayout(layout);
+
+    }
 }

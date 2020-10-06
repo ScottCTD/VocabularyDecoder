@@ -1,10 +1,12 @@
 package xyz.scottc.frames.old.mainFrame.dialog;
 
 import org.json.JSONObject;
-import xyz.scottc.utils.*;
+import xyz.scottc.utils.JSONUtils;
+import xyz.scottc.utils.VDConstantsUtils;
 import xyz.scottc.utils.components.UtilJButton;
 import xyz.scottc.utils.components.UtilJPanel;
 import xyz.scottc.utils.components.VDTextArea;
+import xyz.scottc.utils.layouts.AfRowLayout;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,26 +1,26 @@
-package xyz.scottc.utils;
+package xyz.scottc.utils.layouts;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/* 纵向布局器，和 AfYLayout 等效
+/* 横向布局器，和 AfXLayout 等效
  *
  */
-public class AfColumnLayout implements LayoutManager2 {
+public class AfRowLayout implements LayoutManager2 {
     private List<Item> items = new ArrayList<>();
     private int gap = 2;
     private boolean usePerferredSize = false; // 竖立方向是否占满
 
-    public AfColumnLayout() {
+    public AfRowLayout() {
     }
 
-    public AfColumnLayout(int gap) {
+    public AfRowLayout(int gap) {
         this.gap = gap; // 控件之间的间距
     }
 
-    public AfColumnLayout(int gap, boolean usePerferredSize) {
+    public AfRowLayout(int gap, boolean usePerferredSize) {
         this.gap = gap;
         this.usePerferredSize = usePerferredSize;
     }
@@ -88,40 +88,40 @@ public class AfColumnLayout implements LayoutManager2 {
 
         // 第二轮处理：百分比，像素，auto的，直接计算出结果; 权重的，在第三轮计算
         int totalGapSize = gap * (validItems.size() - 1);// 间距大小
-        int validSize = rect.height - totalGapSize;
+        int validSize = rect.width - totalGapSize;
         int totalSize = 0;
         int totalWeight = 0;
         for (Item it : validItems) {
             Dimension preferred = it.comp.getPreferredSize();
-            it.width = usePerferredSize ? preferred.width : rect.width;
-            it.height = preferred.height;
+            it.width = preferred.width;
+            it.height = usePerferredSize ? preferred.height : rect.height;
             it.weight = 0;
 
             // 计算宽度
             String cstr = it.constraints;
             if (cstr == null || cstr.length() == 0) {
-                //System.out.println("(AfColumnLayout) Warn: Must define constraints when added to container!");
+                //System.out.println("(AfRowLayout) Warn: Must define constraints when added to container!");
             } else if (cstr.equals("auto")) {
             } else if (cstr.endsWith("%")) // 按百分比
             {
                 int num = Integer.valueOf(cstr.substring(0, cstr.length() - 1));
-                it.height = validSize * num / 100;
+                it.width = validSize * num / 100;
             } else if (cstr.endsWith("w")) // 按权重
             {
                 int num = Integer.valueOf(cstr.substring(0, cstr.length() - 1));
-                it.height = 0;
+                it.width = 0;
                 it.weight = num;
             } else if (cstr.endsWith("px")) // 按权重
             {
                 int num = Integer.valueOf(cstr.substring(0, cstr.length() - 2));
-                it.height = num;
+                it.width = num;
             } else // 按像素
             {
                 int num = Integer.valueOf(cstr);
-                it.height = num;
+                it.width = num;
             }
 
-            totalSize += it.height;
+            totalSize += it.width;
             totalWeight += it.weight;
 
             //System.out.println("计算值：width=" + it.width + ",weight=" + it.weight);
@@ -133,7 +133,7 @@ public class AfColumnLayout implements LayoutManager2 {
             double unit = (double) remainSize / totalWeight;
             for (Item it : validItems) {
                 if (it.weight > 0) {
-                    it.height = (int) (unit * it.weight);
+                    it.width = (int) (unit * it.weight);
                 }
             }
         }
@@ -141,18 +141,18 @@ public class AfColumnLayout implements LayoutManager2 {
         //System.out.println("总宽度: " + rect.width);
 
         // 第四轮: 按宽度和高度布局
-        int y = 0;
+        int x = 0;
         for (Item it : validItems) {
-            int x = 0; // 水平靠左
-            if (y + it.height > rect.height)
-                it.height = rect.height - y;
-            if (it.height <= 0) break;
+            int y = (rect.height - it.height) / 2;
+            if (x + it.width > rect.width)
+                it.width = rect.width - x;
+            if (it.width <= 0) break;
 
             it.comp.setBounds(rect.x + x, rect.y + y, it.width, it.height);
 
             //System.out.println("宽度: " + it.width);
-            y += it.height;
-            y += gap; // 间距
+            x += it.width;
+            x += gap; // 间距
         }
     }
 

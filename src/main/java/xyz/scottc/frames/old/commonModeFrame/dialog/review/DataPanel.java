@@ -5,9 +5,9 @@ import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.Correct
 import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.NumCellRenderer;
 import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.StandardAnswerCellRenderer;
 import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.UniversalCellRenderer;
-import xyz.scottc.utils.AfColumnLayout;
-import xyz.scottc.utils.components.UtilJPanel;
 import xyz.scottc.utils.VDConstantsUtils;
+import xyz.scottc.utils.components.UtilJPanel;
+import xyz.scottc.utils.layouts.AfColumnLayout;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

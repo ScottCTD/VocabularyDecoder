@@ -1,10 +1,12 @@
 package xyz.scottc.frames.entryFrame;
 
-import xyz.scottc.utils.*;
+import xyz.scottc.utils.VDConstantsUtils;
 import xyz.scottc.utils.components.UtilJCheckBox;
 import xyz.scottc.utils.components.UtilJLabel;
 import xyz.scottc.utils.components.UtilJPanel;
 import xyz.scottc.utils.components.VDTextArea;
+import xyz.scottc.utils.layouts.AfColumnLayout;
+import xyz.scottc.utils.layouts.AfRowLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,12 +45,13 @@ public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer
 
         this.setOpaque(true);
 
+        Color selectedColor = new Color(0xCCCCCC);
         if (isSelected) {
-            this.setBackGround(new Color(0xCCCCCC));
+            this.setBackGround(selectedColor);
             this.setForeground(list.getSelectionForeground());
-            this.checkBox.setBackground(new Color(0xCCCCCC));
+            this.checkBox.setBackground(selectedColor);
             this.checkBox.setForeground(list.getSelectionForeground());
-            this.description.setBackground(new Color(0xCCCCCC));
+            this.description.setBackground(selectedColor);
             this.description.setForeground(list.getSelectionForeground());
         } else {
             this.setBackground(list.getBackground());
