@@ -5,6 +5,9 @@ import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
 import xyz.scottc.frames.old.commonModeFrame.dialog.review.ReviewData;
 import xyz.scottc.frames.old.mainFrame.MainFrame;
 import xyz.scottc.utils.*;
+import xyz.scottc.utils.components.UtilJButton;
+import xyz.scottc.utils.components.UtilJLabel;
+import xyz.scottc.utils.components.UtilJPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

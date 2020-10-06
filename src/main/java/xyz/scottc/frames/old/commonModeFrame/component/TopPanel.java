@@ -1,7 +1,10 @@
 package xyz.scottc.frames.old.commonModeFrame.component;
 
 import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
-import xyz.scottc.utils.*;
+import xyz.scottc.utils.components.UtilJButton;
+import xyz.scottc.utils.components.UtilJPanel;
+import xyz.scottc.utils.components.VDAmountDisplay;
+import xyz.scottc.utils.components.VDTimer;
 
 import java.awt.*;
 

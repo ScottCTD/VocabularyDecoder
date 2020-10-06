@@ -2,6 +2,10 @@ package xyz.scottc.frames.old.mainFrame.dialog;
 
 import org.json.JSONObject;
 import xyz.scottc.utils.*;
+import xyz.scottc.utils.components.UtilJButton;
+import xyz.scottc.utils.components.UtilJLabel;
+import xyz.scottc.utils.components.UtilJPanel;
+import xyz.scottc.utils.components.VDTextArea;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

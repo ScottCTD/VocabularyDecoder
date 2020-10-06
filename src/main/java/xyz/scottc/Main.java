@@ -21,6 +21,7 @@ public class Main {
         }
         //MainFrame frame = new MainFrame("Vocabulary Decoder");
         EntryFrame frame = new EntryFrame("Vocabulary Decoder");
+        //ListSelectionFrame frame = new ListSelectionFrame("List Selection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(VDConstantsUtils.getSreenRectangle());
         frame.setVisible(true);

@@ -1,8 +1,13 @@
 package xyz.scottc.frames.entryFrame;
 
 import xyz.scottc.utils.*;
+import xyz.scottc.utils.components.LineSeparator;
+import xyz.scottc.utils.components.UtilJButton;
+import xyz.scottc.utils.components.UtilJLabel;
+import xyz.scottc.utils.components.UtilJPanel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class EntryFrame extends JFrame {
@@ -21,9 +26,9 @@ public class EntryFrame extends JFrame {
 
     private final UtilJButton confirmButton = new UtilJButton("Confirm", 60);
 
-    private final LineSeparator separator01 = new LineSeparator(LineSeparator.VERTICAL, Integer.MAX_VALUE);
-    private final LineSeparator separator02 = new LineSeparator(LineSeparator.HORIZONTAL, Integer.MAX_VALUE);
-    private final LineSeparator separator03 = new LineSeparator(LineSeparator.HORIZONTAL, Integer.MAX_VALUE);
+    private final LineSeparator separator01 = new LineSeparator(LineSeparator.VERTICAL, VDConstantsUtils.getSreenRectangle().height);
+    private final LineSeparator separator02 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
+    private final LineSeparator separator03 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
 
     private static final int MARGIN = 20;
 
@@ -38,15 +43,27 @@ public class EntryFrame extends JFrame {
         this.layout.putConstraint(SpringLayout.WEST, this.titleLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
         this.layout.putConstraint(SpringLayout.NORTH, this.titleLabel, MARGIN, SpringLayout.NORTH, this.rootPanel);
 
+        this.rootPanel.add(this.aboutLabel);
+        this.layout.putConstraint(SpringLayout.WEST, this.aboutLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
+        this.layout.putConstraint(SpringLayout.SOUTH, this.aboutLabel, -MARGIN, SpringLayout.SOUTH, this.rootPanel);
+
+        this.rootPanel.add(this.separator01);
+        this.layout.putConstraint(SpringLayout.WEST, this.separator01, MARGIN, SpringLayout.EAST, this.titleLabel);
+
+        this.rootPanel.add(this.separator02);
+        this.layout.putConstraint(SpringLayout.NORTH, this.separator02, MARGIN, SpringLayout.SOUTH, this.titleLabel);
+        this.layout.putConstraint(SpringLayout.EAST, this.separator02, 0, SpringLayout.WEST, this.separator01);
+        this.separator02.setBorder(new LineBorder(Color.BLACK, 20));
+
+        this.rootPanel.add(this.separator03);
+        this.layout.putConstraint(SpringLayout.SOUTH, this.separator03, -MARGIN, SpringLayout.NORTH, this.aboutLabel);
+        this.layout.putConstraint(SpringLayout.EAST, this.separator03, 0, SpringLayout.WEST, this.separator01);
+
         this.rootPanel.add(this.introLabel);
         this.layout.putConstraint(SpringLayout.NORTH, this.introLabel, MARGIN, SpringLayout.SOUTH, this.separator02);
         this.layout.putConstraint(SpringLayout.SOUTH, this.introLabel, -MARGIN, SpringLayout.NORTH, this.separator03);
         this.layout.putConstraint(SpringLayout.WEST, this.introLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
         this.layout.putConstraint(SpringLayout.EAST, this.introLabel, -MARGIN, SpringLayout.WEST, this.separator01);
-
-        this.rootPanel.add(this.aboutLabel);
-        this.layout.putConstraint(SpringLayout.WEST, this.aboutLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
-        this.layout.putConstraint(SpringLayout.SOUTH, this.aboutLabel, -MARGIN, SpringLayout.SOUTH, this.rootPanel);
 
         this.rootPanel.add(this.modeSelectionLabel);
         this.modeSelectionLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -67,17 +84,6 @@ public class EntryFrame extends JFrame {
         this.layout.putConstraint(SpringLayout.NORTH, this.modeListScrollPane, MARGIN, SpringLayout.SOUTH, this.modeSelectionLabel);
         this.layout.putConstraint(SpringLayout.EAST, this.modeListScrollPane, -MARGIN, SpringLayout.EAST, this.rootPanel);
         this.layout.putConstraint(SpringLayout.SOUTH, this.modeListScrollPane, -MARGIN, SpringLayout.NORTH, this.confirmButton);
-
-        this.rootPanel.add(this.separator01);
-        this.layout.putConstraint(SpringLayout.WEST, this.separator01, MARGIN, SpringLayout.EAST, this.titleLabel);
-
-        this.rootPanel.add(this.separator02);
-        this.layout.putConstraint(SpringLayout.NORTH, this.separator02, MARGIN, SpringLayout.SOUTH, this.titleLabel);
-        this.layout.putConstraint(SpringLayout.EAST, this.separator02, 0, SpringLayout.WEST, this.separator01);
-
-        this.rootPanel.add(this.separator03);
-        this.layout.putConstraint(SpringLayout.SOUTH, this.separator03, -MARGIN, SpringLayout.NORTH, this.aboutLabel);
-        this.layout.putConstraint(SpringLayout.EAST, this.separator03, 0, SpringLayout.WEST, this.separator01);
 
     }
 

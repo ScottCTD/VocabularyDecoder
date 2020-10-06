@@ -1,4 +1,6 @@
-package xyz.scottc.utils;
+package xyz.scottc.utils.components;
+
+import xyz.scottc.utils.ImageZoomUtils;
 
 import javax.swing.*;
 import java.awt.*;

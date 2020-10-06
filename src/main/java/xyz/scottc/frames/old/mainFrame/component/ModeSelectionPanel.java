@@ -3,6 +3,10 @@ package xyz.scottc.frames.old.mainFrame.component;
 import xyz.scottc.frames.old.commonModeFrame.CommonModeFrame;
 import xyz.scottc.frames.old.mainFrame.MainFrame;
 import xyz.scottc.utils.*;
+import xyz.scottc.utils.components.UtilJButton;
+import xyz.scottc.utils.components.UtilJLabel;
+import xyz.scottc.utils.components.UtilJPanel;
+import xyz.scottc.utils.components.VDTextArea;
 
 import javax.swing.*;
 import java.awt.*;

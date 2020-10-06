@@ -1,6 +1,10 @@
 package xyz.scottc.frames.entryFrame;
 
 import xyz.scottc.utils.*;
+import xyz.scottc.utils.components.UtilJCheckBox;
+import xyz.scottc.utils.components.UtilJLabel;
+import xyz.scottc.utils.components.UtilJPanel;
+import xyz.scottc.utils.components.VDTextArea;
 
 import javax.swing.*;
 import java.awt.*;

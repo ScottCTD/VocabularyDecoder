@@ -1,4 +1,4 @@
-import xyz.scottc.utils.UtilJPanel;
+import xyz.scottc.utils.components.UtilJPanel;
 
 import javax.swing.*;
 

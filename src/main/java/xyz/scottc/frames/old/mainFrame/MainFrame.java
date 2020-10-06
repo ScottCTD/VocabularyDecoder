@@ -4,6 +4,7 @@ import xyz.scottc.frames.old.mainFrame.component.ModeSelectionPanel;
 import xyz.scottc.frames.old.mainFrame.dialog.CreateVDFileByInputDialog;
 import xyz.scottc.frames.old.mainFrame.dialog.CreateVDFileByTXTDialog;
 import xyz.scottc.utils.*;
+import xyz.scottc.utils.components.*;
 
 import javax.swing.*;
 import java.awt.*;

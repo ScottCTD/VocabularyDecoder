@@ -6,7 +6,7 @@ import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.NumCell
 import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.StandardAnswerCellRenderer;
 import xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers.UniversalCellRenderer;
 import xyz.scottc.utils.AfColumnLayout;
-import xyz.scottc.utils.UtilJPanel;
+import xyz.scottc.utils.components.UtilJPanel;
 import xyz.scottc.utils.VDConstantsUtils;
 
 import javax.swing.*;

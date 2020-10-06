@@ -3,9 +3,9 @@ package xyz.scottc.frames.old.commonModeFrame;
 import xyz.scottc.frames.old.commonModeFrame.component.FunctionPanel;
 import xyz.scottc.frames.old.commonModeFrame.component.LeftPanel;
 import xyz.scottc.frames.old.commonModeFrame.component.TopPanel;
-import xyz.scottc.utils.LineSeparator;
-import xyz.scottc.utils.UtilJPanel;
-import xyz.scottc.utils.VDMenu;
+import xyz.scottc.utils.components.LineSeparator;
+import xyz.scottc.utils.components.UtilJPanel;
+import xyz.scottc.utils.components.VDMenu;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,8 +1,8 @@
 package xyz.scottc.frames.old.commonModeFrame.dialog.review.cellRenderers;
 
 import xyz.scottc.VocabularyState;
-import xyz.scottc.utils.UtilJLabel;
-import xyz.scottc.utils.UtilJPanel;
+import xyz.scottc.utils.components.UtilJLabel;
+import xyz.scottc.utils.components.UtilJPanel;
 import xyz.scottc.utils.VDConstantsUtils;
 
 import javax.swing.*;

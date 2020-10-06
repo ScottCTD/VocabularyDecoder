@@ -1,4 +1,4 @@
-package xyz.scottc.utils;
+package xyz.scottc.utils.components;
 
 import java.awt.*;
 
