@@ -11,3 +11,4 @@ VD has many **internal vocabulary lists**, ranging from TOEFL vocabularies to SA
 If you want to create **your customized vocabulary lists**, just go to the **"tools"** menu at the **top** of this windows. 
 
 **Thanks for using!**
+
