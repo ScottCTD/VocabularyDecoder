@@ -1,5 +1,6 @@
 package xyz.scottc.frames.listSelectionFrame;
 
+import xyz.scottc.Main;
 import xyz.scottc.frames.TransitionalFrame;
 import xyz.scottc.utils.ENText;
 import xyz.scottc.utils.FileUtils;
@@ -9,9 +10,11 @@ import xyz.scottc.utils.components.UtilJButton;
 import xyz.scottc.utils.components.UtilJLabel;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 public class ListSelectionFrame extends TransitionalFrame {
@@ -22,11 +25,13 @@ public class ListSelectionFrame extends TransitionalFrame {
     private final UtilJButton deleteButton = new UtilJButton("Delete", 30);
 
     private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
-    private final JTree inList = new JTree();
+    private final DefaultMutableTreeNode inListRoot = new DefaultMutableTreeNode(ENText.INTERNAL_VD_LISTS);
+    private final JTree inList = new JTree(this.inListRoot);
     private final JScrollPane inListView = new JScrollPane(this.inList);
 
     private final UtilJLabel exListLabel = new UtilJLabel(ENText.EXTERNAL_VD_LISTS, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
-    private final JTree exList = new JTree();
+    private final DefaultMutableTreeNode exListRoot = new DefaultMutableTreeNode(ENText.EXTERNAL_VD_LISTS);
+    private final JTree exList = new JTree(this.exListRoot);
     private final JScrollPane exListView = new JScrollPane(this.exList);
 
     private final LineSeparator separator04 = new LineSeparator(LineSeparator.VERTICAL, VDConstantsUtils.getSreenRectangle().height);
@@ -101,7 +106,13 @@ public class ListSelectionFrame extends TransitionalFrame {
     }
 
     private void inListHandler() {
+        DefaultMutableTreeNode SAT = new DefaultMutableTreeNode(VDList.SAT_TYPE);
+        inListRoot.add(SAT);
+        DefaultMutableTreeNode TOEFL = new DefaultMutableTreeNode(VDList.TOEFL_TYPE);
+        inListRoot.add(TOEFL);
+        for (File list : Main.INTERNAL_LISTS) {
 
+        }
     }
 
     private static class ListTreeCellRenderer extends DefaultTreeCellRenderer {
