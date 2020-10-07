@@ -100,6 +100,10 @@ public class ListSelectionFrame extends TransitionalFrame {
         super.layout.putConstraint(SpringLayout.EAST, this.lineHelper01, 0, SpringLayout.EAST, super.rootPanel);
     }
 
+    private void inListHandler() {
+
+    }
+
     private static class ListTreeCellRenderer extends DefaultTreeCellRenderer {
 
         public ListTreeCellRenderer() {

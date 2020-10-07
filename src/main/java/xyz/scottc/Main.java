@@ -21,6 +21,7 @@ import java.util.jar.JarFile;
 public class Main {
 
     public static File library;
+    public static File internalLibrary;
     public static File externalLibrary;
 
     public static final List<File> INTERNAL_LISTS = new ArrayList<>();
@@ -72,7 +73,13 @@ public class Main {
                 if (!exLibrary.mkdir())
                     throw new FileCreatingException("Failed to create " + VDConstantsUtils.EXTERNAL_LIBRARY_NAME);
             }
+            File inLibrary = new File(lib.getAbsolutePath() + "/" + VDConstantsUtils.INTERNAL_LIBRARY_NAME);
+            if (!inLibrary.exists()) {
+                if (!inLibrary.mkdir())
+                    throw new FileCreatingException("Failed to create " + VDConstantsUtils.INTERNAL_LIBRARY_NAME);
+            }
             library = lib;
+            internalLibrary = inLibrary;
             externalLibrary = exLibrary;
         }
     }
@@ -88,10 +95,14 @@ public class Main {
             if (filePath.startsWith(targetDir) && !filePath.equals(targetDir)) {
                 InputStream inputStream = Main.class.getResourceAsStream("/" + filePath);
                 String fileName = filePath.replace(targetDir, VDConstantsUtils.EMPTY);
-                String target = library.getAbsolutePath() + "/" + fileName;
+                String target = internalLibrary.getAbsolutePath() + "/" + fileName;
                 File targetFile = new File(target);
                 if (!targetFile.exists()) {
-                    Files.copy(inputStream, Paths.get(target));
+                    if (target.contains(".")) {
+                        Files.copy(inputStream, Paths.get(target));
+                    } else {
+                        if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + target);
+                    }
                 }
                 INTERNAL_LISTS.add(targetFile);
             }
