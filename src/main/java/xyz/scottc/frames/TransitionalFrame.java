@@ -8,7 +8,7 @@ import xyz.scottc.utils.components.UtilJPanel;
 import javax.swing.*;
 import java.awt.*;
 
-public class ATransitionalFrame extends JFrame {
+public class TransitionalFrame extends JFrame {
 
     protected final UtilJPanel rootPanel = new UtilJPanel();
     protected final SpringLayout layout = new SpringLayout();
@@ -23,7 +23,7 @@ public class ATransitionalFrame extends JFrame {
 
     protected static final int MARGIN = 20;
 
-    public ATransitionalFrame(String title) throws HeadlessException {
+    public TransitionalFrame(String title) throws HeadlessException {
         super(title);
         this.setContentPane(this.rootPanel);
     }

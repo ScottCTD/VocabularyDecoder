@@ -18,13 +18,13 @@ public class VDConstantsUtils {
     public static final String QUESTION_TITLE = "Yes or No?";
     public static final String INFO_TITLE = "Information";
 
-    public static final Font MICROSOFT_YAHEI_PLAIN_15 = new Font("微软雅黑", Font.PLAIN, 15);
-    public static final Font MICROSOFT_YAHEI_PLAIN_20 = new Font("微软雅黑", Font.PLAIN, 20);
-    public static final Font MICROSOFT_YAHEI_BOLD_30 = new Font("微软雅黑", Font.BOLD, 30);
-    public static final Font MICROSOFT_YAHEI_BOLD_40 = new Font("微软雅黑", Font.BOLD, 40);
-    public static final Font MICROSOFT_YAHEI_BOLD_60 = new Font("微软雅黑", Font.BOLD, 60);
-    public static final Font MICROSOFT_YAHEI_BOLD_80 = new Font("微软雅黑", Font.BOLD, 80);
-    public static final Font MICROSOFT_YAHEI_BOLD_100 = new Font("微软雅黑", Font.BOLD, 100);
+    public static final Font MICROSOFT_YAHEI_PLAIN_15 = new Font("Microsoft YaHei UI", Font.PLAIN, 15);
+    public static final Font MICROSOFT_YAHEI_PLAIN_20 = new Font("Microsoft YaHei UI", Font.PLAIN, 20);
+    public static final Font MICROSOFT_YAHEI_BOLD_30 = new Font("Microsoft YaHei UI", Font.BOLD, 30);
+    public static final Font MICROSOFT_YAHEI_BOLD_40 = new Font("Microsoft YaHei UI", Font.BOLD, 40);
+    public static final Font MICROSOFT_YAHEI_BOLD_60 = new Font("Microsoft YaHei UI", Font.BOLD, 60);
+    public static final Font MICROSOFT_YAHEI_BOLD_80 = new Font("Microsoft YaHei UI", Font.BOLD, 80);
+    public static final Font MICROSOFT_YAHEI_BOLD_100 = new Font("Microsoft YaHei UI", Font.BOLD, 100);
 
     public static void showWarningMessage(Component parent, String message) {
         JOptionPane.showConfirmDialog(parent, message, WARNING_TITLE, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);

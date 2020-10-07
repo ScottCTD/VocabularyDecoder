@@ -1,6 +1,6 @@
 package xyz.scottc.frames.entryFrame;
 
-import xyz.scottc.frames.ATransitionalFrame;
+import xyz.scottc.frames.TransitionalFrame;
 import xyz.scottc.utils.ENText;
 import xyz.scottc.utils.VDConstantsUtils;
 import xyz.scottc.utils.components.UtilJButton;
@@ -9,7 +9,7 @@ import xyz.scottc.utils.components.UtilJLabel;
 import javax.swing.*;
 import java.awt.*;
 
-public class EntryFrame extends ATransitionalFrame {
+public class EntryFrame extends TransitionalFrame {
 
     private final UtilJLabel modeSelectionLabel = new UtilJLabel(ENText.MODE_SELECTION, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultListModel<ModeListCell> modeListModel = new DefaultListModel<>();

@@ -11,7 +11,7 @@ import xyz.scottc.utils.layouts.AfRowLayout;
 import javax.swing.*;
 import java.awt.*;
 
-public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer {
+public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer<ModeListCell> {
 
     private final UtilJCheckBox checkBox = new UtilJCheckBox();
     private final UtilJLabel nameLabel = new UtilJLabel(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40);
@@ -36,12 +36,11 @@ public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer
     }
 
     @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index,
-                                                  boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(JList<? extends ModeListCell> list, ModeListCell value,
+                                                  int index, boolean isSelected, boolean cellHasFocus) {
         this.checkBox.setSelected(isSelected);
-        ModeListCell cell = (ModeListCell) value;
-        this.nameLabel.setText(cell.getName());
-        this.description.setText(cell.getDescription());
+        this.nameLabel.setText(value.getName());
+        this.description.setText(value.getDescription());
 
         this.setOpaque(true);
 
