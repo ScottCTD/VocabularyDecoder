@@ -57,5 +57,4 @@ public class TransitionalFrame extends JFrame {
         layout.putConstraint(SpringLayout.EAST, this.introLabel, -MARGIN, SpringLayout.WEST, this.separator01);
 
     }
-
 }
