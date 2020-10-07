@@ -1,18 +1,19 @@
 package xyz.scottc.utils.components;
 
+import xyz.scottc.utils.VDConstantsUtils;
+
 import javax.swing.*;
-import java.awt.*;
 
 public class UtilJButton extends JButton {
 
-    public UtilJButton(String text, int size) {
+    public UtilJButton(String text, float size) {
         super(text);
-        this.setFont(new Font("微软雅黑", Font.BOLD, size));
+        this.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(size));
     }
 
-    public UtilJButton(String text, int size, Icon icon) {
+    public UtilJButton(String text, float size, Icon icon) {
         super(text, icon);
-        this.setFont(new Font("微软雅黑", Font.BOLD, size));
+        this.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(size));
     }
 
 }

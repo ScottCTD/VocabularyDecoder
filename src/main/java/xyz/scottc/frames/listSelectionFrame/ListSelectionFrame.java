@@ -17,6 +17,9 @@ import java.io.IOException;
 public class ListSelectionFrame extends TransitionalFrame {
 
     private final UtilJButton backButton = new UtilJButton("Back", 40);
+    private final UtilJButton importButton = new UtilJButton("Import", 30);
+    private final UtilJButton addFolderButton = new UtilJButton("Add New Folder", 30);
+    private final UtilJButton deleteButton = new UtilJButton("Delete", 30);
 
     private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
     private final JTree inList = new JTree();
@@ -72,6 +75,20 @@ public class ListSelectionFrame extends TransitionalFrame {
         super.layout.putConstraint(SpringLayout.NORTH, this.exListView, MARGIN, SpringLayout.SOUTH, this.exListLabel);
         super.layout.putConstraint(SpringLayout.WEST, this.exListView, 0, SpringLayout.WEST, this.exListLabel);
         super.layout.putConstraint(SpringLayout.EAST, this.exListView, -MARGIN, SpringLayout.EAST, super.rootPanel);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.exListView, -MARGIN, SpringLayout.NORTH, this.importButton);
+
+        super.rootPanel.add(this.importButton);
+        super.layout.putConstraint(SpringLayout.WEST, this.importButton, 0, SpringLayout.WEST, this.exListLabel);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.importButton, -MARGIN, SpringLayout.SOUTH, super.rootPanel);
+
+        super.rootPanel.add(this.addFolderButton);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.addFolderButton, 0, SpringLayout.SOUTH, this.importButton);
+        super.layout.putConstraint(SpringLayout.WEST, this.addFolderButton, MARGIN, SpringLayout.EAST, this.importButton);
+
+        super.rootPanel.add(this.deleteButton);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.deleteButton, 0, SpringLayout.SOUTH, this.importButton);
+        super.layout.putConstraint(SpringLayout.WEST, this.deleteButton, MARGIN, SpringLayout.EAST, this.addFolderButton);
+        super.layout.putConstraint(SpringLayout.EAST, this.deleteButton, 0, SpringLayout.EAST, this.exListView);
 
         super.rootPanel.add(this.separator04);
         super.layout.putConstraint(SpringLayout.WEST, this.separator04, 0, SpringLayout.HORIZONTAL_CENTER, this.lineHelper01);
