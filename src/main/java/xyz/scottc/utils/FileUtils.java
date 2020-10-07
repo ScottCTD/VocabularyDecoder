@@ -2,19 +2,27 @@ package xyz.scottc.utils;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.util.Arrays;
 
 public class FileUtils {
 
-    public static String getJarFilePath(Object object) {
+    public static byte[] readFromInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[inputStream.available() + 1024];
+        int length = inputStream.read(buffer);
+        //byte[] result = new byte[length];
+        return Arrays.copyOf(buffer, length);
+    }
+
+    public static String getJarFilePath(Class<?> object) {
         if (object != null) {
-            return object.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            return object.getProtectionDomain().getCodeSource().getLocation().getPath();
         }
         return null;
     }
 
-    public static File getDirectoryFile(Object object) {
+    public static File getDirectoryFile(Class<?> object) {
         if (object != null) {
-            String path = object.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            String path = object.getProtectionDomain().getCodeSource().getLocation().getPath();
             try {
                 path = URLDecoder.decode(path, "UTF-8");
                 File file = new File(path);
