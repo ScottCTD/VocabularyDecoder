@@ -36,7 +36,7 @@ public class JTreeTest extends JFrame {
         rootPanel.setLayout(new BorderLayout());
         this.setContentPane(rootPanel);
 
-        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root Node");
+        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root Node ");
         JTree tree = new JTree(rootNode);
         rootPanel.add(tree, BorderLayout.CENTER);
 
