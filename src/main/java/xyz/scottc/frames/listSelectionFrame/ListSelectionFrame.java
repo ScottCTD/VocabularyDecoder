@@ -107,10 +107,31 @@ public class ListSelectionFrame extends TransitionalFrame {
     }
 
     private void inListHandler() {
-        System.out.println(Main.INTERNAL_LISTS);
-        for (File list : Main.INTERNAL_LISTS) {
-            VDList vdList = new VDList(list);
-            System.out.println(vdList);
+        DefaultMutableTreeNode SAT = new DefaultMutableTreeNode("SAT");
+        inListRoot.add(SAT);
+        DefaultMutableTreeNode TOEFL = new DefaultMutableTreeNode("TOEFL");
+        inListRoot.add(TOEFL);
+
+        for (File file : Main.INTERNAL_LISTS) {
+            VDList list = new VDList(file);
+            String type = list.getType();
+            if (type.startsWith(SAT.toString())) {
+                type = type.substring(SAT.toString().length() + 1);
+                DefaultMutableTreeNode subNode = null;
+                for (int i = 0; i < SAT.getChildCount(); i++) {
+                    DefaultMutableTreeNode child = (DefaultMutableTreeNode) SAT.getChildAt(i);
+                    if (type.equals(child.toString())) {
+                        subNode = child;
+                        break;
+                    }
+                }
+                if (subNode == null) {
+                    subNode = new DefaultMutableTreeNode(type);
+                    SAT.add(subNode);
+                } else {
+                    subNode.add(new DefaultMutableTreeNode(list.getName(), false));
+                }
+            }
         }
     }
 

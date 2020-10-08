@@ -23,6 +23,7 @@ public class Main {
     public static File externalLibrary;
 
     public static final List<File> INTERNAL_LISTS = new ArrayList<>();
+    public static final List<File> INTERNAL_DIRS = new ArrayList<>();
 
     public static void main(String[] args) {
         //Initialize the Directories (Libraries)
@@ -95,8 +96,8 @@ public class Main {
                 InputStream inputStream = Main.class.getResourceAsStream("/" + filePath);
                 String fileName = filePath.substring(sourceDir.length());
                 File targetFile = new File(internalLibrary.getAbsolutePath() + "/" + fileName);
-                //ignore whether the file exists, add it to the list if it is a regular file
                 if (!targetFile.isDirectory()) {
+                    //ignore whether the file exists, add it to the list if it is a regular file
                     if (!targetFile.exists()) {
                         Files.copy(inputStream, targetFile.toPath());
                     }
@@ -105,6 +106,7 @@ public class Main {
                     if (!targetFile.exists()) {
                         if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + targetFile);
                     }
+                    INTERNAL_DIRS.add(targetFile);
                 }
             }
         }
@@ -120,6 +122,7 @@ public class Main {
                 File target = new File(internalLibrary.getAbsolutePath() + temp);
                 if (!target.exists())
                     if (!target.mkdirs()) throw new FileCreatingException("Failed to create " + target);
+                INTERNAL_DIRS.add(target);
             }
         });
 

@@ -82,6 +82,6 @@ public class VDList {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getType(), this.toString());
+        return Objects.hash(this.toString());
     }
 }

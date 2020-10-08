@@ -57,4 +57,14 @@ public class VDConstantsUtils {
                 screenInsets.left - screenInsets.right, screenDimension.height -
                 screenInsets.top - screenInsets.bottom);
     }
+
+    public static int getExistCount(String subject, String key) {
+        int count = 0;
+        int index = 0;
+        while ((index = subject.indexOf(key, index)) != -1) {
+            index += key.length();
+            count++;
+        }
+        return count;
+    }
 }
