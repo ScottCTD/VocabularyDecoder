@@ -1,5 +1,5 @@
-import xyz.scottc.utils.VDConstantsUtils;
-import xyz.scottc.utils.components.UtilJPanel;
+import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.components.UtilJPanel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;

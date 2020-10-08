@@ -50,7 +50,7 @@
                         <manifest>
 
                             <!-- 主程序入口类 -->
-                            <mainClass>xyz.scottc.Main</mainClass>
+                            <mainClass>xyz.scottc.vd.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
