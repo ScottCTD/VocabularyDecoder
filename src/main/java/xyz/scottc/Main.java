@@ -23,7 +23,7 @@ public class Main {
     public static File externalLibrary;
 
     public static final List<File> INTERNAL_LISTS = new ArrayList<>();
-    public static final List<File> INTERNAL_DIRS = new ArrayList<>();
+    public static final List<File> EXTERNAL_LISTS = new ArrayList<>();
 
     public static void main(String[] args) {
         //Initialize the Directories (Libraries)
@@ -34,7 +34,7 @@ public class Main {
             if (Main.class.getResource("/internalLibrary").getPath().contains("!")) {
                 initInternalLibraryInJar();
             } else {
-                initInternalLibraryInIDE();
+                initLibraryInIDE();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,13 +106,13 @@ public class Main {
                     if (!targetFile.exists()) {
                         if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + targetFile);
                     }
-                    INTERNAL_DIRS.add(targetFile);
                 }
             }
         }
+        Files.walk(externalLibrary.toPath()).filter(Files::isRegularFile).forEach(path -> EXTERNAL_LISTS.add(path.toFile()));
     }
 
-    private static void initInternalLibraryInIDE() throws IOException {
+    private static void initLibraryInIDE() throws IOException {
         File source = new File(Main.class.getResource("/internalLibrary").getPath());
 
         //create the directory first
@@ -122,7 +122,6 @@ public class Main {
                 File target = new File(internalLibrary.getAbsolutePath() + temp);
                 if (!target.exists())
                     if (!target.mkdirs()) throw new FileCreatingException("Failed to create " + target);
-                INTERNAL_DIRS.add(target);
             }
         });
 
@@ -139,6 +138,8 @@ public class Main {
             }
             INTERNAL_LISTS.add(target);
         });
+
+        Files.walk(externalLibrary.toPath()).filter(Files::isRegularFile).forEach(path -> EXTERNAL_LISTS.add(path.toFile()));
     }
 
 }

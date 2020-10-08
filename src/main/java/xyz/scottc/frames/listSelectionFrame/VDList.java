@@ -5,6 +5,8 @@ import xyz.scottc.utils.VDConstantsUtils;
 
 import java.io.File;
 import java.nio.file.InvalidPathException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class VDList {
@@ -27,7 +29,7 @@ public class VDList {
     /**
      * auto create an instance by identifying the internal or external path
      *
-     * @param list InternalLibrary.getAbsolutePath() or ExternalLibrary.getAbsolutePath()
+     * @param list path should start with InternalLibrary.getAbsolutePath() or ExternalLibrary.getAbsolutePath()
      */
     public VDList(File list) {
         String inLibPath = Main.internalLibrary.getAbsolutePath();
@@ -43,8 +45,21 @@ public class VDList {
                     "Path should only be InternalLibrary.getAbsolutePath() or ExternalLibrary.getAbsolutePath()!");
         }
         int index = temp.lastIndexOf("\\");
-        this.type = temp.substring(1, index);
+        this.type = temp.substring(1, index + 1);
         this.VDList = list;
+    }
+
+    public List<String> splitType() {
+        List<String> list = new ArrayList<>();
+        int index = 0;
+        int start = 0;
+        while ((index = this.type.indexOf("\\", index)) != -1) {
+            String temp = this.type.substring(start, index);
+            list.add(temp.replace("\\", VDConstantsUtils.EMPTY));
+            start = index;
+            index++;
+        }
+        return list;
     }
 
     public String getName() {
@@ -69,7 +84,7 @@ public class VDList {
 
     @Override
     public String toString() {
-        return this.type + "\\" + this.getName();
+        return this.type + this.getName();
     }
 
     @Override

@@ -16,6 +16,7 @@ import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class ListSelectionFrame extends TransitionalFrame {
 
@@ -41,7 +42,7 @@ public class ListSelectionFrame extends TransitionalFrame {
     public ListSelectionFrame(String title) throws HeadlessException {
         super(title);
         this.rootPanelHandler();
-        this.inListHandler();
+        this.treeHandler();
     }
 
     @Override
@@ -106,33 +107,37 @@ public class ListSelectionFrame extends TransitionalFrame {
         super.layout.putConstraint(SpringLayout.EAST, this.lineHelper01, 0, SpringLayout.EAST, super.rootPanel);
     }
 
-    private void inListHandler() {
-        DefaultMutableTreeNode SAT = new DefaultMutableTreeNode("SAT");
-        inListRoot.add(SAT);
-        DefaultMutableTreeNode TOEFL = new DefaultMutableTreeNode("TOEFL");
-        inListRoot.add(TOEFL);
-
+    private void treeHandler() {
         for (File file : Main.INTERNAL_LISTS) {
-            VDList list = new VDList(file);
-            String type = list.getType();
-            if (type.startsWith(SAT.toString())) {
-                type = type.substring(SAT.toString().length() + 1);
-                DefaultMutableTreeNode subNode = null;
-                for (int i = 0; i < SAT.getChildCount(); i++) {
-                    DefaultMutableTreeNode child = (DefaultMutableTreeNode) SAT.getChildAt(i);
-                    if (type.equals(child.toString())) {
-                        subNode = child;
-                        break;
-                    }
-                }
-                if (subNode == null) {
-                    subNode = new DefaultMutableTreeNode(type);
-                    SAT.add(subNode);
-                } else {
-                    subNode.add(new DefaultMutableTreeNode(list.getName(), false));
+            this.addNode(this.inListRoot, new VDList(file));
+        }
+        for (File file : Main.EXTERNAL_LISTS) {
+            this.addNode(this.inListRoot, new VDList(file));
+        }
+    }
+
+    private void addNode(DefaultMutableTreeNode root, VDList list) {
+        //Split the type from ancestor to child
+        List<String> types = list.splitType();
+        //make a node array. Root Node is at the 0 of the array.
+        DefaultMutableTreeNode[] nodes = new DefaultMutableTreeNode[types.size() + 1];
+        nodes[0] = root;
+        //Auto increment to add every branch to the node in proper sequence
+        for (int i = 0; i < types.size(); i++) {
+            for (int j = 0; j < nodes[i].getChildCount(); j++) {
+                if (nodes[i].getChildAt(j).toString().equals(types.get(i))) {
+                    nodes[i + 1] = (DefaultMutableTreeNode) nodes[i].getChildAt(j);
+                    break;
                 }
             }
+            if (nodes[i + 1] == null) {
+                DefaultMutableTreeNode node = new DefaultMutableTreeNode(types.get(i));
+                nodes[i].add(node);
+                nodes[i + 1] = node;
+            }
         }
+        //add leaves
+        nodes[types.size()].add(new DefaultMutableTreeNode(list.getName(), false));
     }
 
     private static class ListTreeCellRenderer extends DefaultTreeCellRenderer {
