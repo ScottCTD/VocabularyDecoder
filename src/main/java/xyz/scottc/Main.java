@@ -52,7 +52,6 @@ public class Main {
                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        //MainFrame frame = new MainFrame("Vocabulary Decoder");
         //EntryFrame frame = new EntryFrame("Vocabulary Decoder");
         ListSelectionFrame frame = new ListSelectionFrame("List Selection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

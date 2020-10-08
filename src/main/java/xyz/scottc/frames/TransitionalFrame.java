@@ -32,29 +32,36 @@ public class TransitionalFrame extends JFrame {
         this.rootPanel.setLayout(layout);
 
         this.rootPanel.add(this.titleLabel);
+
+        this.rootPanel.add(this.aboutLabel);
+
+        this.rootPanel.add(this.separator01);
+
+        this.rootPanel.add(this.separator02);
+
+        this.rootPanel.add(this.separator03);
+
+        this.rootPanel.add(this.introLabel);
+    }
+
+    protected void layoutHandler() {
         layout.putConstraint(SpringLayout.WEST, this.titleLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
         layout.putConstraint(SpringLayout.NORTH, this.titleLabel, MARGIN, SpringLayout.NORTH, this.rootPanel);
 
-        this.rootPanel.add(this.aboutLabel);
         layout.putConstraint(SpringLayout.WEST, this.aboutLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
         layout.putConstraint(SpringLayout.SOUTH, this.aboutLabel, -MARGIN, SpringLayout.SOUTH, this.rootPanel);
 
-        this.rootPanel.add(this.separator01);
         layout.putConstraint(SpringLayout.WEST, this.separator01, MARGIN, SpringLayout.EAST, this.titleLabel);
 
-        this.rootPanel.add(this.separator02);
         layout.putConstraint(SpringLayout.NORTH, this.separator02, MARGIN, SpringLayout.SOUTH, this.titleLabel);
         layout.putConstraint(SpringLayout.EAST, this.separator02, 0, SpringLayout.WEST, this.separator01);
 
-        this.rootPanel.add(this.separator03);
         layout.putConstraint(SpringLayout.SOUTH, this.separator03, -MARGIN, SpringLayout.NORTH, this.aboutLabel);
         layout.putConstraint(SpringLayout.EAST, this.separator03, 0, SpringLayout.WEST, this.separator01);
 
-        this.rootPanel.add(this.introLabel);
         layout.putConstraint(SpringLayout.NORTH, this.introLabel, MARGIN, SpringLayout.SOUTH, this.separator02);
         layout.putConstraint(SpringLayout.SOUTH, this.introLabel, -MARGIN, SpringLayout.NORTH, this.separator03);
         layout.putConstraint(SpringLayout.WEST, this.introLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
         layout.putConstraint(SpringLayout.EAST, this.introLabel, -MARGIN, SpringLayout.WEST, this.separator01);
-
     }
 }
