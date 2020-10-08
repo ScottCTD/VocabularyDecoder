@@ -41,6 +41,7 @@ public class ListSelectionFrame extends TransitionalFrame {
     public ListSelectionFrame(String title) throws HeadlessException {
         super(title);
         this.rootPanelHandler();
+        this.inListHandler();
     }
 
     @Override
@@ -106,12 +107,10 @@ public class ListSelectionFrame extends TransitionalFrame {
     }
 
     private void inListHandler() {
-        DefaultMutableTreeNode SAT = new DefaultMutableTreeNode(VDList.SAT_TYPE);
-        inListRoot.add(SAT);
-        DefaultMutableTreeNode TOEFL = new DefaultMutableTreeNode(VDList.TOEFL_TYPE);
-        inListRoot.add(TOEFL);
+        System.out.println(Main.INTERNAL_LISTS);
         for (File list : Main.INTERNAL_LISTS) {
-
+            VDList vdList = new VDList(list);
+            System.out.println(vdList);
         }
     }
 

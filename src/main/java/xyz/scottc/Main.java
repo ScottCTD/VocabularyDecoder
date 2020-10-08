@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -27,22 +29,23 @@ public class Main {
     public static final List<File> INTERNAL_LISTS = new ArrayList<>();
 
     public static void main(String[] args) {
-        //Initiate the Frame
-        initFrame();
-
         //Initialize the Directories (Libraries)
         initDirectory();
 
         //Copy the internal lists in the jar to library
-        if (Main.class.getResource("/internalLibrary").getPath().contains("!")) {
-            try {
+        try {
+            if (Main.class.getResource("/internalLibrary").getPath().contains("!")) {
                 initInternalLibraryInJar();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                initInternalLibraryInIDE();
             }
-        } else {
-            initInternalLibraryInIDE();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
+        //Initiate the Frame
+        initFrame();
     }
 
     private static void initFrame() {
@@ -104,17 +107,42 @@ public class Main {
                         if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + target);
                     }
                 }
-                INTERNAL_LISTS.add(targetFile);
             }
         }
-    }
-
-    private static void initInternalLibraryInIDE() {
-        File directory = new File(Main.class.getResource("/internalLibrary").getPath());
-        File[] files = directory.listFiles();
+        File[] files = internalLibrary.listFiles();
         if (files != null) {
             INTERNAL_LISTS.addAll(Arrays.asList(files));
         }
+    }
+
+    private static void initInternalLibraryInIDE() throws IOException {
+        File directory = new File(Main.class.getResource("/internalLibrary").getPath());
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                String target = internalLibrary.getAbsolutePath() + "/" + file.getName();
+                File targetFile = new File(target);
+                if (!targetFile.exists()) {
+                    if (target.contains(".")) {
+                        Files.copy(file.toPath(), Paths.get(target));
+                    } else {
+                        if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + target);
+                    }
+                }
+            }
+        }
+        Stream<Path> pathStream = Files.walk(internalLibrary.toPath());
+        pathStream.filter(Files::isRegularFile).forEach(path -> INTERNAL_LISTS.add(new File(String.valueOf(path))));
+        /*File[] infiles = internalLibrary.listFiles();
+        if (infiles != null) {
+            for (File file : infiles) {
+                if (file.isFile()) {
+                    INTERNAL_LISTS.add(file);
+                } else {
+
+                }
+            }
+        }*/
     }
 
 }
