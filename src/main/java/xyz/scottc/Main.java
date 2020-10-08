@@ -10,15 +10,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.stream.Stream;
 
 public class Main {
 
@@ -88,61 +84,58 @@ public class Main {
     }
 
     private static void initInternalLibraryInJar() throws IOException {
-        String targetDir = "internalLibrary/";
+        String sourceDir = "internalLibrary/";
         String jarPath = FileUtils.getJarFilePath(Main.class);
         JarFile jarFile = new JarFile(jarPath);
         Enumeration<JarEntry> entries = jarFile.entries();
         while (entries.hasMoreElements()) {
             JarEntry entry = entries.nextElement();
             String filePath = entry.getName();
-            if (filePath.startsWith(targetDir) && !filePath.equals(targetDir)) {
+            if (filePath.startsWith(sourceDir) && !filePath.equals(sourceDir)) {
                 InputStream inputStream = Main.class.getResourceAsStream("/" + filePath);
-                String fileName = filePath.replace(targetDir, VDConstantsUtils.EMPTY);
-                String target = internalLibrary.getAbsolutePath() + "/" + fileName;
-                File targetFile = new File(target);
-                if (!targetFile.exists()) {
-                    if (target.contains(".")) {
-                        Files.copy(inputStream, Paths.get(target));
-                    } else {
-                        if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + target);
+                String fileName = filePath.substring(sourceDir.length());
+                File targetFile = new File(internalLibrary.getAbsolutePath() + "/" + fileName);
+                //ignore whether the file exists, add it to the list if it is a regular file
+                if (!targetFile.isDirectory()) {
+                    if (!targetFile.exists()) {
+                        Files.copy(inputStream, targetFile.toPath());
+                    }
+                    INTERNAL_LISTS.add(targetFile);
+                } else {
+                    if (!targetFile.exists()) {
+                        if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + targetFile);
                     }
                 }
             }
-        }
-        File[] files = internalLibrary.listFiles();
-        if (files != null) {
-            INTERNAL_LISTS.addAll(Arrays.asList(files));
         }
     }
 
     private static void initInternalLibraryInIDE() throws IOException {
-        File directory = new File(Main.class.getResource("/internalLibrary").getPath());
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                String target = internalLibrary.getAbsolutePath() + "/" + file.getName();
-                File targetFile = new File(target);
-                if (!targetFile.exists()) {
-                    if (target.contains(".")) {
-                        Files.copy(file.toPath(), Paths.get(target));
-                    } else {
-                        if (!targetFile.mkdir()) throw new FileCreatingException("Failed to create " + target);
-                    }
-                }
-            }
-        }
-        Stream<Path> pathStream = Files.walk(internalLibrary.toPath());
-        pathStream.filter(Files::isRegularFile).forEach(path -> INTERNAL_LISTS.add(new File(String.valueOf(path))));
-        /*File[] infiles = internalLibrary.listFiles();
-        if (infiles != null) {
-            for (File file : infiles) {
-                if (file.isFile()) {
-                    INTERNAL_LISTS.add(file);
-                } else {
+        File source = new File(Main.class.getResource("/internalLibrary").getPath());
 
+        //create the directory first
+        Files.walk(source.toPath()).filter(Files::isDirectory).forEach(path -> {
+            if (!path.toString().equals(source.getAbsolutePath())) {
+                String temp = path.toString().substring(source.getAbsolutePath().length());
+                File target = new File(internalLibrary.getAbsolutePath() + temp);
+                if (!target.exists())
+                    if (!target.mkdirs()) throw new FileCreatingException("Failed to create " + target);
+            }
+        });
+
+        //copy the files and add them to list next
+        Files.walk(source.toPath()).filter(Files::isRegularFile).forEach(path -> {
+            String temp = path.toString().substring(source.getAbsolutePath().length());
+            File target = new File(internalLibrary.getAbsolutePath() + temp);
+            if (!target.exists()) {
+                try {
+                    Files.copy(path, target.toPath());
+                } catch (IOException exception) {
+                    exception.printStackTrace();
                 }
             }
-        }*/
+            INTERNAL_LISTS.add(target);
+        });
     }
 
 }

@@ -47,6 +47,10 @@ public class VDList {
         this.VDList = list;
     }
 
+    public String getName() {
+        return this.VDList.getName().replace(".json", VDConstantsUtils.EMPTY);
+    }
+
     public String getType() {
         return type;
     }
@@ -65,7 +69,7 @@ public class VDList {
 
     @Override
     public String toString() {
-        return this.VDList.getName().replace(".json", VDConstantsUtils.EMPTY);
+        return this.type + "\\" + this.getName();
     }
 
     @Override
