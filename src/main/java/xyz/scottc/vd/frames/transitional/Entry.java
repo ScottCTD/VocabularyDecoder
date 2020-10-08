@@ -8,7 +8,7 @@ import xyz.scottc.vd.utils.components.UtilJLabel;
 import javax.swing.*;
 import java.awt.*;
 
-public class EntryFrame extends TransitionalFrame {
+public class Entry extends TransitionalFrame {
 
     private final UtilJLabel modeSelectionLabel = new UtilJLabel(ENText.MODE_SELECTION, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultListModel<ModeListCell> modeListModel = new DefaultListModel<>();
@@ -16,7 +16,7 @@ public class EntryFrame extends TransitionalFrame {
     private final JScrollPane modeListScrollPane = new JScrollPane(this.modeList);
     private final UtilJButton confirmButton = new UtilJButton("Confirm", 60);
 
-    public EntryFrame(String title) throws HeadlessException {
+    public Entry(String title) throws HeadlessException {
         super(title);
         this.rootPanelHandler();
         this.layoutHandler();

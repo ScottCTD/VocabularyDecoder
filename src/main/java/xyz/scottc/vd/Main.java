@@ -1,7 +1,7 @@
 package xyz.scottc.vd;
 
 import xyz.scottc.vd.exceptions.FileCreatingException;
-import xyz.scottc.vd.frames.transitional.ListSelectionFrame;
+import xyz.scottc.vd.frames.functional.FunctionalFrame;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstantsUtils;
 
@@ -52,8 +52,9 @@ public class Main {
                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        //EntryFrame frame = new EntryFrame("Vocabulary Decoder");
-        ListSelectionFrame frame = new ListSelectionFrame("List Selection");
+        //Entry frame = new Entry("Vocabulary Decoder");
+        //ListSelection frame = new ListSelection("List Selection");
+        FunctionalFrame frame = new FunctionalFrame("Functional Frame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(VDConstantsUtils.getSreenRectangle());
         frame.setVisible(true);

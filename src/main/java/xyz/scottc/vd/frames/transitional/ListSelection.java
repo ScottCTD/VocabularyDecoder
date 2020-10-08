@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class ListSelectionFrame extends TransitionalFrame {
+public class ListSelection extends TransitionalFrame {
 
     private final UtilJButton backButton = new UtilJButton("Back", 40);
     private final UtilJButton importButton = new UtilJButton("Import", 30);
@@ -39,7 +39,7 @@ public class ListSelectionFrame extends TransitionalFrame {
 
     private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
 
-    public ListSelectionFrame(String title) throws HeadlessException {
+    public ListSelection(String title) throws HeadlessException {
         super(title);
         this.rootPanelHandler();
         this.layoutHandler();

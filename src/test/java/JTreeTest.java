@@ -21,7 +21,7 @@ public class JTreeTest extends JFrame {
         }
         //MainFrame frame = new MainFrame("Vocabulary Decoder");
         JTreeTest frame = new JTreeTest();
-        //ListSelectionFrame frame = new ListSelectionFrame("List Selection");
+        //ListSelection frame = new ListSelection("List Selection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(0, 0, 500, 500);
         frame.setVisible(true);
