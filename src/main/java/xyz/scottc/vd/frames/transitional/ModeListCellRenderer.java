@@ -1,5 +1,6 @@
 package xyz.scottc.vd.frames.transitional;
 
+import xyz.scottc.vd.Mode;
 import xyz.scottc.vd.utils.VDConstantsUtils;
 import xyz.scottc.vd.utils.components.UtilJCheckBox;
 import xyz.scottc.vd.utils.components.UtilJLabel;
@@ -11,7 +12,7 @@ import xyz.scottc.vd.utils.layouts.AfRowLayout;
 import javax.swing.*;
 import java.awt.*;
 
-public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer<ModeListCell> {
+public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer<Mode> {
 
     private final UtilJCheckBox checkBox = new UtilJCheckBox();
     private final UtilJLabel nameLabel = new UtilJLabel(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40);
@@ -36,7 +37,7 @@ public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer
     }
 
     @Override
-    public Component getListCellRendererComponent(JList<? extends ModeListCell> list, ModeListCell value,
+    public Component getListCellRendererComponent(JList<? extends Mode> list, Mode value,
                                                   int index, boolean isSelected, boolean cellHasFocus) {
         this.checkBox.setSelected(isSelected);
         this.nameLabel.setText(value.getName());
@@ -44,10 +45,11 @@ public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer
 
         this.setOpaque(true);
 
-        Color selectedColor = new Color(0xCCCCCC);
+        Color selectedColor = VDConstantsUtils.SELECTED_COLOR;
         if (isSelected) {
             this.setBackGround(selectedColor);
             this.setForeground(list.getSelectionForeground());
+            this.nameLabel.setBackground(selectedColor);
             this.checkBox.setBackground(selectedColor);
             this.checkBox.setForeground(list.getSelectionForeground());
             this.description.setBackground(selectedColor);
@@ -55,6 +57,7 @@ public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer
         } else {
             this.setBackground(list.getBackground());
             this.setForeground(list.getForeground());
+            this.nameLabel.setBackground(list.getBackground());
             this.checkBox.setBackground(list.getBackground());
             this.checkBox.setForeground(list.getForeground());
             this.description.setBackground(list.getBackground());

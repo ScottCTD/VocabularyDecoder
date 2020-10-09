@@ -1,7 +1,7 @@
 package xyz.scottc.vd;
 
 import xyz.scottc.vd.exceptions.FileCreatingException;
-import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
+import xyz.scottc.vd.frames.transitional.ListSelection;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstantsUtils;
 
@@ -52,11 +52,10 @@ public class Main {
                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        //Entry frame = new Entry("Vocabulary Decoder");
-        //ListSelection frame = new ListSelection("List Selection");
+        //Entry frame = new Entry();
+        ListSelection frame = new ListSelection();
         //FunctionalFrame frame = new FunctionalFrame("Functional Frame");
-        OrderedMode frame = new OrderedMode();
-
+        //OrderedMode frame = new OrderedMode();
         frame.setVisible(true);
     }
 

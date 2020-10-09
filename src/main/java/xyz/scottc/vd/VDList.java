@@ -1,5 +1,7 @@
 package xyz.scottc.vd;
 
+import org.json.JSONObject;
+import xyz.scottc.vd.utils.JSONUtils;
 import xyz.scottc.vd.utils.VDConstantsUtils;
 
 import java.io.File;
@@ -16,6 +18,11 @@ public class VDList {
      */
     private String type;
     private File VDList;
+
+    private final List<String> Qs = new ArrayList<>();
+    private final List<String> As = new ArrayList<>();
+
+    private int index = 0;
 
     public VDList() {
     }
@@ -48,6 +55,46 @@ public class VDList {
         this.VDList = list;
     }
 
+    /**
+     * Convert the VDList into two separated lists : Qs and As (Question List & Answer List)
+     *
+     * @return Whether the list is filled.
+     */
+    private boolean toQAList() {
+        try {
+            JSONObject jsonObject = (JSONObject) JSONUtils.fromFile(this.VDList, "UTF-8");
+            List<Object> questions = jsonObject.getJSONArray("questions").toList();
+            List<Object> answers = jsonObject.getJSONArray("answers").toList();
+            for (Object question : questions) {
+                this.Qs.add(question.toString());
+            }
+            for (Object answer : answers) {
+                this.As.add(answer.toString());
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Parse the paths array and form a valid path string.
+     *
+     * @param paths The paths from DefaultMutableTreeNode.getPath().getPath;
+     * @return A valid String path like 1/2/3/4.json
+     */
+    public static String parsePaths(Object[] paths) {
+        StringBuilder builder = new StringBuilder();
+        if (paths.length > 1) {
+            for (int i = 1; i < paths.length; i++) {
+                builder.append(paths[i].toString()).append("\\");
+            }
+            return builder.substring(0, builder.toString().length() - 1);
+        }
+        return paths.toString();
+    }
+
     public List<String> splitType() {
         List<String> list = new ArrayList<>();
         int index = 0;
@@ -62,7 +109,7 @@ public class VDList {
     }
 
     public String getName() {
-        return this.VDList.getName().replace(".json", VDConstantsUtils.EMPTY);
+        return this.VDList.getName();
     }
 
     public String getType() {

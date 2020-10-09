@@ -1,5 +1,6 @@
 package xyz.scottc.vd.frames.transitional;
 
+import xyz.scottc.vd.Mode;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.VDConstantsUtils;
 import xyz.scottc.vd.utils.components.UtilJButton;
@@ -7,12 +8,14 @@ import xyz.scottc.vd.utils.components.UtilJLabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Entry extends TransitionalFrame {
 
     private final UtilJLabel modeSelectionLabel = new UtilJLabel(ENText.MODE_SELECTION, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
-    private final DefaultListModel<ModeListCell> modeListModel = new DefaultListModel<>();
-    private final JList<ModeListCell> modeList = new JList<>(this.modeListModel);
+    private final DefaultListModel<Mode> modeListModel = new DefaultListModel<>();
+    private final JList<Mode> modeList = new JList<>(this.modeListModel);
     private final JScrollPane modeListScrollPane = new JScrollPane(this.modeList);
     private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
 
@@ -22,6 +25,7 @@ public class Entry extends TransitionalFrame {
         this.layoutHandler();
     }
 
+    @Override
     protected void rootPanelHandler() {
         super.rootPanelHandler();
 
@@ -32,12 +36,40 @@ public class Entry extends TransitionalFrame {
         this.modeSelectionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         super.rootPanel.add(this.confirmButton);
+        this.confirmButton.addActionListener(e -> {
+            Mode.setSelectedMode(modeList.getSelectedValue());
+            if (Mode.getSelectedMode() != null) {
+                VDConstantsUtils.switchFrame(this, new ListSelection());
+            }
+        });
 
         super.rootPanel.add(this.modeListScrollPane);
         this.modeList.setBackground(super.rootPanel.getBackground());
         this.modeList.setCellRenderer(new ModeListCellRenderer());
-        ModeListCell cell01 = new ModeListCell(ENText.ORDERED_MODE_NAME, ENText.ORDERED_MODE_DESCRIPTION);
-        this.modeListModel.addElement(cell01);
+        this.modeListHandler();
+        this.modeList.addMouseListener(new SelectModeMouseListener());
+    }
+
+    private void modeListHandler() {
+        Mode mode01 = new Mode(ENText.ORDERED_MODE_NAME, ENText.ORDERED_MODE_DESCRIPTION);
+        this.addMode(mode01);
+    }
+
+    private void addMode(Mode mode) {
+        this.modeListModel.addElement(mode);
+        Mode.MODE_LIST.add(mode);
+    }
+
+    private class SelectModeMouseListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON1 &&
+                    e.getClickCount() == 2 &&
+                    e.getSource() instanceof JList) {
+                Mode.setSelectedMode(modeList.getSelectedValue());
+                VDConstantsUtils.switchFrame(Entry.this, new ListSelection());
+            }
+        }
     }
 
     @Override

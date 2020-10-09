@@ -1,5 +1,6 @@
 package xyz.scottc.vd.frames.functional.orderedMode;
 
+import xyz.scottc.vd.VDList;
 import xyz.scottc.vd.frames.functional.FunctionalFrame;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.VDConstantsUtils;
@@ -35,8 +36,11 @@ public class OrderedMode extends FunctionalFrame {
 
     private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.VERTICAL, VDConstantsUtils.getSreenRectangle().height);
 
-    public OrderedMode() throws HeadlessException {
+    private VDList vdList;
+
+    public OrderedMode(VDList vdList) throws HeadlessException {
         super("Ordered Mode");
+        this.vdList = vdList;
 
         this.rootPanelHandler();
         this.layoutHandler();

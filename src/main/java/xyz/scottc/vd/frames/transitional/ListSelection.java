@@ -2,6 +2,7 @@ package xyz.scottc.vd.frames.transitional;
 
 import xyz.scottc.vd.Main;
 import xyz.scottc.vd.VDList;
+import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstantsUtils;
@@ -14,9 +15,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class ListSelection extends TransitionalFrame {
 
@@ -64,6 +68,21 @@ public class ListSelection extends TransitionalFrame {
         super.rootPanel.add(this.inListView);
         this.inList.setRowHeight(40);
         this.inList.setCellRenderer(cellRenderer);
+        this.inList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 && e.getSource() instanceof JTree) {
+                    Object[] paths = Objects.requireNonNull(inList.getPathForLocation(e.getX(), e.getY())).getPath();
+                    String path = VDList.parsePaths(paths);
+                    for (File file : Main.INTERNAL_LISTS) {
+                        if (file.getAbsolutePath().endsWith(path)) {
+                            VDConstantsUtils.switchFrame(ListSelection.this, new OrderedMode(new VDList(file)));
+                            break;
+                        }
+                    }
+                }
+            }
+        });
 
         super.rootPanel.add(exListLabel);
 
@@ -88,7 +107,7 @@ public class ListSelection extends TransitionalFrame {
             this.addNode(this.inListRoot, new VDList(file));
         }
         for (File file : Main.EXTERNAL_LISTS) {
-            this.addNode(this.inListRoot, new VDList(file));
+            this.addNode(this.exListRoot, new VDList(file));
         }
     }
 
@@ -120,8 +139,11 @@ public class ListSelection extends TransitionalFrame {
     protected void layoutHandler() {
         super.layoutHandler();
 
+        this.layout.putConstraint(SpringLayout.SOUTH, this.introLabel, -MARGIN, SpringLayout.NORTH, this.backButton);
+
         super.layout.putConstraint(SpringLayout.WEST, this.backButton, MARGIN, SpringLayout.WEST, super.rootPanel);
         super.layout.putConstraint(SpringLayout.SOUTH, this.backButton, -MARGIN, SpringLayout.NORTH, super.separator03);
+        super.layout.putConstraint(SpringLayout.EAST, this.backButton, -MARGIN, SpringLayout.WEST, super.separator01);
 
         super.layout.putConstraint(SpringLayout.WEST, this.inListLabel, MARGIN, SpringLayout.EAST, super.separator01);
         super.layout.putConstraint(SpringLayout.NORTH, this.inListLabel, MARGIN, SpringLayout.NORTH, super.rootPanel);
