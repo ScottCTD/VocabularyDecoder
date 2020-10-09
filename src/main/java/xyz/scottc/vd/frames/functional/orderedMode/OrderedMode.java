@@ -5,16 +5,17 @@ import xyz.scottc.vd.VDList;
 import xyz.scottc.vd.frames.functional.FunctionalFrame;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.VDConstantsUtils;
-import xyz.scottc.vd.utils.components.LineSeparator;
-import xyz.scottc.vd.utils.components.UtilJButton;
-import xyz.scottc.vd.utils.components.UtilJLabel;
-import xyz.scottc.vd.utils.components.VDTextArea;
+import xyz.scottc.vd.utils.components.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class OrderedMode extends FunctionalFrame {
+
+    private final UtilJPanel suspendPanel = new UtilJPanel();
+    private final SpringLayout suspendPanelLayout = new SpringLayout();
+    private final UtilJLabel suspendLabel = new UtilJLabel(ENText.ORDERED_MODE_SUSPEND_TEXT, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
 
     private final UtilJLabel readyLabel = new UtilJLabel(ENText.ORDERED_MODE_READY_TEXT, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
 
@@ -37,7 +38,7 @@ public class OrderedMode extends FunctionalFrame {
 
     private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.VERTICAL, VDConstantsUtils.getSreenRectangle().height);
 
-    private VDList vdList;
+    private final VDList vdList;
 
     public static boolean vocabularyQ;
     private boolean isAnswerShown;
@@ -54,8 +55,6 @@ public class OrderedMode extends FunctionalFrame {
     protected void rootPanelHandler() {
         super.rootPanelHandler();
 
-        super.backButton.addKeyListener(new ReadyPanelKeyBoardListener());
-
         super.rootPanel.add(this.nextButton);
         this.nextButton.addActionListener(e -> this.next());
 
@@ -71,8 +70,56 @@ public class OrderedMode extends FunctionalFrame {
         super.rootPanel.add(this.suspendButton);
         this.suspendButton.addActionListener(e -> this.suspend());
 
+        super.rootPanel.add(this.suspendPanel);
+        this.suspendPanel.setLayout(this.suspendPanelLayout);
+        this.suspendPanel.setBackGround(VDConstantsUtils.SELECTED_COLOR);
+        this.suspendPanel.setVisible(false);
+        this.suspendPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (init && suspend) {
+                    suspendPanel.setVisible(false);
+                    initPanel.setVisible(true);
+                    timer.continu();
+                    suspend = false;
+                }
+            }
+        });
+
+        this.suspendPanel.add(this.suspendLabel);
+        this.suspendLabel.setBackground(VDConstantsUtils.SELECTED_COLOR);
+
         super.readyPanel.add(this.readyLabel);
         this.readyLabel.setBackground(this.readyLabel.getParent().getBackground());
+        super.readyPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!init) {
+                    int result = JOptionPane.showConfirmDialog(OrderedMode.this, ENText.VOCABULARYQ_OR_NOT,
+                            VDConstantsUtils.QUESTION_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (result == JOptionPane.OK_OPTION) {
+                        vocabularyQ = true;
+                    } else if (result == JOptionPane.NO_OPTION) {
+                        vocabularyQ = false;
+                        vdList.interconvertQAList();
+                    }
+
+                    readyPanel.setVisible(false);
+                    initPanel.setVisible(true);
+
+                    Q.setText(vdList.getQuestion());
+
+                    timer.startFromZero();
+                    amount.setTotalAmount(vdList.getQs().size());
+                    amount.setCurrentAmount(vdList.getIndex() + 1);
+
+                    I.grabFocus();
+
+                    init = true;
+                }
+            }
+        });
+
 
         this.initPanel.add(this.QView);
         this.Q.setLineWrap(true);
@@ -132,40 +179,38 @@ public class OrderedMode extends FunctionalFrame {
 
     private void next() {
         if (super.init && !super.suspend) {
+            //save
             this.vdList.setInputContent(this.I.getText());
             if (this.vdList.next()) {
-                this.Q.setText(this.vdList.getQuestion());
-                this.I.setText(this.vdList.getInput().toString());
-                this.I.grabFocus();
-
-                if (this.isAnswerShown) {
-                    if (this.vdList.getInput().getState() != Input.InputState.NOT_ANSWERED) {
-                        this.updateAnswer();
-                    } else {
-                        this.disableAnswer();
-                    }
-                }
+                this.updateUI();
             }
         }
     }
 
     private void pre() {
         if (super.init && !super.suspend) {
+            //save
             this.vdList.setInputContent(this.I.getText());
             if (this.vdList.pre()) {
-                this.Q.setText(this.vdList.getQuestion());
-                this.I.setText(this.vdList.getInput().toString());
-                this.I.grabFocus();
-
-                if (this.isAnswerShown) {
-                    if (this.vdList.getInput().getState() != Input.InputState.NOT_ANSWERED) {
-                        this.updateAnswer();
-                    } else {
-                        this.disableAnswer();
-                    }
-                }
+                this.updateUI();
             }
         }
+    }
+
+    private void updateUI() {
+        this.Q.setText(this.vdList.getQuestion());
+        this.I.setText(this.vdList.getInput().toString());
+        this.I.grabFocus();
+
+        if (this.isAnswerShown) {
+            if (this.vdList.getInput().getState() != Input.InputState.NOT_ANSWERED) {
+                this.updateAnswer();
+            } else {
+                this.disableAnswer();
+            }
+        }
+
+        amount.setCurrentAmount(vdList.getIndex() + 1);
     }
 
     private void answer() {
@@ -200,13 +245,15 @@ public class OrderedMode extends FunctionalFrame {
 
     private void review() {
         if (super.init) {
-
+            System.out.println("review");
         }
     }
 
     private void suspend() {
         if (super.init && !super.suspend) {
-
+            this.timer.suspend();
+            this.initPanel.setVisible(false);
+            this.suspendPanel.setVisible(true);
             super.suspend = true;
         }
     }
@@ -230,9 +277,18 @@ public class OrderedMode extends FunctionalFrame {
         super.layout.putConstraint(SpringLayout.NORTH, this.suspendButton, 0, SpringLayout.NORTH, super.hideTimerButton);
         super.layout.putConstraint(SpringLayout.EAST, this.suspendButton, -MARGIN, SpringLayout.WEST, super.hideTimerButton);
 
+        super.layout.putConstraint(SpringLayout.NORTH, this.suspendPanel, 0, SpringLayout.SOUTH, super.separator02);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.suspendPanel, 0, SpringLayout.SOUTH, super.rootPanel);
+        super.layout.putConstraint(SpringLayout.WEST, this.suspendPanel, 0, SpringLayout.WEST, super.rootPanel);
+        super.layout.putConstraint(SpringLayout.EAST, this.suspendPanel, 0, SpringLayout.EAST, super.rootPanel);
+
         //ready panel
         super.readyPanelLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, this.readyLabel, 0, SpringLayout.HORIZONTAL_CENTER, super.readyPanel);
         super.readyPanelLayout.putConstraint(SpringLayout.VERTICAL_CENTER, this.readyLabel, 0, SpringLayout.VERTICAL_CENTER, super.readyPanel);
+
+        //suspend panel
+        this.suspendPanelLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, this.suspendLabel, 0, SpringLayout.HORIZONTAL_CENTER, this.suspendPanel);
+        this.suspendPanelLayout.putConstraint(SpringLayout.VERTICAL_CENTER, this.suspendLabel, 0, SpringLayout.VERTICAL_CENTER, this.suspendPanel);
 
         //init panel
         super.initPanelLayout.putConstraint(SpringLayout.NORTH, this.preLabel, 0, SpringLayout.NORTH, super.initPanel);
@@ -296,45 +352,17 @@ public class OrderedMode extends FunctionalFrame {
                 vdList.getInput().setContent(I.getText());
 
                 //judge
-                vdList.setInput(vdList.judgeEn());
-                //update answer if needed
-                if (isAnswerShown) updateAnswer();
-            }
-        }
-    }
-
-    private class ReadyPanelKeyBoardListener implements KeyListener {
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            if (!init) {
-                int result = JOptionPane.showConfirmDialog(OrderedMode.this, ENText.VOCABULARYQ_OR_NOT,
-                        VDConstantsUtils.QUESTION_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.OK_OPTION) {
-                    vocabularyQ = true;
-                } else if (result == JOptionPane.NO_OPTION) {
-                    vocabularyQ = false;
-                    vdList.interconvertQAList();
+                if (!OrderedMode.vocabularyQ) {
+                    if (!I.getText().equals(VDConstantsUtils.EMPTY)) {
+                        vdList.setInput(vdList.judgeEn());
+                    }
+                } else {
+                    if (!I.getText().equals(VDConstantsUtils.EMPTY)) {
+                    }
                 }
 
-                readyPanel.setVisible(false);
-                initPanel.setVisible(true);
-
-                Q.setText(vdList.getQuestion());
-
-                I.grabFocus();
-
-                init = true;
+                //update answer if needed
+                if (isAnswerShown) updateAnswer();
             }
         }
     }

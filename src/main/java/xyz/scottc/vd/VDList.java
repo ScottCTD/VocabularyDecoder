@@ -22,7 +22,7 @@ public class VDList {
     private final List<String> Qs = new ArrayList<>();
     private final List<String> As = new ArrayList<>();
 
-    public int index = 0;
+    private int index = 0;
 
     private final List<Input> Is = new ArrayList<>();
 
@@ -51,7 +51,6 @@ public class VDList {
 
     public boolean next() {
         if (this.index + 1 < this.Qs.size()) {
-            this.setInput(this.judgeEn());
             index++;
             return true;
         }
@@ -60,7 +59,6 @@ public class VDList {
 
     public boolean pre() {
         if (this.index > 0) {
-            this.setInput(this.judgeEn());
             this.index--;
             return true;
         }
@@ -137,6 +135,10 @@ public class VDList {
             index++;
         }
         return list;
+    }
+
+    public int getIndex() {
+        return this.index;
     }
 
     public String getName() {

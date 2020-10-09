@@ -20,13 +20,24 @@ public class ENText {
 
     public static final String ORDERED_MODE_READY_TEXT = "<html>\n" +
             "<body>\n" +
+            "<div align=\"center\">\n" +
+            "    Click <font color=\"#dc143c\">HERE</font> to get start!\n" +
+            "    <br>\n" +
+            "    Note: You <font color=\"#dc143c\">can</font> check the answer and review!\n" +
+            "</div>\n" +
+            "</body>\n" +
+            "</html>";
+
+    public static final String ORDERED_MODE_SUSPEND_TEXT = "<html>\n" +
+            "<body>\n" +
             "    <div align=\"center\">\n" +
-            "        Press <font color=\"#dc143c\">any key</font> to get start!\n" +
-            "        <br>\n" +
-            "        Note: You <font color=\"#dc143c\">can</font> check the answer and review!\n" +
+            "        <font color=\"#ff7f50\">SUSPENDED</font>\n" +
+            "        <br>" +
+            "        Click <font color=\"#dc143c\">HERE</font> to continue!\n" +
             "    </div>\n" +
             "</body>\n" +
             "</html>";
+
     public static final String VOCABULARYQ_OR_NOT = "Do you want vocabularies serve the function of questions?\n" +
             "Yes for Vocabularies as questions.\n" +
             "No for Meanings as questions.";
