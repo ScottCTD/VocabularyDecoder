@@ -146,7 +146,7 @@ public class FunctionPanel extends UtilJPanel {
                         break;
                     case "Meaning - Vocabulary":
                         //默认单词列表是questionList，所以如果选这个模式就将questionList和answerList互换
-                        VDConstantsUtils.interconvertList(this.questionList, this.answerList);
+                        //VDConstantsUtils.interconvertList(this.questionList, this.answerList);
                         this.selectionValue = this.selectionValues[1];
                         break;
                 }

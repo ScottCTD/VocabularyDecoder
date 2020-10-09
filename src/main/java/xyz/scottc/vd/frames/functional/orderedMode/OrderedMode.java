@@ -1,5 +1,6 @@
 package xyz.scottc.vd.frames.functional.orderedMode;
 
+import xyz.scottc.vd.Input;
 import xyz.scottc.vd.VDList;
 import xyz.scottc.vd.frames.functional.FunctionalFrame;
 import xyz.scottc.vd.utils.ENText;
@@ -38,6 +39,9 @@ public class OrderedMode extends FunctionalFrame {
 
     private VDList vdList;
 
+    public static boolean vocabularyQ;
+    private boolean isAnswerShown;
+
     public OrderedMode(VDList vdList) throws HeadlessException {
         super("Ordered Mode");
         this.vdList = vdList;
@@ -53,14 +57,19 @@ public class OrderedMode extends FunctionalFrame {
         super.backButton.addKeyListener(new ReadyPanelKeyBoardListener());
 
         super.rootPanel.add(this.nextButton);
+        this.nextButton.addActionListener(e -> this.next());
 
         super.rootPanel.add(this.preButton);
+        this.preButton.addActionListener(e -> this.pre());
 
         super.rootPanel.add(this.answerButton);
+        this.answerButton.addActionListener(e -> this.answer());
 
         super.rootPanel.add(this.reviewButton);
+        this.reviewButton.addActionListener(e -> this.review());
 
         super.rootPanel.add(this.suspendButton);
+        this.suspendButton.addActionListener(e -> this.suspend());
 
         super.readyPanel.add(this.readyLabel);
         this.readyLabel.setBackground(this.readyLabel.getParent().getBackground());
@@ -71,7 +80,7 @@ public class OrderedMode extends FunctionalFrame {
         this.Q.setBackground(super.rootPanel.getBackground());
 
         this.initPanel.add(this.IView);
-        this.I.grabFocus();
+        this.I.addKeyListener(new InputKeyListener());
 
         this.initPanel.add(this.AView);
         this.A.setBackground(super.rootPanel.getBackground());
@@ -79,7 +88,15 @@ public class OrderedMode extends FunctionalFrame {
         MouseListener mouseListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                if (e.getClickCount() == 1) {
+                    UtilJLabel label = (UtilJLabel) e.getSource();
+                    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    if (label.equals(preLabel)) {
+                        pre();
+                    } else if (label.equals(nextLabel)) {
+                        next();
+                    }
+                }
             }
 
             @Override
@@ -96,6 +113,7 @@ public class OrderedMode extends FunctionalFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 UtilJLabel label = (UtilJLabel) e.getSource();
+                label.setBorder(BorderFactory.createEmptyBorder());
                 label.setBackground(label.getParent().getBackground());
                 label.setText(VDConstantsUtils.EMPTY);
             }
@@ -110,6 +128,87 @@ public class OrderedMode extends FunctionalFrame {
 
         this.initPanel.add(this.lineHelper01);
         this.lineHelper01.setVisible(true);
+    }
+
+    private void next() {
+        if (super.init && !super.suspend) {
+            this.vdList.setInputContent(this.I.getText());
+            if (this.vdList.next()) {
+                this.Q.setText(this.vdList.getQuestion());
+                this.I.setText(this.vdList.getInput().toString());
+                this.I.grabFocus();
+
+                if (this.isAnswerShown) {
+                    if (this.vdList.getInput().getState() != Input.InputState.NOT_ANSWERED) {
+                        this.updateAnswer();
+                    } else {
+                        this.disableAnswer();
+                    }
+                }
+            }
+        }
+    }
+
+    private void pre() {
+        if (super.init && !super.suspend) {
+            this.vdList.setInputContent(this.I.getText());
+            if (this.vdList.pre()) {
+                this.Q.setText(this.vdList.getQuestion());
+                this.I.setText(this.vdList.getInput().toString());
+                this.I.grabFocus();
+
+                if (this.isAnswerShown) {
+                    if (this.vdList.getInput().getState() != Input.InputState.NOT_ANSWERED) {
+                        this.updateAnswer();
+                    } else {
+                        this.disableAnswer();
+                    }
+                }
+            }
+        }
+    }
+
+    private void answer() {
+        if (super.init && !super.suspend) {
+            if (this.isAnswerShown) {
+                this.disableAnswer();
+            } else {
+                this.updateAnswer();
+            }
+            this.I.grabFocus();
+        }
+    }
+
+    private void disableAnswer() {
+        this.A.setText(VDConstantsUtils.EMPTY);
+        this.IView.setBorder(BorderFactory.createEmptyBorder());
+        this.isAnswerShown = false;
+    }
+
+    private void updateAnswer() {
+        this.A.setText(this.vdList.getAnswer());
+        switch (this.vdList.getInput().getState()) {
+            case CORRECT:
+                this.IView.setBorder(BorderFactory.createLineBorder(Input.CORRECT, 3));
+                break;
+            case INCORRECT:
+                this.IView.setBorder(BorderFactory.createLineBorder(Input.INCORRECT, 3));
+                break;
+        }
+        this.isAnswerShown = true;
+    }
+
+    private void review() {
+        if (super.init) {
+
+        }
+    }
+
+    private void suspend() {
+        if (super.init && !super.suspend) {
+
+            super.suspend = true;
+        }
     }
 
     @Override
@@ -159,6 +258,51 @@ public class OrderedMode extends FunctionalFrame {
         super.layout.putConstraint(SpringLayout.SOUTH, this.lineHelper01, 0, SpringLayout.SOUTH, super.rootPanel);
     }
 
+    private class InputKeyListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (init && !suspend) {
+                //单键判断： enter = 10  下箭头 = 40  上箭头 38
+                switch (e.getKeyCode()) {
+                    case 10:
+                    case 40:
+                        try {
+                            next();
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                        break;
+                    case 38:
+                        try {
+                            pre();
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                        break;
+                }
+
+                //save
+                vdList.getInput().setContent(I.getText());
+
+                //judge
+                vdList.setInput(vdList.judgeEn());
+                //update answer if needed
+                if (isAnswerShown) updateAnswer();
+            }
+        }
+    }
+
     private class ReadyPanelKeyBoardListener implements KeyListener {
 
         @Override
@@ -174,10 +318,23 @@ public class OrderedMode extends FunctionalFrame {
         @Override
         public void keyReleased(KeyEvent e) {
             if (!init) {
+                int result = JOptionPane.showConfirmDialog(OrderedMode.this, ENText.VOCABULARYQ_OR_NOT,
+                        VDConstantsUtils.QUESTION_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.OK_OPTION) {
+                    vocabularyQ = true;
+                } else if (result == JOptionPane.NO_OPTION) {
+                    vocabularyQ = false;
+                    vdList.interconvertQAList();
+                }
+
                 readyPanel.setVisible(false);
                 initPanel.setVisible(true);
-                init = true;
+
+                Q.setText(vdList.getQuestion());
+
                 I.grabFocus();
+
+                init = true;
             }
         }
     }

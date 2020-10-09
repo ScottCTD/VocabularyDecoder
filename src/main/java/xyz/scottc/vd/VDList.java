@@ -22,15 +22,9 @@ public class VDList {
     private final List<String> Qs = new ArrayList<>();
     private final List<String> As = new ArrayList<>();
 
-    private int index = 0;
+    public int index = 0;
 
-    public VDList() {
-    }
-
-    public VDList(String type, File VDList) {
-        this.type = type;
-        this.VDList = VDList;
-    }
+    private final List<Input> Is = new ArrayList<>();
 
     /**
      * auto create an instance by identifying the internal or external path
@@ -55,18 +49,55 @@ public class VDList {
         this.VDList = list;
     }
 
+    public boolean next() {
+        if (this.index + 1 < this.Qs.size()) {
+            this.setInput(this.judgeEn());
+            index++;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean pre() {
+        if (this.index > 0) {
+            this.setInput(this.judgeEn());
+            this.index--;
+            return true;
+        }
+        return false;
+    }
+
+    public void setInputContent(String input) {
+        this.Is.get(this.index).setContent(input);
+    }
+
+    public Input judgeEn() {
+        Input input = this.getInput();
+        if (input.toString().equals(this.getAnswer())) {
+            input.setState(Input.InputState.CORRECT);
+        } else {
+            input.setState(Input.InputState.INCORRECT);
+        }
+        return input;
+    }
+
+    public void interconvertQAList() {
+        VDConstantsUtils.interconvertList(this.Qs, this.As);
+    }
+
     /**
      * Convert the VDList into two separated lists : Qs and As (Question List & Answer List)
      *
      * @return Whether the list is filled.
      */
-    private boolean toQAList() {
+    public boolean toQAList() {
         try {
             JSONObject jsonObject = (JSONObject) JSONUtils.fromFile(this.VDList, "UTF-8");
             List<Object> questions = jsonObject.getJSONArray("questions").toList();
             List<Object> answers = jsonObject.getJSONArray("answers").toList();
             for (Object question : questions) {
                 this.Qs.add(question.toString());
+                this.Is.add(new Input(VDConstantsUtils.EMPTY));
             }
             for (Object answer : answers) {
                 this.As.add(answer.toString());
@@ -126,6 +157,46 @@ public class VDList {
 
     public void setVDList(File VDList) {
         this.VDList = VDList;
+    }
+
+    public String getQuestion() {
+        return this.Qs.get(this.index);
+    }
+
+    public String getQuestion(int index) {
+        return this.Qs.get(index);
+    }
+
+    public String getAnswer() {
+        return this.As.get(this.index);
+    }
+
+    public String getAnswer(int index) {
+        return this.As.get(index);
+    }
+
+    public Input getInput() {
+        return this.Is.get(this.index);
+    }
+
+    public Input getInput(int index) {
+        return this.Is.get(index);
+    }
+
+    public void setInput(Input input) {
+        this.Is.set(this.index, input);
+    }
+
+    public List<String> getQs() {
+        return this.Qs;
+    }
+
+    public List<String> getAs() {
+        return this.As;
+    }
+
+    public List<Input> getIs() {
+        return this.Is;
     }
 
     @Override

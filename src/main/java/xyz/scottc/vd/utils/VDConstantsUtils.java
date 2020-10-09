@@ -18,6 +18,7 @@ public class VDConstantsUtils {
     public static final String WARNING_TITLE = "Ops";
     public static final String QUESTION_TITLE = "Yes or No?";
     public static final String INFO_TITLE = "Information";
+    public static final String ERROR_TITLE = "Oh No!";
 
     public static final Font MICROSOFT_YAHEI_PLAIN_15 = new Font("Microsoft YaHei UI", Font.PLAIN, 15);
     public static final Font MICROSOFT_YAHEI_PLAIN_20 = new Font("Microsoft YaHei UI", Font.PLAIN, 20);
@@ -53,13 +54,17 @@ public class VDConstantsUtils {
         JOptionPane.showConfirmDialog(parent, message, INFO_TITLE, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static void showErrorMessage(Component parent, String message) {
+        JOptionPane.showConfirmDialog(parent, message, ERROR_TITLE, JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+    }
+
     public static void switchFrame(JFrame current, JFrame target) {
         current.dispose();
         target.setVisible(true);
     }
 
-    public static void interconvertList(List<Object> list01, List<Object> list02) {
-        List<Object> temp = new ArrayList<>(list01);
+    public static void interconvertList(List<String> list01, List<String> list02) {
+        List<String> temp = new ArrayList<>(list01);
         list01.clear();
         list01.addAll(list02);
         list02.clear();

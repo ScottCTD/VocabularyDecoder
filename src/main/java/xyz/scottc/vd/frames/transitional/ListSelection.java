@@ -76,7 +76,12 @@ public class ListSelection extends TransitionalFrame {
                     String path = VDList.parsePaths(paths);
                     for (File file : Main.INTERNAL_LISTS) {
                         if (file.getAbsolutePath().endsWith(path)) {
-                            VDConstantsUtils.switchFrame(ListSelection.this, new OrderedMode(new VDList(file)));
+                            VDList list = new VDList(file);
+                            if (list.toQAList()) {
+                                VDConstantsUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                            } else {
+                                VDConstantsUtils.showErrorMessage(ListSelection.this, "Failed to process!");
+                            }
                             break;
                         }
                     }
