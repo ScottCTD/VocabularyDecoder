@@ -9,19 +9,23 @@ public class UtilJLabel extends JLabel {
 
     public UtilJLabel() {
         this(VDConstantsUtils.EMPTY, null);
+        this.setOpaque(true);
     }
 
     public UtilJLabel(Font font) {
         this(VDConstantsUtils.EMPTY, font);
+        this.setOpaque(true);
     }
 
     public UtilJLabel(String text) {
         this(text, null);
+        this.setOpaque(true);
     }
 
     public UtilJLabel(String text, Font font) {
         super(text);
         this.setFont(font);
+        this.setOpaque(true);
     }
 
     @Override

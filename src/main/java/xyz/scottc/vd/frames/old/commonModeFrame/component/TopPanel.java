@@ -1,6 +1,7 @@
 package xyz.scottc.vd.frames.old.commonModeFrame.component;
 
 import xyz.scottc.vd.frames.old.commonModeFrame.CommonModeFrame;
+import xyz.scottc.vd.utils.VDConstantsUtils;
 import xyz.scottc.vd.utils.components.UtilJButton;
 import xyz.scottc.vd.utils.components.UtilJPanel;
 import xyz.scottc.vd.utils.components.VDAmountDisplay;
@@ -12,10 +13,10 @@ public class TopPanel extends UtilJPanel {
 
     private final CommonModeFrame parentFrame;
 
-    public final UtilJButton startButton = new UtilJButton("Start", 25);
-    public final UtilJButton stopButton = new UtilJButton("Stop", 25);
-    public final UtilJButton suspendButton = new UtilJButton("Suspend", 25);
-    public final UtilJButton continueButton = new UtilJButton("Continue", 25);
+    public final UtilJButton startButton = new UtilJButton("Start", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(25F));
+    public final UtilJButton stopButton = new UtilJButton("Stop", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(25F));
+    public final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(25F));
+    public final UtilJButton continueButton = new UtilJButton("Continue", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(25F));
 
     public final VDAmountDisplay amountDisplay = new VDAmountDisplay(new Font("微软雅黑", Font.PLAIN, 23));
     public final VDTimer timer = new VDTimer();

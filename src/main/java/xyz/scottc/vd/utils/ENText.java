@@ -18,4 +18,14 @@ public class ENText {
     public static final String INTERNAL_VD_LISTS = "Internal VD Lists";
     public static final String EXTERNAL_VD_LISTS = "External VD Lists";
 
+    public static final String ORDERED_MODE_READY_TEXT = "<html>\n" +
+            "<body>\n" +
+            "    <div align=\"center\">\n" +
+            "        Press <font color=\"#dc143c\">any key</font> to get start!\n" +
+            "        <br>\n" +
+            "        Note: You <font color=\"#dc143c\">can</font> check the answer and review!\n" +
+            "    </div>\n" +
+            "</body>\n" +
+            "</html>";
+
 }

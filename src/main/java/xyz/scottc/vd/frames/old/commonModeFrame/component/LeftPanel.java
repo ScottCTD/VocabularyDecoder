@@ -32,8 +32,8 @@ public class LeftPanel extends UtilJPanel {
     private final FunctionPanel functionPanel;
     private final TopPanel topPanel;
 
-    private final UtilJButton importButton = new UtilJButton("Import", 20);
-    private final UtilJButton exportButton = new UtilJButton("Export", 20);
+    private final UtilJButton importButton = new UtilJButton("Import", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
+    private final UtilJButton exportButton = new UtilJButton("Export", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
     private final UtilJLabel internalFileListLabel = new UtilJLabel("Internal Vocab List",
             new Font("微软雅黑", Font.BOLD, 24));
     private final DefaultListModel<String> internalFileListModel = new DefaultListModel<>();
@@ -44,7 +44,7 @@ public class LeftPanel extends UtilJPanel {
     private final DefaultListModel<String> externalFileListModel = new DefaultListModel<>();
     private final JList<String> externalFileList = new JList<>(this.externalFileListModel);
     private final JScrollPane externalFileListScrollPane = new JScrollPane(this.externalFileList);
-    private final UtilJButton backButton = new UtilJButton("Go Back", 45);
+    private final UtilJButton backButton = new UtilJButton("Go Back", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40.deriveFont(45F));
 
     private final List<File> internalVocabularyPool = new ArrayList<>();
     private final List<File> externalVocabularyPool = new ArrayList<>();

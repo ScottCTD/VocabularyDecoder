@@ -14,10 +14,10 @@ public class Entry extends TransitionalFrame {
     private final DefaultListModel<ModeListCell> modeListModel = new DefaultListModel<>();
     private final JList<ModeListCell> modeList = new JList<>(this.modeListModel);
     private final JScrollPane modeListScrollPane = new JScrollPane(this.modeList);
-    private final UtilJButton confirmButton = new UtilJButton("Confirm", 60);
+    private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
 
-    public Entry(String title) throws HeadlessException {
-        super(title);
+    public Entry() throws HeadlessException {
+        super("VD Entry");
         this.rootPanelHandler();
         this.layoutHandler();
     }

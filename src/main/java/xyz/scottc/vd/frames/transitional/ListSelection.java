@@ -20,10 +20,10 @@ import java.util.List;
 
 public class ListSelection extends TransitionalFrame {
 
-    private final UtilJButton backButton = new UtilJButton("Back", 40);
-    private final UtilJButton importButton = new UtilJButton("Import", 30);
-    private final UtilJButton addFolderButton = new UtilJButton("Add New Folder", 30);
-    private final UtilJButton deleteButton = new UtilJButton("Delete", 30);
+    private final UtilJButton backButton = new UtilJButton("Back", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40);
+    private final UtilJButton importButton = new UtilJButton("Import", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton addFolderButton = new UtilJButton("Add New Folder", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton deleteButton = new UtilJButton("Delete", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
 
     private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultMutableTreeNode inListRoot = new DefaultMutableTreeNode(ENText.INTERNAL_VD_LISTS);
@@ -39,8 +39,8 @@ public class ListSelection extends TransitionalFrame {
 
     private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
 
-    public ListSelection(String title) throws HeadlessException {
-        super(title);
+    public ListSelection() throws HeadlessException {
+        super("VD List Selection");
         this.rootPanelHandler();
         this.layoutHandler();
         this.treeHandler();
@@ -55,6 +55,7 @@ public class ListSelection extends TransitionalFrame {
         super.introLabel.setText(ENText.LIST_SELECTION_INTRODUCTION);
 
         super.rootPanel.add(this.backButton);
+        this.backButton.addActionListener(e -> VDConstantsUtils.switchFrame(this, new Entry()));
 
         TreeCellRenderer cellRenderer = new ListTreeCellRenderer();
 

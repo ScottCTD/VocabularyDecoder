@@ -29,14 +29,14 @@ public class CreateVDFileByTXTDialog extends JDialog {
 
     private final VDTextArea helpText = new VDTextArea(HELP_TEXT, 5, 33, VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
     private final UtilJLabel vocabLabel = new UtilJLabel("Vocabulary File", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
-    private final UtilJButton chooseVocabFile = new UtilJButton("Choose", 20);
+    private final UtilJButton chooseVocabFile = new UtilJButton("Choose", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
     private final JTextField vocabFilePath = new JTextField(19);
     private final JScrollPane vocabFilePathScrollPane = new JScrollPane(this.vocabFilePath);
     private final UtilJLabel answerLabel = new UtilJLabel("Answer File", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
-    private final UtilJButton chooseAnswerFile = new UtilJButton("Choose", 20);
+    private final UtilJButton chooseAnswerFile = new UtilJButton("Choose", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
     private final JTextField answerFilePath = new JTextField(19);
     private final JScrollPane answerFilePathScrollPane = new JScrollPane(this.answerFilePath);
-    private final UtilJButton generate = new UtilJButton("Generate", 30);
+    private final UtilJButton generate = new UtilJButton("Generate", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
 
     private final List<String> vocabList = new ArrayList<>(100);
     private final List<String> answerList = new ArrayList<>(100);

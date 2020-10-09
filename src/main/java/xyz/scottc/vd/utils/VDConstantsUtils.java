@@ -26,6 +26,19 @@ public class VDConstantsUtils {
     public static final Font MICROSOFT_YAHEI_BOLD_60 = new Font("Microsoft YaHei UI", Font.BOLD, 60);
     public static final Font MICROSOFT_YAHEI_BOLD_80 = new Font("Microsoft YaHei UI", Font.BOLD, 80);
     public static final Font MICROSOFT_YAHEI_BOLD_100 = new Font("Microsoft YaHei UI", Font.BOLD, 100);
+    public static final Font MICROSOFT_YAHEI_BOLD_120 = new Font("Microsoft YaHei UI", Font.BOLD, 120);
+
+    public static final Color SELECTED_COLOR = new Color(0xCCCCCC);
+
+    public static Rectangle getSreenRectangle() {
+        Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().
+                        getDefaultConfiguration());
+        return new Rectangle(screenInsets.left, screenInsets.top, screenDimension.width -
+                screenInsets.left - screenInsets.right, screenDimension.height -
+                screenInsets.top - screenInsets.bottom);
+    }
 
     public static void showWarningMessage(Component parent, String message) {
         JOptionPane.showConfirmDialog(parent, message, WARNING_TITLE, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -40,22 +53,17 @@ public class VDConstantsUtils {
         JOptionPane.showConfirmDialog(parent, message, INFO_TITLE, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public static void switchFrame(JFrame current, JFrame target) {
+        current.dispose();
+        target.setVisible(true);
+    }
+
     public static void interconvertList(List<Object> list01, List<Object> list02) {
         List<Object> temp = new ArrayList<>(list01);
         list01.clear();
         list01.addAll(list02);
         list02.clear();
         list02.addAll(temp);
-    }
-
-    public static Rectangle getSreenRectangle() {
-        Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
-        Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(
-                GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().
-                        getDefaultConfiguration());
-        return new Rectangle(screenInsets.left, screenInsets.top, screenDimension.width -
-                screenInsets.left - screenInsets.right, screenDimension.height -
-                screenInsets.top - screenInsets.bottom);
     }
 
     public static int getExistCount(String subject, String key) {

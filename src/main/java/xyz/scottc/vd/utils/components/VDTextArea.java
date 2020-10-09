@@ -25,7 +25,7 @@ public class VDTextArea extends JTextArea {
         this.setEnabled(enable);
         this.setDisabledTextColor(Color.BLACK);
 
-        if (enter) {
+        if (!enter) {
             //prevent enter from wrapping line
             KeyStroke enterKey = KeyStroke.getKeyStroke("ENTER");
             this.getInputMap().put(enterKey, "none");

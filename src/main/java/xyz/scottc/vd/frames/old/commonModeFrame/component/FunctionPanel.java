@@ -45,10 +45,10 @@ public class FunctionPanel extends UtilJPanel {
     private final VDTextArea standardA = new VDTextArea(1, 11, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60, false, true);
     private final JScrollPane standardAScrollPane = new JScrollPane(this.standardA);
 
-    private final UtilJButton previousButton = new UtilJButton("Previous", 35);
-    private final UtilJButton nextButton = new UtilJButton("Next", 35);
-    private final UtilJButton answerButton = new UtilJButton("Answer", 35);
-    private final UtilJButton reviewButton = new UtilJButton("Review", 35);
+    private final UtilJButton previousButton = new UtilJButton("Previous", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(35F));
+    private final UtilJButton nextButton = new UtilJButton("Next", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(35F));
+    private final UtilJButton answerButton = new UtilJButton("Answer", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(35F));
+    private final UtilJButton reviewButton = new UtilJButton("Review", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(35F));
 
     protected boolean isListLoaded = false;
     protected boolean init = false;

@@ -25,6 +25,8 @@ public class TransitionalFrame extends JFrame {
 
     public TransitionalFrame(String title) throws HeadlessException {
         super(title);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBounds(VDConstantsUtils.getSreenRectangle());
         this.setContentPane(this.rootPanel);
     }
 

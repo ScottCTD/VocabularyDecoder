@@ -19,7 +19,7 @@ public class ModeSelectionPanel extends UtilJPanel {
     private final DefaultListModel<String> modeListModel = new DefaultListModel<>();
     private final JList<String> modeList = new JList<>();
     private final JScrollPane modeListScrollPane = new JScrollPane(modeList);
-    private final UtilJButton confirmButton = new UtilJButton("Confirm", 40);
+    private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40);
     private final VDTextArea help = new VDTextArea(VDConstantsUtils.HELP, 0, 0, VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20, false, false);
 
     public ModeSelectionPanel(MainFrame parent) {

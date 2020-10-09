@@ -15,6 +15,6 @@ public enum VocabularyState {
             case NOT_ANSWERED:
                 return "NOT ANSWERED";
         }
-        return "ERROR";
+        return null;
     }
 }

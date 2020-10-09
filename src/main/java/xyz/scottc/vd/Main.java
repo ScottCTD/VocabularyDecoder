@@ -1,7 +1,7 @@
 package xyz.scottc.vd;
 
 import xyz.scottc.vd.exceptions.FileCreatingException;
-import xyz.scottc.vd.frames.functional.FunctionalFrame;
+import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstantsUtils;
 
@@ -54,9 +54,9 @@ public class Main {
         }
         //Entry frame = new Entry("Vocabulary Decoder");
         //ListSelection frame = new ListSelection("List Selection");
-        FunctionalFrame frame = new FunctionalFrame("Functional Frame");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(VDConstantsUtils.getSreenRectangle());
+        //FunctionalFrame frame = new FunctionalFrame("Functional Frame");
+        OrderedMode frame = new OrderedMode();
+
         frame.setVisible(true);
     }
 

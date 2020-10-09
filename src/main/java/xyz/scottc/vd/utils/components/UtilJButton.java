@@ -1,19 +1,37 @@
 package xyz.scottc.vd.utils.components;
 
-import xyz.scottc.vd.utils.VDConstantsUtils;
-
 import javax.swing.*;
+import java.awt.*;
 
 public class UtilJButton extends JButton {
 
-    public UtilJButton(String text, float size) {
-        super(text);
-        this.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(size));
+    public UtilJButton() {
     }
 
-    public UtilJButton(String text, float size, Icon icon) {
+    public UtilJButton(String text, Font font) {
+        super(text);
+        this.setFont(font);
+    }
+
+    public UtilJButton(String text, Font font, boolean space) {
+        this(text, font);
+        if (!space) {
+            KeyStroke spaceKey = KeyStroke.getKeyStroke("SPACE");
+            this.getInputMap().put(spaceKey, "none");
+        }
+    }
+
+    public UtilJButton(String text, Font font, Icon icon) {
+        this(text, font, icon, true);
+    }
+
+    public UtilJButton(String text, Font font, Icon icon, boolean space) {
         super(text, icon);
-        this.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(size));
+        this.setFont(font);
+        if (!space) {
+            KeyStroke spaceKey = KeyStroke.getKeyStroke("SPACE");
+            this.getInputMap().put(spaceKey, "none");
+        }
     }
 
 }
