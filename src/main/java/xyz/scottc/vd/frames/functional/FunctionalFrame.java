@@ -33,8 +33,7 @@ public class FunctionalFrame extends JFrame {
     protected boolean init = false;
     protected boolean suspend = false;
 
-    public FunctionalFrame(String title) throws HeadlessException {
-        super(title);
+    public FunctionalFrame() throws HeadlessException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(VDConstantsUtils.getSreenRectangle());
     }

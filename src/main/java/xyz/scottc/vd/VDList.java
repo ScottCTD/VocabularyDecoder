@@ -145,6 +145,10 @@ public class VDList {
         return this.VDList.getName();
     }
 
+    public String getSimpleName() {
+        return this.VDList.getName().replace(".json", VDConstantsUtils.EMPTY);
+    }
+
     public String getType() {
         return type;
     }

@@ -206,6 +206,10 @@ public class ListSelection extends TransitionalFrame {
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
                                                       boolean leaf, int row, boolean hasFocus) {
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+            String text = value.toString();
+            if (text.contains(".json")) {
+                this.setText(text.replace(".json", VDConstantsUtils.EMPTY));
+            }
             return this;
         }
     }
