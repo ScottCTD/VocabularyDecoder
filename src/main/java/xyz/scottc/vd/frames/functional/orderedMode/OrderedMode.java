@@ -374,6 +374,11 @@ public class OrderedMode extends FunctionalFrame {
                         break;
                 }
 
+                //modifier == 8 + keyCode == 65 -> alt+a
+                if (e.getModifiers() == 8 && e.getKeyCode() == 65) {
+                    answer();
+                }
+
                 //save
                 vdList.getInput().setContent(I.getText());
 
