@@ -1,6 +1,6 @@
 package xyz.scottc.vd.frames.functional;
 
-import xyz.scottc.vd.frames.transitional.ListSelection;
+import xyz.scottc.vd.frames.transitional.listSelection.ListSelection;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.*;

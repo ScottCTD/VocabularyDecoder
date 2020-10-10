@@ -9,6 +9,7 @@ import xyz.scottc.vd.utils.VDUtils;
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -119,7 +120,7 @@ public class VDList {
             }
             return builder.substring(0, builder.toString().length() - 1);
         }
-        return paths.toString();
+        return Arrays.toString(paths);
     }
 
     public List<String> splitType() {

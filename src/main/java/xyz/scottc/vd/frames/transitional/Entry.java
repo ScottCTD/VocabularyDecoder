@@ -1,11 +1,15 @@
 package xyz.scottc.vd.frames.transitional;
 
 import xyz.scottc.vd.core.Mode;
+import xyz.scottc.vd.frames.transitional.listSelection.ListSelection;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.UtilJButton;
 import xyz.scottc.vd.utils.components.UtilJLabel;
+import xyz.scottc.vd.utils.components.VDMenu;
+import xyz.scottc.vd.utils.components.VDMenuItem;
+import xyz.scottc.vd.utils.dialogs.VDInputDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +24,15 @@ public class Entry extends TransitionalFrame {
     private final JScrollPane modeListScrollPane = new JScrollPane(this.modeList);
     private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_BOLD_60);
 
+    private final JMenuBar menuBar = new JMenuBar();
+    private final VDMenu testMenu = new VDMenu("Test");
+    private final VDMenuItem testMenuItem = new VDMenuItem("Test");
+
     public Entry() throws HeadlessException {
         super("VD Entry");
         this.rootPanelHandler();
         this.layoutHandler();
+        this.menuHandler();
     }
 
     @Override
@@ -49,6 +58,17 @@ public class Entry extends TransitionalFrame {
         this.modeList.setCellRenderer(new ModeListCellRenderer());
         this.modeListHandler();
         this.modeList.addMouseListener(new SelectModeMouseListener());
+    }
+
+    private void menuHandler() {
+        this.setJMenuBar(this.menuBar);
+        this.menuBar.add(this.testMenu);
+        this.testMenu.add(this.testMenuItem);
+        this.testMenuItem.addActionListener(e -> {
+            String value = VDInputDialog.showInputDialog(Entry.this, "test", "Input something!",
+                    VDConstants.MICROSOFT_YAHEI_PLAIN_20);
+            System.out.println(value);
+        });
     }
 
     private void modeListHandler() {

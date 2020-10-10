@@ -1,10 +1,19 @@
 package xyz.scottc.vd.utils;
 
+import xyz.scottc.vd.Main;
+
+import javax.swing.*;
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.Arrays;
 
 public class FileUtils {
+
+    public static ImageIcon createImageIcon(String resourceName) throws IOException {
+        return new ImageIcon(FileUtils.readFromInputStream(
+                Main.class.getResourceAsStream(resourceName)
+        ));
+    }
 
     public static byte[] readFromInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[inputStream.available() + 1024];

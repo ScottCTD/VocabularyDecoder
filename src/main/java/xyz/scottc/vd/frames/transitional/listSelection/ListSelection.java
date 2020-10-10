@@ -1,8 +1,10 @@
-package xyz.scottc.vd.frames.transitional;
+package xyz.scottc.vd.frames.transitional.listSelection;
 
 import xyz.scottc.vd.Main;
 import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
+import xyz.scottc.vd.frames.transitional.Entry;
+import xyz.scottc.vd.frames.transitional.TransitionalFrame;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
@@ -15,13 +17,14 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 public class ListSelection extends TransitionalFrame {
 
@@ -63,38 +66,20 @@ public class ListSelection extends TransitionalFrame {
         this.backButton.addActionListener(e -> VDUtils.switchFrame(this, new Entry()));
 
         TreeCellRenderer cellRenderer = new ListTreeCellRenderer();
-
+        MouseListener mouseListener = new ListTreeMouseListener();
         super.rootPanel.add(this.inListLabel);
 
         super.rootPanel.add(this.inListView);
         this.inList.setRowHeight(40);
         this.inList.setCellRenderer(cellRenderer);
-        this.inList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 && e.getSource() instanceof JTree) {
-                    Object[] paths = Objects.requireNonNull(inList.getPathForLocation(e.getX(), e.getY())).getPath();
-                    String path = VDList.parsePaths(paths);
-                    for (File file : Main.INTERNAL_LISTS) {
-                        if (file.getAbsolutePath().endsWith(path)) {
-                            VDList list = new VDList(file);
-                            if (list.toQAList()) {
-                                VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
-                            } else {
-                                VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        });
+        this.inList.addMouseListener(mouseListener);
 
         super.rootPanel.add(exListLabel);
 
         super.rootPanel.add(this.exListView);
         this.exList.setRowHeight(40);
         this.exList.setCellRenderer(cellRenderer);
+        this.exList.addMouseListener(mouseListener);
 
         super.rootPanel.add(this.importButton);
 
@@ -184,16 +169,36 @@ public class ListSelection extends TransitionalFrame {
         super.layout.putConstraint(SpringLayout.EAST, this.lineHelper01, 0, SpringLayout.EAST, super.rootPanel);
     }
 
+    private class ListTreeMouseListener extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 && e.getSource() instanceof JTree) {
+                TreePath treePath = inList.getPathForLocation(e.getX(), e.getY());
+                if (treePath != null) {
+                    Object[] paths = treePath.getPath();
+                    String path = VDList.parsePaths(paths);
+                    for (File file : Main.INTERNAL_LISTS) {
+                        if (file.getAbsolutePath().endsWith(path)) {
+                            VDList list = new VDList(file);
+                            if (list.toQAList()) {
+                                VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                            } else {
+                                VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private static class ListTreeCellRenderer extends DefaultTreeCellRenderer {
 
         public ListTreeCellRenderer() {
             try {
-                Icon leafIcon = new ImageIcon(FileUtils.readFromInputStream(
-                        this.getClass().getResourceAsStream("/images/icons/leafNode.png")
-                ));
-                Icon branchIcon = new ImageIcon(FileUtils.readFromInputStream(
-                        this.getClass().getResourceAsStream("/images/icons/branchNode.png")
-                ));
+                Icon leafIcon = FileUtils.createImageIcon("/images/icons/leafNode.png");
+                Icon branchIcon = FileUtils.createImageIcon("/images/icons/branchNode.png");
                 this.setLeafIcon(leafIcon);
                 this.setClosedIcon(branchIcon);
                 this.setOpenIcon(branchIcon);
@@ -209,8 +214,9 @@ public class ListSelection extends TransitionalFrame {
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
             String text = value.toString();
             if (text.contains(".json")) {
-                this.setText(text.replace(".json", VDConstants.EMPTY));
+                text = text.replace(".json", VDConstants.EMPTY);
             }
+            this.setText(text);
             return this;
         }
     }
