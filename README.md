@@ -12,3 +12,15 @@ If you want to create **your customized vocabulary lists**, just go to the **"to
 
 **Thanks for using!**
 
+Still don't know how to use? Go to the wiki page to get detailed introduction -> [WIKI](https://github.com/ScottCTD/VocabularyDecoder/wiki)
+
+## Download
+
+Go to the [Release Page](https://github.com/ScottCTD/VocabularyDecoder/releases) to download the latest version of VD!
+
+Or, you can clone my code and build by yourself.
+
+## Help Me
+
+If you really want to help me, please contact me through my email -> ScottCTD@outlook.com.
+
