@@ -1,8 +1,9 @@
 package xyz.scottc.vd.frames.transitional;
 
-import xyz.scottc.vd.Mode;
+import xyz.scottc.vd.core.Mode;
 import xyz.scottc.vd.utils.ENText;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
+import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.UtilJButton;
 import xyz.scottc.vd.utils.components.UtilJLabel;
 
@@ -13,11 +14,11 @@ import java.awt.event.MouseEvent;
 
 public class Entry extends TransitionalFrame {
 
-    private final UtilJLabel modeSelectionLabel = new UtilJLabel(ENText.MODE_SELECTION, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
+    private final UtilJLabel modeSelectionLabel = new UtilJLabel(ENText.MODE_SELECTION, VDConstants.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultListModel<Mode> modeListModel = new DefaultListModel<>();
     private final JList<Mode> modeList = new JList<>(this.modeListModel);
     private final JScrollPane modeListScrollPane = new JScrollPane(this.modeList);
-    private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
+    private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_BOLD_60);
 
     public Entry() throws HeadlessException {
         super("VD Entry");
@@ -29,7 +30,7 @@ public class Entry extends TransitionalFrame {
     protected void rootPanelHandler() {
         super.rootPanelHandler();
 
-        super.titleLabel.setText(VDConstantsUtils.NAME);
+        super.titleLabel.setText(VDConstants.NAME);
         super.introLabel.setText(ENText.MAIN_INTRODUCTION);
 
         super.rootPanel.add(this.modeSelectionLabel);
@@ -39,7 +40,7 @@ public class Entry extends TransitionalFrame {
         this.confirmButton.addActionListener(e -> {
             Mode.setSelectedMode(modeList.getSelectedValue());
             if (Mode.getSelectedMode() != null) {
-                VDConstantsUtils.switchFrame(this, new ListSelection());
+                VDUtils.switchFrame(this, new ListSelection());
             }
         });
 
@@ -67,7 +68,7 @@ public class Entry extends TransitionalFrame {
                     e.getClickCount() == 2 &&
                     e.getSource() instanceof JList) {
                 Mode.setSelectedMode(modeList.getSelectedValue());
-                VDConstantsUtils.switchFrame(Entry.this, new ListSelection());
+                VDUtils.switchFrame(Entry.this, new ListSelection());
             }
         }
     }

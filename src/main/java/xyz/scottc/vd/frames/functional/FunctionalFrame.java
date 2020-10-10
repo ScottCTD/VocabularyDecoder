@@ -1,7 +1,8 @@
 package xyz.scottc.vd.frames.functional;
 
 import xyz.scottc.vd.frames.transitional.ListSelection;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
+import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.*;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.awt.*;
 
 public class FunctionalFrame extends JFrame {
 
-    protected static final int MARGIN = VDConstantsUtils.getSreenRectangle().width / 100;
+    protected static final int MARGIN = VDUtils.getScreenRectangle().width / 100;
     protected static final int SUB_MARGIN = MARGIN / 10;
 
     protected final UtilJPanel rootPanel = new UtilJPanel();
@@ -21,36 +22,37 @@ public class FunctionalFrame extends JFrame {
     protected final UtilJPanel readyPanel = new UtilJPanel();
     protected final SpringLayout readyPanelLayout = new SpringLayout();
 
-    protected final UtilJButton backButton = new UtilJButton("Back", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30, false);
-    protected final UtilJButton hideTimerButton = new UtilJButton("Hide Timer", VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
+    protected final UtilJButton backButton = new UtilJButton("Back", VDConstants.MICROSOFT_YAHEI_BOLD_30, false);
+    protected final UtilJButton hideTimerButton = new UtilJButton("Hide Timer", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
 
-    protected final VDAmountDisplay amount = new VDAmountDisplay(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+    protected final VDAmountDisplay amount = new VDAmountDisplay(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
     protected final VDTimer timer = new VDTimer();
 
-    protected final LineSeparator separator01 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
-    protected final LineSeparator separator02 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
+    protected final LineSeparator separator01 = new LineSeparator(LineSeparator.HORIZONTAL, VDUtils.getScreenRectangle().width);
+    protected final LineSeparator separator02 = new LineSeparator(LineSeparator.HORIZONTAL, VDUtils.getScreenRectangle().width);
 
     protected boolean init = false;
     protected boolean suspend = false;
 
     public FunctionalFrame() throws HeadlessException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(VDConstantsUtils.getSreenRectangle());
+        this.setBounds(VDUtils.getScreenRectangle());
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     protected void rootPanelHandler() {
         this.setContentPane(this.rootPanel);
 
         this.rootPanel.add(this.backButton);
-        this.backButton.addActionListener(e -> VDConstantsUtils.switchFrame(this, new ListSelection()));
+        this.backButton.addActionListener(e -> VDUtils.switchFrame(this, new ListSelection()));
 
         this.rootPanel.add(this.separator01);
 
         this.rootPanel.add(this.timer);
-        this.timer.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+        this.timer.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
 
         this.rootPanel.add(this.hideTimerButton);
-        this.hideTimerButton.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+        this.hideTimerButton.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
         this.hideTimerButton.addActionListener(e -> {
             String hide = "Hide Timer";
             String display = "Display Timer";
@@ -69,7 +71,7 @@ public class FunctionalFrame extends JFrame {
 
         this.rootPanel.add(this.readyPanel);
         this.readyPanel.setLayout(this.readyPanelLayout);
-        this.readyPanel.setBackGround(VDConstantsUtils.SELECTED_COLOR);
+        this.readyPanel.setBackGround(VDConstants.SELECTED_COLOR);
 
         this.rootPanel.add(this.initPanel);
         this.initPanel.setLayout(initPanelLayout);

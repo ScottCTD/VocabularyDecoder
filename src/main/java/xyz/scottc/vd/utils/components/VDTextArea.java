@@ -1,6 +1,6 @@
 package xyz.scottc.vd.utils.components;
 
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class VDTextArea extends JTextArea {
     }
 
     public VDTextArea(int rows, int columns, Font font, boolean enable, boolean enter) {
-        this(VDConstantsUtils.EMPTY, rows, columns, font, enable, enter);
+        this(VDConstants.EMPTY, rows, columns, font, enable, enter);
     }
 
     public VDTextArea(String text, int rows, int columns, Font font) {

@@ -1,7 +1,7 @@
 package xyz.scottc.vd.frames.transitional;
 
-import xyz.scottc.vd.Mode;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.core.Mode;
+import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.components.UtilJCheckBox;
 import xyz.scottc.vd.utils.components.UtilJLabel;
 import xyz.scottc.vd.utils.components.UtilJPanel;
@@ -15,10 +15,10 @@ import java.awt.*;
 public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer<Mode> {
 
     private final UtilJCheckBox checkBox = new UtilJCheckBox();
-    private final UtilJLabel nameLabel = new UtilJLabel(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40);
+    private final UtilJLabel nameLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_40);
 
     private final VDTextArea description = new VDTextArea(3, 5,
-            VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20, false, false);
+            VDConstants.MICROSOFT_YAHEI_PLAIN_20, false, false);
 
     public ModeListCellRenderer() {
         this.setPreferredSize(new Dimension(400, 200));
@@ -45,7 +45,7 @@ public class ModeListCellRenderer extends UtilJPanel implements ListCellRenderer
 
         this.setOpaque(true);
 
-        Color selectedColor = VDConstantsUtils.SELECTED_COLOR;
+        Color selectedColor = VDConstants.SELECTED_COLOR;
         if (isSelected) {
             this.setBackGround(selectedColor);
             this.setForeground(list.getSelectionForeground());

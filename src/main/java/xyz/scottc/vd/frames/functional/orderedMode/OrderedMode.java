@@ -1,10 +1,12 @@
 package xyz.scottc.vd.frames.functional.orderedMode;
 
-import xyz.scottc.vd.Input;
-import xyz.scottc.vd.VDList;
+import xyz.scottc.vd.core.Input;
+import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.frames.functional.FunctionalFrame;
+import xyz.scottc.vd.review.ReviewDialog;
 import xyz.scottc.vd.utils.ENText;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
+import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.*;
 
 import javax.swing.*;
@@ -15,31 +17,38 @@ public class OrderedMode extends FunctionalFrame {
 
     private final UtilJPanel suspendPanel = new UtilJPanel();
     private final SpringLayout suspendPanelLayout = new SpringLayout();
-    private final UtilJLabel suspendLabel = new UtilJLabel(ENText.ORDERED_MODE_SUSPEND_TEXT, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
+    private final UtilJLabel suspendLabel = new UtilJLabel(ENText.ORDERED_MODE_SUSPEND_TEXT, VDConstants.MICROSOFT_YAHEI_BOLD_60);
 
-    private final UtilJLabel readyLabel = new UtilJLabel(ENText.ORDERED_MODE_READY_TEXT, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton VQButton = new UtilJButton("Vocabularies as Questions", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton MQButton = new UtilJButton("Meanings as Questions", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
+    private final ReviewDialog review = new ReviewDialog(this);
 
-    private final UtilJButton nextButton = new UtilJButton("Next", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton preButton = new UtilJButton("Previous", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton answerButton = new UtilJButton("Answer", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton reviewButton = new UtilJButton("Review", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJLabel currentListLabel = new UtilJLabel("Current VD List: ", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJLabel readyLabel = new UtilJLabel(ENText.ORDERED_MODE_READY_TEXT, VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton VQButton = new UtilJButton("Vocabularies as Questions", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton MQButton = new UtilJButton("Meanings as Questions", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
-    private final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton nextButton = new UtilJButton("Next", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton preButton = new UtilJButton("Previous", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton answerButton = new UtilJButton("Answer", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton reviewButton = new UtilJButton("Review", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJLabel currentListLabel = new UtilJLabel("Current VD List: ", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
-    private final UtilJLabel preLabel = new UtilJLabel(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJLabel nextLabel = new UtilJLabel(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
-    private final VDTextArea Q = new VDTextArea(2, 10, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_120, false, false);
+    private final UtilJLabel preLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJLabel nextLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
+
+    private final VDTextArea Q = new VDTextArea(2, 10, VDConstants.MICROSOFT_YAHEI_BOLD_120, false, false);
     private final JScrollPane QView = new JScrollPane(this.Q, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    private final VDTextArea I = new VDTextArea(1, 10, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_120, true, false);
+    private final VDTextArea I = new VDTextArea(1, 10, VDConstants.MICROSOFT_YAHEI_BOLD_120, true, false);
     private final JScrollPane IView = new JScrollPane(this.I, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    private final VDTextArea A = new VDTextArea(1, 10, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_120, false, false);
+    private final UtilJLabel ALabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final VDTextArea A = new VDTextArea(1, 10, VDConstants.MICROSOFT_YAHEI_BOLD_120, false, false);
     private final JScrollPane AView = new JScrollPane(this.A, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-    private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.VERTICAL, VDConstantsUtils.getSreenRectangle().height);
+    private final LineSeparator separator03 = new LineSeparator(LineSeparator.VERTICAL, VDUtils.getScreenRectangle().height, 5);
+    private final LineSeparator separator04 = new LineSeparator(LineSeparator.VERTICAL, VDUtils.getScreenRectangle().height, 5);
+    private final LineSeparator separator05 = new LineSeparator(LineSeparator.HORIZONTAL, VDUtils.getScreenRectangle().width, 1);
+
+    private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.VERTICAL, VDUtils.getScreenRectangle().height);
 
     private final VDList vdList;
 
@@ -70,6 +79,7 @@ public class OrderedMode extends FunctionalFrame {
 
         super.rootPanel.add(this.reviewButton);
         this.reviewButton.addActionListener(e -> this.review());
+        this.review.addTableMouseLisener(new TableMouseLisener());
 
         super.rootPanel.add(this.suspendButton);
         this.suspendButton.addActionListener(e -> this.suspend());
@@ -77,10 +87,13 @@ public class OrderedMode extends FunctionalFrame {
         super.rootPanel.add(this.currentListLabel);
         this.currentListLabel.setBackground(this.rootPanel.getBackground());
 
+        super.rootPanel.add(this.lineHelper01);
+        this.lineHelper01.setVisible(false);
+
         //suspend panel
         super.rootPanel.add(this.suspendPanel);
         this.suspendPanel.setLayout(this.suspendPanelLayout);
-        this.suspendPanel.setBackGround(VDConstantsUtils.SELECTED_COLOR);
+        this.suspendPanel.setBackGround(VDConstants.SELECTED_COLOR);
         this.suspendPanel.setVisible(false);
         this.suspendPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -95,7 +108,7 @@ public class OrderedMode extends FunctionalFrame {
         });
 
         this.suspendPanel.add(this.suspendLabel);
-        this.suspendLabel.setBackground(VDConstantsUtils.SELECTED_COLOR);
+        this.suspendLabel.setBackground(VDConstants.SELECTED_COLOR);
 
         //ready panel
         super.readyPanel.add(this.readyLabel);
@@ -111,58 +124,36 @@ public class OrderedMode extends FunctionalFrame {
         });
 
         //init panel
-        this.initPanel.add(this.QView);
+        super.initPanel.add(this.QView);
         this.Q.setLineWrap(true);
         this.Q.setWrapStyleWord(true);
         this.Q.setBackground(super.rootPanel.getBackground());
+        this.QView.setBorder(BorderFactory.createEmptyBorder());
 
-        this.initPanel.add(this.IView);
+        super.initPanel.add(this.IView);
         this.I.addKeyListener(new InputKeyListener());
 
-        this.initPanel.add(this.AView);
-        this.A.setBackground(super.rootPanel.getBackground());
+        super.initPanel.add(this.ALabel);
+        this.ALabel.setBackground(super.initPanel.getBackground());
 
-        MouseListener mouseListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                UtilJLabel label = (UtilJLabel) e.getSource();
-                label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                if (label.equals(preLabel)) {
-                    pre();
-                } else if (label.equals(nextLabel)) {
-                    next();
-                }
-            }
+        super.initPanel.add(this.AView);
+        this.A.setBackground(super.initPanel.getBackground());
+        this.AView.setBorder(BorderFactory.createEmptyBorder());
 
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                UtilJLabel label = (UtilJLabel) e.getSource();
-                label.setBackground(VDConstantsUtils.SELECTED_COLOR);
-                if (label.equals(preLabel)) {
-                    label.setText("Previous");
-                } else if (label.equals(nextLabel)) {
-                    label.setText("Next");
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                UtilJLabel label = (UtilJLabel) e.getSource();
-                label.setBorder(BorderFactory.createEmptyBorder());
-                label.setBackground(label.getParent().getBackground());
-                label.setText(VDConstantsUtils.EMPTY);
-            }
-        };
-        this.initPanel.add(this.preLabel);
+        MouseListener mouseListener = new NextPreLabelMouseListener();
+        super.initPanel.add(this.preLabel);
         this.preLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.preLabel.addMouseListener(mouseListener);
 
-        this.initPanel.add(this.nextLabel);
+        super.initPanel.add(this.nextLabel);
         this.nextLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.nextLabel.addMouseListener(mouseListener);
 
-        this.initPanel.add(this.lineHelper01);
-        this.lineHelper01.setVisible(true);
+        super.initPanel.add(this.separator03);
+
+        super.initPanel.add(this.separator04);
+
+        super.initPanel.add(this.separator05);
     }
 
     private void init() {
@@ -174,6 +165,8 @@ public class OrderedMode extends FunctionalFrame {
         timer.startFromZero();
         amount.setTotalAmount(vdList.getQs().size());
         amount.setCurrentAmount(vdList.getIndex() + 1);
+
+        this.review.initData(this.vdList);
 
         I.grabFocus();
 
@@ -228,8 +221,11 @@ public class OrderedMode extends FunctionalFrame {
     }
 
     private void disableAnswer() {
-        this.A.setText(VDConstantsUtils.EMPTY);
-        this.IView.setBorder(BorderFactory.createEmptyBorder());
+        this.A.setText(VDConstants.EMPTY);
+        this.AView.setBorder(BorderFactory.createEmptyBorder());
+        this.IView.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.ALabel.setText(VDConstants.EMPTY);
+        this.ALabel.setForeground(Color.BLACK);
         this.isAnswerShown = false;
     }
 
@@ -237,18 +233,24 @@ public class OrderedMode extends FunctionalFrame {
         this.A.setText(this.vdList.getAnswer());
         switch (this.vdList.getInput().getState()) {
             case CORRECT:
-                this.IView.setBorder(BorderFactory.createLineBorder(Input.CORRECT, 3));
+                this.IView.setBorder(BorderFactory.createLineBorder(Input.CORRECT_COLOR, 3));
+
+                this.ALabel.setText(this.vdList.getInput().getState().toString());
+                this.ALabel.setForeground(Input.CORRECT_COLOR);
                 break;
             case INCORRECT:
-                this.IView.setBorder(BorderFactory.createLineBorder(Input.INCORRECT, 3));
+                this.IView.setBorder(BorderFactory.createLineBorder(Input.INCORRECT_COLOR, 3));
+                this.ALabel.setText(this.vdList.getInput().getState().toString());
+                this.ALabel.setForeground(Input.INCORRECT_COLOR);
                 break;
         }
+        this.AView.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.isAnswerShown = true;
     }
 
     private void review() {
         if (super.init) {
-            System.out.println("review");
+            this.review.setVisible(true);
         }
     }
 
@@ -289,6 +291,9 @@ public class OrderedMode extends FunctionalFrame {
         super.layout.putConstraint(SpringLayout.WEST, this.suspendPanel, 0, SpringLayout.WEST, super.rootPanel);
         super.layout.putConstraint(SpringLayout.EAST, this.suspendPanel, 0, SpringLayout.EAST, super.rootPanel);
 
+        super.layout.putConstraint(SpringLayout.NORTH, this.lineHelper01, 0, SpringLayout.NORTH, super.rootPanel);
+        super.layout.putConstraint(SpringLayout.SOUTH, this.lineHelper01, 0, SpringLayout.SOUTH, super.rootPanel);
+
         //ready panel
         super.readyPanelLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, this.readyLabel, 0, SpringLayout.HORIZONTAL_CENTER, super.readyPanel);
         super.readyPanelLayout.putConstraint(SpringLayout.VERTICAL_CENTER, this.readyLabel, 0, SpringLayout.VERTICAL_CENTER, super.readyPanel);
@@ -318,13 +323,21 @@ public class OrderedMode extends FunctionalFrame {
         super.initPanelLayout.putConstraint(SpringLayout.SOUTH, this.AView, -MARGIN, SpringLayout.SOUTH, super.initPanel);
         super.initPanelLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, this.AView, 0, SpringLayout.HORIZONTAL_CENTER, this.QView);
 
+        super.initPanelLayout.putConstraint(SpringLayout.NORTH, this.ALabel, MARGIN, SpringLayout.SOUTH, this.IView);
+        super.initPanelLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, this.ALabel, 0, SpringLayout.HORIZONTAL_CENTER, this.AView);
+
         super.initPanelLayout.putConstraint(SpringLayout.NORTH, this.nextLabel, 0, SpringLayout.NORTH, super.initPanel);
         super.initPanelLayout.putConstraint(SpringLayout.SOUTH, this.nextLabel, 0, SpringLayout.SOUTH, super.initPanel);
         super.initPanelLayout.putConstraint(SpringLayout.EAST, this.nextLabel, 0, SpringLayout.EAST, super.initPanel);
         super.initPanelLayout.putConstraint(SpringLayout.WEST, this.nextLabel, MARGIN * 2, SpringLayout.EAST, this.QView);
 
-        super.layout.putConstraint(SpringLayout.NORTH, this.lineHelper01, 0, SpringLayout.NORTH, super.rootPanel);
-        super.layout.putConstraint(SpringLayout.SOUTH, this.lineHelper01, 0, SpringLayout.SOUTH, super.rootPanel);
+        super.initPanelLayout.putConstraint(SpringLayout.WEST, this.separator03, 0, SpringLayout.EAST, this.preLabel);
+
+        super.initPanelLayout.putConstraint(SpringLayout.EAST, this.separator04, 0, SpringLayout.WEST, this.nextLabel);
+
+        super.initPanelLayout.putConstraint(SpringLayout.NORTH, this.separator05, MARGIN, SpringLayout.SOUTH, this.QView);
+        super.initPanelLayout.putConstraint(SpringLayout.WEST, this.separator05, 0, SpringLayout.EAST, this.separator03);
+        super.initPanelLayout.putConstraint(SpringLayout.EAST, this.separator05, 0, SpringLayout.WEST, this.separator04);
     }
 
     private class InputKeyListener implements KeyListener {
@@ -366,16 +379,65 @@ public class OrderedMode extends FunctionalFrame {
 
                 //judge
                 if (!OrderedMode.vocabularyQ) {
-                    if (!I.getText().equals(VDConstantsUtils.EMPTY)) {
+                    if (!I.getText().equals(VDConstants.EMPTY)) {
                         vdList.setInput(vdList.judgeEn());
                     }
                 } else {
-                    if (!I.getText().equals(VDConstantsUtils.EMPTY)) {
+                    if (!I.getText().equals(VDConstants.EMPTY)) {
+                        //To do Chinese Correction
                     }
                 }
 
                 //update answer if needed
                 if (isAnswerShown) updateAnswer();
+
+                //update the review
+                review.setData(vdList.getIndex(), vdList);
+            }
+        }
+    }
+
+    private class NextPreLabelMouseListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            UtilJLabel label = (UtilJLabel) e.getSource();
+            label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            if (label.equals(preLabel)) {
+                pre();
+            } else if (label.equals(nextLabel)) {
+                next();
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            UtilJLabel label = (UtilJLabel) e.getSource();
+            label.setBackground(VDConstants.SELECTED_COLOR);
+            if (label.equals(preLabel)) {
+                label.setText("Previous");
+            } else if (label.equals(nextLabel)) {
+                label.setText("Next");
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            UtilJLabel label = (UtilJLabel) e.getSource();
+            label.setBorder(BorderFactory.createEmptyBorder());
+            label.setBackground(label.getParent().getBackground());
+            label.setText(VDConstants.EMPTY);
+        }
+    }
+
+    private class TableMouseLisener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 2) {
+                int row = review.table.getSelectedRow();
+                int index = (int) review.table.getValueAt(row, 0);
+                vdList.setIndex(index - 1);
+                updateUI();
+                review.setVisible(false);
             }
         }
     }

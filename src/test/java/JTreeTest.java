@@ -1,4 +1,4 @@
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.components.UtilJPanel;
 
 import javax.swing.*;
@@ -40,7 +40,7 @@ public class JTreeTest extends JFrame {
         JTree tree = new JTree(rootNode);
         rootPanel.add(tree, BorderLayout.CENTER);
 
-        tree.setFont(VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
+        tree.setFont(VDConstants.MICROSOFT_YAHEI_PLAIN_20);
 
         DefaultMutableTreeNode testNode01 = new DefaultMutableTreeNode("Test01");
         rootNode.add(testNode01);

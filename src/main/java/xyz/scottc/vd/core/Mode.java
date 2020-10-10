@@ -1,4 +1,4 @@
-package xyz.scottc.vd;
+package xyz.scottc.vd.core;
 
 import java.util.ArrayList;
 import java.util.List;

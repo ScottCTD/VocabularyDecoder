@@ -1,6 +1,6 @@
 package xyz.scottc.vd.utils.components;
 
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,12 +8,12 @@ import java.awt.*;
 public class UtilJLabel extends JLabel {
 
     public UtilJLabel() {
-        this(VDConstantsUtils.EMPTY, null);
+        this(VDConstants.EMPTY, null);
         this.setOpaque(true);
     }
 
     public UtilJLabel(Font font) {
-        this(VDConstantsUtils.EMPTY, font);
+        this(VDConstants.EMPTY, font);
         this.setOpaque(true);
     }
 

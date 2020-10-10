@@ -21,9 +21,9 @@ public class ENText {
     public static final String ORDERED_MODE_READY_TEXT = "<html>\n" +
             "<body>\n" +
             "<div align=\"center\">\n" +
-            "    <font color=\"#ff7f50\">Vocabularies as Questions</font> means you need to type <font color=\"#dc143c\">the meaning of a vocabulary</font>.\n" +
+            "    <font color=\"#0033FF\">Vocabularies as Questions</font> means you need to type <font color=\"#dc143c\">the meaning of a vocabulary</font>.\n" +
             "    <br>\n" +
-            "    <font color=\"#ff7f50\">Meanings as Questions</font> means you need to type <font color=\"#dc143c\">the corresponding vocabulary of it's meaning</font>.\n" +
+            "    <font color=\"#0033FF\">Meanings as Questions</font> means you need to type <font color=\"#dc143c\">the corresponding vocabulary of it's meaning</font>.\n" +
             "    <br>\n" +
             "    Note: You <font color=\"#dc143c\">can</font> check the answer and review!\n" +
             "</div>\n" +

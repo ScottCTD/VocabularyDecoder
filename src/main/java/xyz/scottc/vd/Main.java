@@ -1,9 +1,9 @@
 package xyz.scottc.vd;
 
 import xyz.scottc.vd.exceptions.FileCreatingException;
-import xyz.scottc.vd.frames.transitional.ListSelection;
+import xyz.scottc.vd.frames.transitional.Entry;
 import xyz.scottc.vd.utils.FileUtils;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
 
 import javax.swing.*;
 import java.io.File;
@@ -52,8 +52,8 @@ public class Main {
                 IllegalAccessException e) {
             e.printStackTrace();
         }
-        //Entry frame = new Entry();
-        ListSelection frame = new ListSelection();
+        Entry frame = new Entry();
+        //ListSelection frame = new ListSelection();
         //FunctionalFrame frame = new FunctionalFrame("Functional Frame");
         //OrderedMode frame = new OrderedMode();
         frame.setVisible(true);
@@ -63,19 +63,19 @@ public class Main {
         //Create the library files
         File directory = FileUtils.getDirectoryFile(Main.class);
         if (directory != null) {
-            File lib = new File(directory.getAbsolutePath() + "/" + VDConstantsUtils.LIBRARY_NAME);
+            File lib = new File(directory.getAbsolutePath() + "/" + VDConstants.LIBRARY_NAME);
             if (!lib.exists()) {
-                if (!lib.mkdir()) throw new FileCreatingException("Fail to create" + VDConstantsUtils.LIBRARY_NAME);
+                if (!lib.mkdir()) throw new FileCreatingException("Fail to create" + VDConstants.LIBRARY_NAME);
             }
-            File exLibrary = new File(lib.getAbsolutePath() + "/" + VDConstantsUtils.EXTERNAL_LIBRARY_NAME);
+            File exLibrary = new File(lib.getAbsolutePath() + "/" + VDConstants.EXTERNAL_LIBRARY_NAME);
             if (!exLibrary.exists()) {
                 if (!exLibrary.mkdir())
-                    throw new FileCreatingException("Failed to create " + VDConstantsUtils.EXTERNAL_LIBRARY_NAME);
+                    throw new FileCreatingException("Failed to create " + VDConstants.EXTERNAL_LIBRARY_NAME);
             }
-            File inLibrary = new File(lib.getAbsolutePath() + "/" + VDConstantsUtils.INTERNAL_LIBRARY_NAME);
+            File inLibrary = new File(lib.getAbsolutePath() + "/" + VDConstants.INTERNAL_LIBRARY_NAME);
             if (!inLibrary.exists()) {
                 if (!inLibrary.mkdir())
-                    throw new FileCreatingException("Failed to create " + VDConstantsUtils.INTERNAL_LIBRARY_NAME);
+                    throw new FileCreatingException("Failed to create " + VDConstants.INTERNAL_LIBRARY_NAME);
             }
             library = lib;
             internalLibrary = inLibrary;

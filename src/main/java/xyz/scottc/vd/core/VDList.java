@@ -1,8 +1,10 @@
-package xyz.scottc.vd;
+package xyz.scottc.vd.core;
 
 import org.json.JSONObject;
+import xyz.scottc.vd.Main;
 import xyz.scottc.vd.utils.JSONUtils;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
+import xyz.scottc.vd.utils.VDUtils;
 
 import java.io.File;
 import java.nio.file.InvalidPathException;
@@ -65,10 +67,6 @@ public class VDList {
         return false;
     }
 
-    public void setInputContent(String input) {
-        this.Is.get(this.index).setContent(input);
-    }
-
     public Input judgeEn() {
         Input input = this.getInput();
         if (input.toString().equals(this.getAnswer())) {
@@ -80,7 +78,7 @@ public class VDList {
     }
 
     public void interconvertQAList() {
-        VDConstantsUtils.interconvertList(this.Qs, this.As);
+        VDUtils.interconvertList(this.Qs, this.As);
     }
 
     /**
@@ -95,7 +93,7 @@ public class VDList {
             List<Object> answers = jsonObject.getJSONArray("answers").toList();
             for (Object question : questions) {
                 this.Qs.add(question.toString());
-                this.Is.add(new Input(VDConstantsUtils.EMPTY));
+                this.Is.add(new Input(VDConstants.EMPTY));
             }
             for (Object answer : answers) {
                 this.As.add(answer.toString());
@@ -130,7 +128,7 @@ public class VDList {
         int start = 0;
         while ((index = this.type.indexOf("\\", index)) != -1) {
             String temp = this.type.substring(start, index);
-            list.add(temp.replace("\\", VDConstantsUtils.EMPTY));
+            list.add(temp.replace("\\", VDConstants.EMPTY));
             start = index;
             index++;
         }
@@ -141,12 +139,16 @@ public class VDList {
         return this.index;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     public String getName() {
         return this.VDList.getName();
     }
 
     public String getSimpleName() {
-        return this.VDList.getName().replace(".json", VDConstantsUtils.EMPTY);
+        return this.VDList.getName().replace(".json", VDConstants.EMPTY);
     }
 
     public String getType() {
@@ -191,6 +193,10 @@ public class VDList {
 
     public void setInput(Input input) {
         this.Is.set(this.index, input);
+    }
+
+    public void setInputContent(String input) {
+        this.Is.get(this.index).setContent(input);
     }
 
     public List<String> getQs() {

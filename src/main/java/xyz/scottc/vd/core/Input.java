@@ -1,6 +1,6 @@
-package xyz.scottc.vd;
+package xyz.scottc.vd.core;
 
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
 
 import java.awt.*;
 import java.util.Objects;
@@ -10,22 +10,17 @@ public class Input {
     private String content;
     private InputState state;
 
-    public static final Color CORRECT = new Color(0x00A74A);
-    public static final Color INCORRECT = new Color(0xFE4365);
+    public static final Color CORRECT_COLOR = new Color(0x00A74A);
+    public static final Color INCORRECT_COLOR = new Color(0xFE4365);
 
     public Input(String content) {
-        if (content.equals(VDConstantsUtils.EMPTY)) {
+        if (content.equals(VDConstants.EMPTY)) {
             this.content = content;
             this.state = InputState.NOT_ANSWERED;
         } else {
             this.content = content;
-            this.state = InputState.ANSWERED;
+            this.state = InputState.UNSURE;
         }
-    }
-
-    public Input(String content, InputState state) {
-        this.content = content;
-        this.state = state;
     }
 
     public String getContent() {
@@ -63,7 +58,7 @@ public class Input {
     }
 
     public enum InputState {
-        CORRECT, INCORRECT, NOT_ANSWERED, ANSWERED;
+        CORRECT, INCORRECT, NOT_ANSWERED, UNSURE;
 
         @Override
         public String toString() {
@@ -72,7 +67,7 @@ public class Input {
                     return "CORRECT";
                 case INCORRECT:
                     return "INCORRECT";
-                case ANSWERED:
+                case UNSURE:
                     return "ANSWERED";
                 case NOT_ANSWERED:
                     return "NOT ANSWERED";

@@ -1,11 +1,12 @@
 package xyz.scottc.vd.frames.transitional;
 
 import xyz.scottc.vd.Main;
-import xyz.scottc.vd.VDList;
+import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.utils.VDConstants;
+import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.LineSeparator;
 import xyz.scottc.vd.utils.components.UtilJButton;
 import xyz.scottc.vd.utils.components.UtilJLabel;
@@ -24,24 +25,24 @@ import java.util.Objects;
 
 public class ListSelection extends TransitionalFrame {
 
-    private final UtilJButton backButton = new UtilJButton("Back", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_40);
-    private final UtilJButton importButton = new UtilJButton("Import", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton addFolderButton = new UtilJButton("Add New Folder", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton deleteButton = new UtilJButton("Delete", VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton backButton = new UtilJButton("Back", VDConstants.MICROSOFT_YAHEI_BOLD_40);
+    private final UtilJButton importButton = new UtilJButton("Import", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton addFolderButton = new UtilJButton("Add New Folder", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton deleteButton = new UtilJButton("Delete", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
-    private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
+    private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstants.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultMutableTreeNode inListRoot = new DefaultMutableTreeNode(ENText.INTERNAL_VD_LISTS);
     private final JTree inList = new JTree(this.inListRoot);
     private final JScrollPane inListView = new JScrollPane(this.inList);
 
-    private final UtilJLabel exListLabel = new UtilJLabel(ENText.EXTERNAL_VD_LISTS, VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
+    private final UtilJLabel exListLabel = new UtilJLabel(ENText.EXTERNAL_VD_LISTS, VDConstants.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultMutableTreeNode exListRoot = new DefaultMutableTreeNode(ENText.EXTERNAL_VD_LISTS);
     private final JTree exList = new JTree(this.exListRoot);
     private final JScrollPane exListView = new JScrollPane(this.exList);
 
-    private final LineSeparator separator04 = new LineSeparator(LineSeparator.VERTICAL, VDConstantsUtils.getSreenRectangle().height);
+    private final LineSeparator separator04 = new LineSeparator(LineSeparator.VERTICAL, VDUtils.getScreenRectangle().height);
 
-    private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.HORIZONTAL, VDConstantsUtils.getSreenRectangle().width);
+    private final LineSeparator lineHelper01 = new LineSeparator(LineSeparator.HORIZONTAL, VDUtils.getScreenRectangle().width);
 
     public ListSelection() throws HeadlessException {
         super("VD List Selection");
@@ -54,12 +55,12 @@ public class ListSelection extends TransitionalFrame {
     protected void rootPanelHandler() {
         super.rootPanelHandler();
 
-        super.titleLabel.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_60);
+        super.titleLabel.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_60);
         super.titleLabel.setText(ENText.LIST_SELECTION);
         super.introLabel.setText(ENText.LIST_SELECTION_INTRODUCTION);
 
         super.rootPanel.add(this.backButton);
-        this.backButton.addActionListener(e -> VDConstantsUtils.switchFrame(this, new Entry()));
+        this.backButton.addActionListener(e -> VDUtils.switchFrame(this, new Entry()));
 
         TreeCellRenderer cellRenderer = new ListTreeCellRenderer();
 
@@ -78,9 +79,9 @@ public class ListSelection extends TransitionalFrame {
                         if (file.getAbsolutePath().endsWith(path)) {
                             VDList list = new VDList(file);
                             if (list.toQAList()) {
-                                VDConstantsUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                                VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
                             } else {
-                                VDConstantsUtils.showErrorMessage(ListSelection.this, "Failed to process!");
+                                VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
                             }
                             break;
                         }
@@ -199,7 +200,7 @@ public class ListSelection extends TransitionalFrame {
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-            this.setFont(VDConstantsUtils.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+            this.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
         }
 
         @Override
@@ -208,7 +209,7 @@ public class ListSelection extends TransitionalFrame {
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
             String text = value.toString();
             if (text.contains(".json")) {
-                this.setText(text.replace(".json", VDConstantsUtils.EMPTY));
+                this.setText(text.replace(".json", VDConstants.EMPTY));
             }
             return this;
         }

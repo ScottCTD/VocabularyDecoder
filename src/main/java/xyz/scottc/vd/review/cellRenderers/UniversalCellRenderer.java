@@ -1,7 +1,7 @@
-package xyz.scottc.vd.frames.old.commonModeFrame.dialog.review.cellRenderers;
+package xyz.scottc.vd.review.cellRenderers;
 
-import xyz.scottc.vd.VocabularyState;
-import xyz.scottc.vd.utils.VDConstantsUtils;
+import xyz.scottc.vd.core.Input;
+import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.components.UtilJLabel;
 import xyz.scottc.vd.utils.components.UtilJPanel;
 
@@ -11,12 +11,14 @@ import java.awt.*;
 
 public class UniversalCellRenderer extends UtilJPanel implements TableCellRenderer {
 
-    public UtilJLabel label = new UtilJLabel(VDConstantsUtils.MICROSOFT_YAHEI_PLAIN_20);
+    public UtilJLabel label = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_PLAIN_20);
 
     public UniversalCellRenderer() {
+        this.label.setFont(VDConstants.MICROSOFT_YAHEI_PLAIN_20);
         this.add(label, BorderLayout.CENTER);
         this.label.setHorizontalAlignment(UtilJLabel.CENTER);
         this.label.setVerticalAlignment(UtilJLabel.CENTER);
+        this.label.setBackground(Color.WHITE);
     }
 
     @Override
@@ -28,24 +30,27 @@ public class UniversalCellRenderer extends UtilJPanel implements TableCellRender
         this.setOpaque(true);
         if (isSelected) {
             this.setBackground(new Color(0xD9EBF9));
+            this.label.setBackground(new Color(0xD9EBF9));
             this.setForeground(table.getSelectionForeground());
         } else {
             this.setBackground(Color.WHITE);
+            this.label.setBackground(Color.WHITE);
             this.setForeground(table.getForeground());
         }
 
-        VocabularyState correct = (VocabularyState) table.getValueAt(row, 4);
+        Input.InputState correct = (Input.InputState) table.getValueAt(row, 4);
         if (hasFocus) {
             this.setBackGround(new Color(0xBCDCF4));
+            this.label.setBackground(new Color(0xBCDCF4));
         }
         switch (correct) {
             case CORRECT:
-                this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0x00A74A)));
+                this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Input.CORRECT_COLOR));
                 break;
             case INCORRECT:
-                this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(0xFE4365)));
+                this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, Input.INCORRECT_COLOR));
                 break;
-            case ANSWERED:
+            case UNSURE:
             case NOT_ANSWERED:
                 this.setBorder(BorderFactory.createEmptyBorder());
                 break;
