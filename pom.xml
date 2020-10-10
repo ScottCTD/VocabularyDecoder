@@ -6,7 +6,7 @@
 
     <groupId>xyz.socttc</groupId>
     <artifactId>VocabularyDecoder</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.5</version>
     <dependencies>
         <dependency>
             <groupId>org.json</groupId>
@@ -21,7 +21,7 @@
     </properties>
 
     <build>
-        <finalName>${project.artifactId}${project.version}</finalName>
+        <finalName>${project.artifactId} - ${project.version}</finalName>
 
         <plugins>
             <!-- 编译插件 -->
