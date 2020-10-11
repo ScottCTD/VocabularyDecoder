@@ -349,7 +349,11 @@ public class OrderedMode extends FunctionalFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-
+            if (init && !suspend) {
+                if (e.getModifiers() == InputEvent.ALT_MASK && e.getKeyCode() == KeyEvent.VK_A) {
+                    answer();
+                }
+            }
         }
 
         @Override
@@ -357,26 +361,21 @@ public class OrderedMode extends FunctionalFrame {
             if (init && !suspend) {
                 //单键判断： enter = 10  下箭头 = 40  上箭头 38
                 switch (e.getKeyCode()) {
-                    case 10:
-                    case 40:
+                    case KeyEvent.VK_ENTER:
+                    case KeyEvent.VK_DOWN:
                         try {
                             next();
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
                         break;
-                    case 38:
+                    case KeyEvent.VK_UP:
                         try {
                             pre();
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
                         break;
-                }
-
-                //modifier == 8 + keyCode == 65 -> alt+a
-                if (e.getModifiers() == 8 && e.getKeyCode() == 65) {
-                    answer();
                 }
 
                 //save

@@ -294,29 +294,29 @@ public class ListSelection extends TransitionalFrame {
 
     private class ListTreeMouseListener extends MouseAdapter {
 
-        private void switchFrame(MouseEvent e, JTree tree) {
-            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 && e.getSource() instanceof JTree) {
-                TreePath treePath = inList.getPathForLocation(e.getX(), e.getY());
-                if (treePath != null) {
-                    File file = getFileFromTreePath(treePath, Main.INTERNAL_LISTS);
-                    if (file != null) {
-                        VDList list = new VDList(file);
-                        if (list.toQAList()) {
-                            VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
-                        } else {
-                            VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
-                        }
+        private void switchFrame(MouseEvent e, JTree tree, List<File> fileList) {
+            TreePath treePath = tree.getPathForLocation(e.getX(), e.getY());
+            if (treePath != null) {
+                File file = getFileFromTreePath(treePath, fileList);
+                if (file != null) {
+                    VDList list = new VDList(file);
+                    if (list.toQAList()) {
+                        VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                    } else {
+                        VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
                     }
                 }
-            }
+                }
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-            if (e.getSource() == inList) {
-                this.switchFrame(e, inList);
-            } else if (e.getSource() == exList) {
-                this.switchFrame(e, exList);
+            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 && e.getSource() instanceof JTree) {
+                if (e.getSource() == inList) {
+                    this.switchFrame(e, inList, Main.INTERNAL_LISTS);
+                } else if (e.getSource() == exList) {
+                    this.switchFrame(e, exList, Main.EXTERNAL_LISTS);
+                }
             }
         }
     }
