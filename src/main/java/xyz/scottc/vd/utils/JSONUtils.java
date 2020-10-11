@@ -4,12 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JSONUtils {
 
-    public static void toFile(Object json, File file, String encoding) {
+    public static void toFile(Object json, File file) {
         String jsonString;
         //判断是否为json对象
         if (json instanceof JSONObject) {
@@ -25,13 +23,6 @@ public class JSONUtils {
         OutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(file);
-            // UTF-8写入BOM头部
-            encoding = encoding.toUpperCase();
-            if ("UTF-8".equals(encoding)) {
-                byte[] bom = {(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
-                outputStream.write(bom);
-            }
-            outputStream.flush();
             //写入文件
             byte[] buffer = jsonString.getBytes();
             outputStream.write(buffer);
@@ -58,11 +49,6 @@ public class JSONUtils {
             int length = inputStream.read(buffer);
 
             int offset = 0;
-            encoding = encoding.toUpperCase();
-            if (length > 3 && "UTF-8".equals(encoding)) {
-                if (buffer[0] == (byte) 0xEF && buffer[1] == (byte) 0xBB && buffer[2] == (byte) 0xBF)
-                    offset = 3; // 前3个字节是BOM
-            }
             String jsonString = new String(buffer, offset, length - offset, encoding);
 
             if (jsonString.trim().startsWith("{")) {
@@ -85,11 +71,4 @@ public class JSONUtils {
         throw new Exception("Invalid Json File");
     }
 
-    public static List<String> JSONArrayToArrayList(JSONArray jsonArray) {
-        List<String> list = new ArrayList<>();
-        for (Object object : jsonArray) {
-            list.add(object.toString());
-        }
-        return list;
-    }
 }

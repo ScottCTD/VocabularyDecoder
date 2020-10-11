@@ -8,7 +8,8 @@ import xyz.scottc.vd.utils.components.UtilJButton;
 import xyz.scottc.vd.utils.components.UtilJLabel;
 import xyz.scottc.vd.utils.components.VDMenu;
 import xyz.scottc.vd.utils.components.VDMenuItem;
-import xyz.scottc.vd.utils.dialogs.VDInputDialog;
+import xyz.scottc.vd.utils.dialogs.CreateVDFileByInputDialog;
+import xyz.scottc.vd.utils.dialogs.CreateVDFileByTXTDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,8 +25,9 @@ public class Entry extends TransitionalFrame {
     private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_BOLD_60);
 
     private final JMenuBar menuBar = new JMenuBar();
-    private final VDMenu testMenu = new VDMenu("Test");
-    private final VDMenuItem testMenuItem = new VDMenuItem("Test");
+    private final VDMenu toolsMenu = new VDMenu("Tools");
+    private final VDMenuItem createVDFile01MenuItem = new VDMenuItem("Create VD File by .txt");
+    private final VDMenuItem createVDFile02MenuItem = new VDMenuItem("Create VD File by Input");
 
     public Entry() throws HeadlessException {
         super("VD Entry");
@@ -61,13 +63,19 @@ public class Entry extends TransitionalFrame {
 
     private void menuHandler() {
         this.setJMenuBar(this.menuBar);
-        this.menuBar.add(this.testMenu);
-        this.testMenu.add(this.testMenuItem);
-        this.testMenuItem.addActionListener(e -> {
-            String value = VDInputDialog.show(Entry.this, "test", "Input something!",
-                    VDConstants.MICROSOFT_YAHEI_PLAIN_20);
-            System.out.println(value);
+
+        this.menuBar.add(this.toolsMenu);
+        this.toolsMenu.add(this.createVDFile01MenuItem);
+        this.createVDFile01MenuItem.addActionListener(e -> {
+            CreateVDFileByTXTDialog dialog = new CreateVDFileByTXTDialog(Entry.this);
+            dialog.setVisible(true);
         });
+        this.toolsMenu.add(this.createVDFile02MenuItem);
+        this.createVDFile02MenuItem.addActionListener(e -> {
+            CreateVDFileByInputDialog dialog = new CreateVDFileByInputDialog(Entry.this);
+            dialog.setVisible(true);
+        });
+
     }
 
     private void modeListHandler() {
