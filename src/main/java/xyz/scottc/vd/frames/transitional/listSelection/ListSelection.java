@@ -72,14 +72,14 @@ public class ListSelection extends TransitionalFrame {
         super.rootPanel.add(this.inListLabel);
 
         super.rootPanel.add(this.inListView);
-        this.inList.setRowHeight(40);
+        this.inList.setRowHeight(50);
         this.inList.setCellRenderer(cellRenderer);
         this.inList.addMouseListener(mouseListener);
 
         super.rootPanel.add(exListLabel);
 
         super.rootPanel.add(this.exListView);
-        this.exList.setRowHeight(40);
+        this.exList.setRowHeight(50);
         this.exList.setCellRenderer(cellRenderer);
         this.exList.addMouseListener(mouseListener);
 
@@ -323,13 +323,17 @@ public class ListSelection extends TransitionalFrame {
 
     private static class ListTreeCellRenderer extends DefaultTreeCellRenderer {
 
+        private Icon textFile;
+        private Icon folder;
+        private Icon vdList;
+        private Icon openedFolder;
+
         public ListTreeCellRenderer() {
             try {
-                Icon leafIcon = FileUtils.createImageIcon("/images/icons/leafNode.png");
-                Icon branchIcon = FileUtils.createImageIcon("/images/icons/branchNode.png");
-                this.setLeafIcon(leafIcon);
-                this.setClosedIcon(branchIcon);
-                this.setOpenIcon(branchIcon);
+                this.textFile = FileUtils.createImageIcon("/images/icons/textFile.png");
+                this.folder = FileUtils.createImageIcon("/images/icons/folder.png");
+                this.vdList = FileUtils.createImageIcon("/images/icons/vdList.png");
+                this.openedFolder = FileUtils.createImageIcon("/images/icons/openedFolder.png");
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
@@ -341,10 +345,20 @@ public class ListSelection extends TransitionalFrame {
                                                       boolean leaf, int row, boolean hasFocus) {
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
             String text = value.toString();
+            if (!text.contains(".")) {
+                this.setIcon(this.folder);
+            } else {
+                this.setIcon(this.textFile);
+            }
             if (text.contains(".vd")) {
                 text = text.replace(".vd", VDConstants.EMPTY);
+                this.setIcon(this.vdList);
             }
             this.setText(text);
+
+            if (expanded) {
+                this.setIcon(this.openedFolder);
+            }
             return this;
         }
     }
