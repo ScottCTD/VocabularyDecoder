@@ -199,6 +199,18 @@ public class VDList {
         this.Is.get(this.index).setContent(input);
     }
 
+    public int getPercentAnswered() {
+        int answered = 0;
+        for (Input input : this.Is) {
+            if (input.getState() != Input.InputState.NOT_ANSWERED) {
+                answered++;
+            }
+        }
+        int total = this.Qs.size();
+        System.out.println((answered * 100) / (total * 100));
+        return (answered * 100) / (total * 100);
+    }
+
     public List<String> getQs() {
         return this.Qs;
     }

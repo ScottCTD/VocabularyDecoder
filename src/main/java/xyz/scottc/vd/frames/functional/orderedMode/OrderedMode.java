@@ -159,20 +159,20 @@ public class OrderedMode extends FunctionalFrame {
     }
 
     private void init() {
-        readyPanel.setVisible(false);
-        initPanel.setVisible(true);
+        super.readyPanel.setVisible(false);
+        super.initPanel.setVisible(true);
 
-        Q.setText(vdList.getQuestion());
+        this.Q.setText(vdList.getQuestion());
 
-        timer.startFromZero();
-        amount.setTotalAmount(vdList.getQs().size());
-        amount.setCurrentAmount(vdList.getIndex() + 1);
+        super.timer.startFromZero();
+        super.amount.setTotalAmount(vdList.getQs().size());
+        super.amount.setCurrentAmount(vdList.getIndex() + 1);
 
         this.review.initData(this.vdList);
 
-        I.grabFocus();
+        this.I.grabFocus();
 
-        init = true;
+        super.init = true;
     }
 
     private void next() {
