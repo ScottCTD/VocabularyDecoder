@@ -1,4 +1,4 @@
-package xyz.scottc.vd.exceptions;
+package xyz.scottc.vd.exceptions.runtime;
 
 public class FileCreatingException extends RuntimeException {
 

@@ -2,6 +2,7 @@ package xyz.scottc.vd.frames.transitional.listSelection;
 
 import xyz.scottc.vd.Main;
 import xyz.scottc.vd.core.VDList;
+import xyz.scottc.vd.exceptions.FileDeletingException;
 import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
 import xyz.scottc.vd.frames.transitional.Entry;
 import xyz.scottc.vd.frames.transitional.TransitionalFrame;
@@ -80,7 +81,7 @@ public class ListSelection extends TransitionalFrame {
         super.rootPanel.add(this.exListView);
         this.exList.setRowHeight(40);
         this.exList.setCellRenderer(cellRenderer);
-        //this.exList.addMouseListener(mouseListener);
+        this.exList.addMouseListener(mouseListener);
 
         super.rootPanel.add(this.importButton);
         this.importButton.addActionListener(this.importListener);
@@ -98,16 +99,21 @@ public class ListSelection extends TransitionalFrame {
         for (File file : Main.INTERNAL_LISTS) {
             this.addNode(this.inListRoot, new VDList(file));
         }
-        this.updateExternalLists();
+        try {
+            this.updateExternalLists();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
-    private void updateExternalLists() {
-        for (int i = 0; i < this.exList.getRowCount(); i++) {
-            this.exList.removeSelectionRow(i);
-        }
+    private void updateExternalLists() throws IOException {
+        this.exListRoot.removeAllChildren();
+        Main.updateExternalFiles();
         for (File file : Main.EXTERNAL_LISTS) {
             this.addNode(this.exListRoot, new VDList(file));
         }
+        DefaultTreeModel model = (DefaultTreeModel) exList.getModel();
+        model.reload();
     }
 
     private void addNode(DefaultMutableTreeNode root, VDList list) {
@@ -189,19 +195,61 @@ public class ListSelection extends TransitionalFrame {
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-            updateExternalLists();
-            DefaultTreeModel model = (DefaultTreeModel) exList.getModel();
-            model.reload();
+            try {
+                this.updateExternalLists();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         }
     };
 
     private final ActionListener deleteListener = e -> {
-        int result = VDConfirmDialog.show(ListSelection.this, "Delete Selected File",
+        int result = VDConfirmDialog.show(this, "Delete Selected File",
                 "Do you really want to delete this file?", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
         if (result == VDConfirmDialog.CONFIRM) {
-
+            TreePath[] treePaths = this.exList.getSelectionPaths();
+            if (treePaths != null) {
+                for (TreePath treePath : treePaths) {
+                    File file = this.getFileFromTreePath(treePath, Main.EXTERNAL_LISTS);
+                    if (file != null) {
+                        try {
+                            if (!file.delete()) throw new FileDeletingException(file.getName() + " delete failed!");
+                        } catch (FileDeletingException exception) {
+                            exception.printStackTrace();
+                            return;
+                        }
+                        //delete the item in the tree
+                        this.exList.removeSelectionPath(treePath);
+                        //update
+                        try {
+                            this.updateExternalLists();
+                        } catch (IOException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
+                }
+            }
         }
     };
+
+    /**
+     * @param treePath required TreePath
+     * @param fileList internalLibrary or ExternalLibrary
+     * @return a corresponding file in the fileList, or null if the fileList does not
+     * contain that file
+     */
+    private File getFileFromTreePath(TreePath treePath, List<File> fileList) {
+        Object[] paths = treePath.getPath();
+        String path = VDList.parsePaths(paths);
+        if (path != null) {
+            for (File file : fileList) {
+                if (file.getAbsolutePath().endsWith(path)) {
+                    return file;
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     protected void layoutHandler() {
@@ -245,27 +293,30 @@ public class ListSelection extends TransitionalFrame {
     }
 
     private class ListTreeMouseListener extends MouseAdapter {
-        @Override
-        public void mousePressed(MouseEvent e) {
+
+        private void switchFrame(MouseEvent e, JTree tree) {
             if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 && e.getSource() instanceof JTree) {
                 TreePath treePath = inList.getPathForLocation(e.getX(), e.getY());
                 if (treePath != null) {
-                    Object[] paths = treePath.getPath();
-                    String path = VDList.parsePaths(paths);
-                    if (path != null) {
-                        for (File file : Main.INTERNAL_LISTS) {
-                            if (file.getAbsolutePath().endsWith(path)) {
-                                VDList list = new VDList(file);
-                                if (list.toQAList()) {
-                                    VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
-                                } else {
-                                    VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
-                                }
-                                break;
-                            }
+                    File file = getFileFromTreePath(treePath, Main.INTERNAL_LISTS);
+                    if (file != null) {
+                        VDList list = new VDList(file);
+                        if (list.toQAList()) {
+                            VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                        } else {
+                            VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
                         }
                     }
                 }
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.getSource() == inList) {
+                this.switchFrame(e, inList);
+            } else if (e.getSource() == exList) {
+                this.switchFrame(e, exList);
             }
         }
     }

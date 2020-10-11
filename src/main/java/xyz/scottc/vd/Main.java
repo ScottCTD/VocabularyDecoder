@@ -1,6 +1,6 @@
 package xyz.scottc.vd;
 
-import xyz.scottc.vd.exceptions.FileCreatingException;
+import xyz.scottc.vd.exceptions.runtime.FileCreatingException;
 import xyz.scottc.vd.frames.transitional.Entry;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
