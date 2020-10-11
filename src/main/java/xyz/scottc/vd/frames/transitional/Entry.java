@@ -1,7 +1,6 @@
 package xyz.scottc.vd.frames.transitional;
 
 import xyz.scottc.vd.core.Mode;
-import xyz.scottc.vd.frames.transitional.listSelection.ListSelection;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;

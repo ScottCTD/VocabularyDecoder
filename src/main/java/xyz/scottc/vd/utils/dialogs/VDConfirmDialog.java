@@ -22,7 +22,7 @@ public class VDConfirmDialog extends VDDialog {
     public VDConfirmDialog(Frame owner, String title, String info, Font font) {
         super(owner, title, info, font);
         try {
-            super.setIcon(FileUtils.createImageIcon("/images/icons/question.png"));
+            super.setIcon(FileUtils.createImageIcon("/images/icons/VDConfirmDialog/question.png"));
         } catch (IOException exception) {
             exception.printStackTrace();
         }

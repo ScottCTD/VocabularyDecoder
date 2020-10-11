@@ -1,11 +1,9 @@
-package xyz.scottc.vd.frames.transitional.listSelection;
+package xyz.scottc.vd.frames.transitional;
 
 import xyz.scottc.vd.Main;
 import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.exceptions.FileDeletingException;
 import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
-import xyz.scottc.vd.frames.transitional.Entry;
-import xyz.scottc.vd.frames.transitional.TransitionalFrame;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
@@ -330,10 +328,10 @@ public class ListSelection extends TransitionalFrame {
 
         public ListTreeCellRenderer() {
             try {
-                this.textFile = FileUtils.createImageIcon("/images/icons/textFile.png");
-                this.folder = FileUtils.createImageIcon("/images/icons/folder.png");
-                this.vdList = FileUtils.createImageIcon("/images/icons/vdList.png");
-                this.openedFolder = FileUtils.createImageIcon("/images/icons/openedFolder.png");
+                this.textFile = FileUtils.createImageIcon("/images/icons/ListSelection/textFile.png");
+                this.folder = FileUtils.createImageIcon("/images/icons/ListSelection/folder.png");
+                this.vdList = FileUtils.createImageIcon("/images/icons/ListSelection/vdList.png");
+                this.openedFolder = FileUtils.createImageIcon("/images/icons/ListSelection/openedFolder.png");
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
@@ -353,6 +351,9 @@ public class ListSelection extends TransitionalFrame {
             if (text.contains(".vd")) {
                 text = text.replace(".vd", VDConstants.EMPTY);
                 this.setIcon(this.vdList);
+                this.setToolTipText("Double click to continue!");
+            } else {
+                this.setToolTipText("This is not a valid VD File!");
             }
             this.setText(text);
 

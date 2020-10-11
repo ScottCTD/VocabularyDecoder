@@ -13,16 +13,16 @@ public class VDCancelButton extends UtilJButton {
         try {
             switch (iconSize) {
                 case 16:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/cancel/cancel16.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/CancelButton/cancel16.png"));
                     break;
                 case 32:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/cancel/cancel32.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/CancelButton/cancel32.png"));
                     break;
                 case 48:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/cancel/cancel48.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/CancelButton/cancel48.png"));
                     break;
                 case 96:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/cancel/cancel96.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/CancelButton/cancel96.png"));
                     break;
             }
         } catch (IOException e) {

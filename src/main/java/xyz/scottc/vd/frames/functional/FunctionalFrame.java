@@ -1,12 +1,14 @@
 package xyz.scottc.vd.frames.functional;
 
-import xyz.scottc.vd.frames.transitional.listSelection.ListSelection;
+import xyz.scottc.vd.frames.transitional.ListSelection;
+import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class FunctionalFrame extends JFrame {
 
@@ -22,8 +24,10 @@ public class FunctionalFrame extends JFrame {
     protected final UtilJPanel readyPanel = new UtilJPanel();
     protected final SpringLayout readyPanelLayout = new SpringLayout();
 
-    protected final UtilJButton backButton = new UtilJButton("Back", VDConstants.MICROSOFT_YAHEI_BOLD_30, false);
+    protected final VDBackButton backButton = new VDBackButton(VDConstants.MICROSOFT_YAHEI_BOLD_30, 32);
     protected final UtilJButton hideTimerButton = new UtilJButton("Hide Timer", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
+
+    protected final UtilJLabel currentListLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
     protected final VDAmountDisplay amount = new VDAmountDisplay(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
     protected final VDTimer timer = new VDTimer();
@@ -45,6 +49,14 @@ public class FunctionalFrame extends JFrame {
 
         this.rootPanel.add(this.backButton);
         this.backButton.addActionListener(e -> VDUtils.switchFrame(this, new ListSelection()));
+
+        this.rootPanel.add(this.currentListLabel);
+        try {
+            this.currentListLabel.setIcon(FileUtils.createImageIcon("/images/icons/FunctionalFrame/vdList.png"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        this.currentListLabel.setBackground(this.rootPanel.getBackground());
 
         this.rootPanel.add(this.separator01);
 
@@ -91,13 +103,16 @@ public class FunctionalFrame extends JFrame {
 
         this.layout.putConstraint(SpringLayout.NORTH, this.separator01, MARGIN, SpringLayout.SOUTH, this.backButton);
 
+        this.layout.putConstraint(SpringLayout.WEST, this.currentListLabel, MARGIN, SpringLayout.EAST, this.backButton);
+        this.layout.putConstraint(SpringLayout.NORTH, this.currentListLabel, MARGIN + 4, SpringLayout.NORTH, this.rootPanel);
+
         this.layout.putConstraint(SpringLayout.EAST, this.timer, -MARGIN * 2, SpringLayout.EAST, this.rootPanel);
         this.layout.putConstraint(SpringLayout.NORTH, this.timer, SUB_MARGIN + 6, SpringLayout.SOUTH, this.separator01);
 
         this.layout.putConstraint(SpringLayout.EAST, this.hideTimerButton, -MARGIN * 2, SpringLayout.WEST, this.timer);
         this.layout.putConstraint(SpringLayout.NORTH, this.hideTimerButton, SUB_MARGIN, SpringLayout.SOUTH, this.separator01);
 
-        this.layout.putConstraint(SpringLayout.WEST, this.amount, MARGIN, SpringLayout.WEST, this.rootPanel);
+        this.layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, this.amount, 0, SpringLayout.HORIZONTAL_CENTER, this.rootPanel);
         this.layout.putConstraint(SpringLayout.NORTH, this.amount, 0, SpringLayout.NORTH, this.timer);
 
         this.layout.putConstraint(SpringLayout.NORTH, this.separator02, SUB_MARGIN, SpringLayout.SOUTH, this.hideTimerButton);

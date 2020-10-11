@@ -13,16 +13,16 @@ public class VDConfirmButton extends UtilJButton {
         try {
             switch (iconSize) {
                 case 16:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/confirm/confirm16.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/ConfirmButton/confirm16.png"));
                     break;
                 case 32:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/confirm/confirm32.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/ConfirmButton/confirm32.png"));
                     break;
                 case 48:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/confirm/confirm48.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/ConfirmButton/confirm48.png"));
                     break;
                 case 96:
-                    this.setIcon(FileUtils.createImageIcon("/images/icons/confirm/confirm96.png"));
+                    this.setIcon(FileUtils.createImageIcon("/images/icons/ConfirmButton/confirm96.png"));
                     break;
             }
         } catch (IOException e) {

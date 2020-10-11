@@ -24,7 +24,7 @@ public class VDInputDialog extends VDDialog {
         super(owner, title, info, font);
         this.setSize(width, height - (100 - MARGIN));
         try {
-            Icon icon = FileUtils.createImageIcon("/images/icons/edit.png");
+            Icon icon = FileUtils.createImageIcon("/images/icons/VDInputDialog/edit.png");
             super.info.setIcon(icon);
         } catch (IOException exception) {
             exception.printStackTrace();

@@ -5,6 +5,7 @@ import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.frames.functional.FunctionalFrame;
 import xyz.scottc.vd.review.ReviewDialog;
 import xyz.scottc.vd.utils.ENText;
+import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.*;
@@ -12,6 +13,7 @@ import xyz.scottc.vd.utils.components.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class OrderedMode extends FunctionalFrame {
 
@@ -29,7 +31,6 @@ public class OrderedMode extends FunctionalFrame {
     private final UtilJButton preButton = new UtilJButton("Previous", VDConstants.MICROSOFT_YAHEI_BOLD_30);
     private final UtilJButton answerButton = new UtilJButton("Answer", VDConstants.MICROSOFT_YAHEI_BOLD_30);
     private final UtilJButton reviewButton = new UtilJButton("Review", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJLabel currentListLabel = new UtilJLabel("Current VD List: ", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
     private final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
@@ -58,8 +59,9 @@ public class OrderedMode extends FunctionalFrame {
     public OrderedMode(VDList vdList) throws HeadlessException {
         this.vdList = vdList;
         this.setTitle("Ordered Mode - " + this.vdList.getSimpleName());
-        this.currentListLabel.setText("Current VD List: " + this.vdList.getSimpleName());
+        super.currentListLabel.setText(this.vdList.getSimpleName());
         this.rootPanelHandler();
+        this.iconHandler();
         this.layoutHandler();
     }
 
@@ -69,12 +71,15 @@ public class OrderedMode extends FunctionalFrame {
 
         //root panel
         super.rootPanel.add(this.nextButton);
+        this.nextButton.setToolTipText("ENTER or DOWN");
         this.nextButton.addActionListener(e -> this.next());
 
         super.rootPanel.add(this.preButton);
+        this.preButton.setToolTipText("UP");
         this.preButton.addActionListener(e -> this.pre());
 
         super.rootPanel.add(this.answerButton);
+        this.answerButton.setToolTipText("Alt + A");
         this.answerButton.addActionListener(e -> this.answer());
 
         super.rootPanel.add(this.reviewButton);
@@ -83,9 +88,6 @@ public class OrderedMode extends FunctionalFrame {
 
         super.rootPanel.add(this.suspendButton);
         this.suspendButton.addActionListener(e -> this.suspend());
-
-        super.rootPanel.add(this.currentListLabel);
-        this.currentListLabel.setBackground(this.rootPanel.getBackground());
 
         super.rootPanel.add(this.lineHelper01);
         this.lineHelper01.setVisible(false);
@@ -263,6 +265,16 @@ public class OrderedMode extends FunctionalFrame {
         }
     }
 
+    private void iconHandler() {
+        try {
+            this.nextButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/next.png"));
+            this.preButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/pre.png"));
+            this.suspendButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/suspend.png"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
     @Override
     protected void layoutHandler() {
         super.layoutHandler();
@@ -282,9 +294,6 @@ public class OrderedMode extends FunctionalFrame {
 
         super.layout.putConstraint(SpringLayout.NORTH, this.suspendButton, 0, SpringLayout.NORTH, super.hideTimerButton);
         super.layout.putConstraint(SpringLayout.EAST, this.suspendButton, -MARGIN, SpringLayout.WEST, super.hideTimerButton);
-
-        super.layout.putConstraint(SpringLayout.WEST, this.currentListLabel, MARGIN, SpringLayout.EAST, super.backButton);
-        super.layout.putConstraint(SpringLayout.NORTH, this.currentListLabel, MARGIN + 4, SpringLayout.NORTH, super.rootPanel);
 
         super.layout.putConstraint(SpringLayout.NORTH, this.suspendPanel, 0, SpringLayout.SOUTH, super.separator02);
         super.layout.putConstraint(SpringLayout.SOUTH, this.suspendPanel, 0, SpringLayout.SOUTH, super.rootPanel);
