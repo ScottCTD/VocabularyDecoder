@@ -5,7 +5,8 @@ import java.awt.*;
 
 public class UtilJButton extends JButton {
 
-    public UtilJButton() {
+    public UtilJButton(Font font) {
+        this.setFont(font);
     }
 
     public UtilJButton(String text, Font font) {

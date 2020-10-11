@@ -2,7 +2,8 @@ package xyz.scottc.vd.utils.dialogs;
 
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
-import xyz.scottc.vd.utils.components.UtilJButton;
+import xyz.scottc.vd.utils.components.VDCancelButton;
+import xyz.scottc.vd.utils.components.VDConfirmButton;
 import xyz.scottc.vd.utils.components.VDTextField;
 
 import javax.swing.*;
@@ -14,8 +15,8 @@ public class VDInputDialog extends VDDialog {
     private final VDTextField inputField = new VDTextField(VDConstants.MICROSOFT_YAHEI_PLAIN_20);
     private final JScrollPane inputFieldView = new JScrollPane(this.inputField);
 
-    private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
-    private final UtilJButton cancelButton = new UtilJButton("Cancel", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
+    private final VDConfirmButton confirmButton = new VDConfirmButton(VDConstants.MICROSOFT_YAHEI_PLAIN_20, 32);
+    private final VDCancelButton cancelButton = new VDCancelButton(VDConstants.MICROSOFT_YAHEI_PLAIN_20, 32);
 
     private String inputValue = VDConstants.EMPTY;
 
@@ -41,7 +42,7 @@ public class VDInputDialog extends VDDialog {
      * @param font  the font of the information
      * @return the String that user input
      */
-    public static String showInputDialog(Frame owner, String title, String info, Font font) {
+    public static String show(Frame owner, String title, String info, Font font) {
         VDInputDialog inputDialog = new VDInputDialog(owner, title, info, font);
         inputDialog.setVisible(true);
         return inputDialog.inputValue;

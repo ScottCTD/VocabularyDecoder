@@ -9,7 +9,6 @@ import xyz.scottc.vd.utils.VDUtils;
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -110,7 +109,7 @@ public class VDList {
      * Parse the paths array and form a valid path string.
      *
      * @param paths The paths from DefaultMutableTreeNode.getPath().getPath;
-     * @return A valid String path like 1/2/3/4.json
+     * @return A valid String path like 1/2/3/4.vd
      */
     public static String parsePaths(Object[] paths) {
         StringBuilder builder = new StringBuilder();
@@ -120,7 +119,7 @@ public class VDList {
             }
             return builder.substring(0, builder.toString().length() - 1);
         }
-        return Arrays.toString(paths);
+        return null;
     }
 
     public List<String> splitType() {
@@ -149,7 +148,7 @@ public class VDList {
     }
 
     public String getSimpleName() {
-        return this.VDList.getName().replace(".json", VDConstants.EMPTY);
+        return this.VDList.getName().replace(".vd", VDConstants.EMPTY);
     }
 
     public String getType() {

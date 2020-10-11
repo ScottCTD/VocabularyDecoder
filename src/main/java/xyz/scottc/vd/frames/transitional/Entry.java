@@ -65,7 +65,7 @@ public class Entry extends TransitionalFrame {
         this.menuBar.add(this.testMenu);
         this.testMenu.add(this.testMenuItem);
         this.testMenuItem.addActionListener(e -> {
-            String value = VDInputDialog.showInputDialog(Entry.this, "test", "Input something!",
+            String value = VDInputDialog.show(Entry.this, "test", "Input something!",
                     VDConstants.MICROSOFT_YAHEI_PLAIN_20);
             System.out.println(value);
         });

@@ -12,25 +12,26 @@ import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.LineSeparator;
 import xyz.scottc.vd.utils.components.UtilJButton;
 import xyz.scottc.vd.utils.components.UtilJLabel;
+import xyz.scottc.vd.utils.dialogs.VDConfirmDialog;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
-import javax.swing.tree.TreePath;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class ListSelection extends TransitionalFrame {
 
     private final UtilJButton backButton = new UtilJButton("Back", VDConstants.MICROSOFT_YAHEI_BOLD_40);
     private final UtilJButton importButton = new UtilJButton("Import", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton addFolderButton = new UtilJButton("Add New Folder", VDConstants.MICROSOFT_YAHEI_BOLD_30);
     private final UtilJButton deleteButton = new UtilJButton("Delete", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
     private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstants.MICROSOFT_YAHEI_BOLD_60);
@@ -79,13 +80,13 @@ public class ListSelection extends TransitionalFrame {
         super.rootPanel.add(this.exListView);
         this.exList.setRowHeight(40);
         this.exList.setCellRenderer(cellRenderer);
-        this.exList.addMouseListener(mouseListener);
+        //this.exList.addMouseListener(mouseListener);
 
         super.rootPanel.add(this.importButton);
-
-        super.rootPanel.add(this.addFolderButton);
+        this.importButton.addActionListener(this.importListener);
 
         super.rootPanel.add(this.deleteButton);
+        this.deleteButton.addActionListener(this.deleteListener);
 
         super.rootPanel.add(this.separator04);
 
@@ -96,6 +97,13 @@ public class ListSelection extends TransitionalFrame {
     private void treeHandler() {
         for (File file : Main.INTERNAL_LISTS) {
             this.addNode(this.inListRoot, new VDList(file));
+        }
+        this.updateExternalLists();
+    }
+
+    private void updateExternalLists() {
+        for (int i = 0; i < this.exList.getRowCount(); i++) {
+            this.exList.removeSelectionRow(i);
         }
         for (File file : Main.EXTERNAL_LISTS) {
             this.addNode(this.exListRoot, new VDList(file));
@@ -122,9 +130,78 @@ public class ListSelection extends TransitionalFrame {
                 nodes[i + 1] = node;
             }
         }
-        //add leaves
-        nodes[types.size()].add(new DefaultMutableTreeNode(list.getName(), false));
+        if (!list.getName().equals(VDConstants.EMPTY)) {
+            //add leaves
+            nodes[types.size()].add(new DefaultMutableTreeNode(list.getName()));
+        }
     }
+
+    private final ActionListener importListener = e -> {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter(VDConstants.FILE_TYPE, "vd"));
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setMultiSelectionEnabled(true);
+        int result = fileChooser.showSaveDialog(ListSelection.this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File[] selectedFiles = fileChooser.getSelectedFiles();
+            File sourceDir = fileChooser.getCurrentDirectory();
+            for (File file : selectedFiles) {
+                if (file.isDirectory()) {
+                    try {
+                        Files.walk(file.toPath()).filter(Files::isDirectory).forEach(path -> {
+                            File sourceDir2 = path.toFile();
+                            String targetDirName = sourceDir2.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
+                            String targetDirPath = Main.externalLibrary.getAbsolutePath() + "\\" + targetDirName;
+                            try {
+                                Files.createDirectory(Paths.get(targetDirPath));
+                            } catch (IOException exception) {
+                                exception.printStackTrace();
+                            }
+                        });
+                        Files.walk(file.toPath()).filter(Files::isRegularFile).forEach(path -> {
+                            File sourceFile = path.toFile();
+                            String targetFileName = sourceFile.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
+                            String targetFilePath = Main.externalLibrary.getAbsolutePath() + "\\" + targetFileName;
+                            try {
+                                Files.copy(sourceFile.toPath(), Paths.get(targetFilePath));
+                            } catch (IOException exception) {
+                                exception.printStackTrace();
+                            }
+                        });
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+            for (File file : selectedFiles) {
+                if (file.isFile()) {
+                    try {
+                        String targetFileName = file.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
+                        String targetFilePath = Main.externalLibrary.getAbsolutePath() + "\\" + targetFileName;
+                        Files.copy(file.toPath(), Paths.get(targetFilePath));
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+            try {
+                Main.updateExternalFiles();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            updateExternalLists();
+            DefaultTreeModel model = (DefaultTreeModel) exList.getModel();
+            model.reload();
+        }
+    };
+
+    private final ActionListener deleteListener = e -> {
+        int result = VDConfirmDialog.show(ListSelection.this, "Delete Selected File",
+                "Do you really want to delete this file?", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
+        if (result == VDConfirmDialog.CONFIRM) {
+
+        }
+    };
 
     @Override
     protected void layoutHandler() {
@@ -154,12 +231,10 @@ public class ListSelection extends TransitionalFrame {
 
         super.layout.putConstraint(SpringLayout.WEST, this.importButton, 0, SpringLayout.WEST, this.exListLabel);
         super.layout.putConstraint(SpringLayout.SOUTH, this.importButton, -MARGIN, SpringLayout.SOUTH, super.rootPanel);
-
-        super.layout.putConstraint(SpringLayout.SOUTH, this.addFolderButton, 0, SpringLayout.SOUTH, this.importButton);
-        super.layout.putConstraint(SpringLayout.WEST, this.addFolderButton, MARGIN, SpringLayout.EAST, this.importButton);
+        super.layout.putConstraint(SpringLayout.EAST, this.importButton, -(MARGIN / 2), SpringLayout.HORIZONTAL_CENTER, this.exListView);
 
         super.layout.putConstraint(SpringLayout.SOUTH, this.deleteButton, 0, SpringLayout.SOUTH, this.importButton);
-        super.layout.putConstraint(SpringLayout.WEST, this.deleteButton, MARGIN, SpringLayout.EAST, this.addFolderButton);
+        super.layout.putConstraint(SpringLayout.WEST, this.deleteButton, MARGIN / 2, SpringLayout.HORIZONTAL_CENTER, this.exListView);
         super.layout.putConstraint(SpringLayout.EAST, this.deleteButton, 0, SpringLayout.EAST, this.exListView);
 
         super.layout.putConstraint(SpringLayout.WEST, this.separator04, 0, SpringLayout.HORIZONTAL_CENTER, this.lineHelper01);
@@ -177,15 +252,17 @@ public class ListSelection extends TransitionalFrame {
                 if (treePath != null) {
                     Object[] paths = treePath.getPath();
                     String path = VDList.parsePaths(paths);
-                    for (File file : Main.INTERNAL_LISTS) {
-                        if (file.getAbsolutePath().endsWith(path)) {
-                            VDList list = new VDList(file);
-                            if (list.toQAList()) {
-                                VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
-                            } else {
-                                VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
+                    if (path != null) {
+                        for (File file : Main.INTERNAL_LISTS) {
+                            if (file.getAbsolutePath().endsWith(path)) {
+                                VDList list = new VDList(file);
+                                if (list.toQAList()) {
+                                    VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                                } else {
+                                    VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
                 }
@@ -213,8 +290,8 @@ public class ListSelection extends TransitionalFrame {
                                                       boolean leaf, int row, boolean hasFocus) {
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
             String text = value.toString();
-            if (text.contains(".json")) {
-                text = text.replace(".json", VDConstants.EMPTY);
+            if (text.contains(".vd")) {
+                text = text.replace(".vd", VDConstants.EMPTY);
             }
             this.setText(text);
             return this;

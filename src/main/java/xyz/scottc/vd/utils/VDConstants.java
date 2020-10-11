@@ -8,6 +8,7 @@ public class VDConstants {
     public static final String EXTERNAL_LIBRARY_NAME = "ExternalLibrary";
     public static final String INTERNAL_LIBRARY_NAME = "InternalLibrary";
     public static final String NAME = "Vocabulary Decoder";
+    public static final String FILE_TYPE = "VD File";
     public static final String ABOUT = "Email -> ScottCTD@outlook.com";
     public static final String HELP = "Common Mode:\nAnswer the meaning of a vocabulary \nor the correspond vocabulary of it's \nmeaning. You can check the answer \nwhen you are answering.";
     public static final String EMPTY = "";

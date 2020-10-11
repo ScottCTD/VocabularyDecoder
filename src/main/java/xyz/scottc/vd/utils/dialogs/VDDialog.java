@@ -47,6 +47,10 @@ public class VDDialog extends JDialog {
         this.info.setIcon(icon);
     }
 
+    protected void setIcon(Icon icon) {
+        this.info.setIcon(icon);
+    }
+
     protected void rootPanelHandler() {
         this.setContentPane(this.rootPanel);
         this.rootPanel.add(this.info);

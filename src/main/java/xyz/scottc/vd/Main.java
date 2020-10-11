@@ -108,7 +108,7 @@ public class Main {
                 }
             }
         }
-        Files.walk(externalLibrary.toPath()).filter(Files::isRegularFile).forEach(path -> EXTERNAL_LISTS.add(path.toFile()));
+        Main.updateExternalFiles();
     }
 
     private static void initLibraryInIDE() throws IOException {
@@ -137,8 +137,17 @@ public class Main {
             }
             INTERNAL_LISTS.add(target);
         });
+        Main.updateExternalFiles();
+    }
 
-        Files.walk(externalLibrary.toPath()).filter(Files::isRegularFile).forEach(path -> EXTERNAL_LISTS.add(path.toFile()));
+    public static void updateExternalFiles() throws IOException {
+        //Files.walk(externalLibrary.toPath()).filter(Files::isRegularFile).forEach(path -> EXTERNAL_LISTS.add(path.toFile()));
+        EXTERNAL_LISTS.clear();
+        Files.walk(externalLibrary.toPath()).filter(Files::isRegularFile).forEach(path -> {
+            if (!path.toString().equals(externalLibrary.getAbsolutePath())) {
+                EXTERNAL_LISTS.add(path.toFile());
+            }
+        });
     }
 
 }
