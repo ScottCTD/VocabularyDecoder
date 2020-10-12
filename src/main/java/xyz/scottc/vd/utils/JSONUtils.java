@@ -2,10 +2,20 @@ package xyz.scottc.vd.utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import xyz.scottc.vd.exceptions.FileDeletingException;
 
 import java.io.*;
+import java.nio.file.FileSystemException;
 
 public class JSONUtils {
+
+    public static void replaceByKey(File target, String key, Object replacement) throws IOException {
+        JSONObject jsonObject = (JSONObject) JSONUtils.fromFile(target);
+        jsonObject.remove(key);
+        jsonObject.put(key, replacement);
+        if (!target.delete()) throw new FileDeletingException(target);
+        JSONUtils.toFile(jsonObject, target);
+    }
 
     public static void toFile(Object json, File file) {
         String jsonString;
@@ -15,7 +25,7 @@ public class JSONUtils {
         } else if (json instanceof JSONArray) {
             jsonString = ((JSONArray) json).toString(2);
         } else {
-            System.out.println("[ERROR] Invalid Json Object! (Shoule be JSONObject or JSONArray)");
+            System.out.println("[ERROR] Invalid Json Object! (Should be JSONObject or JSONArray)");
             return;
         }
 
@@ -40,7 +50,7 @@ public class JSONUtils {
         }
     }
 
-    public static Object fromFile(File file, String encoding) throws Exception {
+    public static Object fromFile(File file) throws IOException {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
@@ -48,8 +58,7 @@ public class JSONUtils {
             byte[] buffer = new byte[(int) fileLength];
             int length = inputStream.read(buffer);
 
-            int offset = 0;
-            String jsonString = new String(buffer, offset, length - offset, encoding);
+            String jsonString = new String(buffer, 0, length);
 
             if (jsonString.trim().startsWith("{")) {
                 return new JSONObject(jsonString);
@@ -57,7 +66,7 @@ public class JSONUtils {
             if (jsonString.trim().startsWith("[")) {
                 return new JSONArray(jsonString);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (inputStream != null) {
@@ -68,7 +77,7 @@ public class JSONUtils {
                 }
             }
         }
-        throw new Exception("Invalid Json File");
+        throw new FileSystemException("Invalid Json File");
     }
 
 }

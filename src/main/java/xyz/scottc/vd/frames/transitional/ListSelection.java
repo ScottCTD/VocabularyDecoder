@@ -211,7 +211,7 @@ public class ListSelection extends TransitionalFrame {
                     File file = this.getFileFromTreePath(treePath, Main.EXTERNAL_LISTS);
                     if (file != null) {
                         try {
-                            if (!file.delete()) throw new FileDeletingException(file.getName() + " delete failed!");
+                            if (!file.delete()) throw new FileDeletingException(file);
                         } catch (FileDeletingException exception) {
                             exception.printStackTrace();
                             return;

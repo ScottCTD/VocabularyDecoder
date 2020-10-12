@@ -31,6 +31,8 @@ public class OrderedMode extends FunctionalFrame {
     private final UtilJButton preButton = new UtilJButton("Previous", VDConstants.MICROSOFT_YAHEI_BOLD_30);
     private final UtilJButton answerButton = new UtilJButton("Answer", VDConstants.MICROSOFT_YAHEI_BOLD_30);
     private final UtilJButton reviewButton = new UtilJButton("Review", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton saveButton = new UtilJButton("Save", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton clearButton = new UtilJButton("Clear", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
     private final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstants.MICROSOFT_YAHEI_BOLD_30);
 
@@ -53,7 +55,6 @@ public class OrderedMode extends FunctionalFrame {
 
     private final VDList vdList;
 
-    public static boolean vocabularyQ;
     private boolean isAnswerShown;
 
     public OrderedMode(VDList vdList) throws HeadlessException {
@@ -84,7 +85,19 @@ public class OrderedMode extends FunctionalFrame {
 
         super.rootPanel.add(this.reviewButton);
         this.reviewButton.addActionListener(e -> this.review());
-        this.review.addTableMouseLisener(new TableMouseLisener());
+        this.review.addTableMouseLisener(new TableMouseListener());
+
+        super.rootPanel.add(this.saveButton);
+        this.saveButton.addActionListener(e -> {
+            try {
+                this.vdList.save();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        });
+
+        super.rootPanel.add(this.clearButton);
+
 
         super.rootPanel.add(this.suspendButton);
         this.suspendButton.addActionListener(e -> this.suspend());
@@ -117,11 +130,15 @@ public class OrderedMode extends FunctionalFrame {
         this.readyLabel.setBackground(this.readyLabel.getParent().getBackground());
 
         super.readyPanel.add(this.VQButton);
-        this.VQButton.addActionListener(e -> this.init());
+        this.VQButton.addActionListener(e -> {
+            this.vdList.loadInput();
+            this.init();
+        });
 
         super.readyPanel.add(this.MQButton);
         this.MQButton.addActionListener(e -> {
             this.vdList.interconvertQAList();
+            this.vdList.loadInput();
             this.init();
         });
 
@@ -162,11 +179,12 @@ public class OrderedMode extends FunctionalFrame {
         super.readyPanel.setVisible(false);
         super.initPanel.setVisible(true);
 
-        this.Q.setText(vdList.getQuestion());
+        this.Q.setText(this.vdList.getQuestion());
+        this.I.setText(this.vdList.getInput().getContent());
 
         super.timer.startFromZero();
-        super.amount.setTotalAmount(vdList.getQs().size());
-        super.amount.setCurrentAmount(vdList.getIndex() + 1);
+        super.amount.setTotalAmount(this.vdList.getQs().size());
+        super.amount.setCurrentAmount(this.vdList.getIndex() + 1);
 
         this.review.initData(this.vdList);
 
@@ -197,7 +215,7 @@ public class OrderedMode extends FunctionalFrame {
 
     private void updateUI() {
         this.Q.setText(this.vdList.getQuestion());
-        this.I.setText(this.vdList.getInput().toString());
+        this.I.setText(this.vdList.getInput().getContent());
         this.I.grabFocus();
 
         if (this.isAnswerShown) {
@@ -291,6 +309,12 @@ public class OrderedMode extends FunctionalFrame {
 
         super.layout.putConstraint(SpringLayout.NORTH, this.reviewButton, 0, SpringLayout.NORTH, this.nextButton);
         super.layout.putConstraint(SpringLayout.EAST, this.reviewButton, -MARGIN, SpringLayout.WEST, this.answerButton);
+
+        super.layout.putConstraint(SpringLayout.EAST, this.saveButton, -MARGIN, SpringLayout.WEST, this.reviewButton);
+        super.layout.putConstraint(SpringLayout.NORTH, this.saveButton, 0, SpringLayout.NORTH, this.nextButton);
+
+        super.layout.putConstraint(SpringLayout.EAST, this.clearButton, -MARGIN, SpringLayout.WEST, this.saveButton);
+        super.layout.putConstraint(SpringLayout.NORTH, this.clearButton, 0, SpringLayout.NORTH, this.nextButton);
 
         super.layout.putConstraint(SpringLayout.NORTH, this.suspendButton, 0, SpringLayout.NORTH, super.hideTimerButton);
         super.layout.putConstraint(SpringLayout.EAST, this.suspendButton, -MARGIN, SpringLayout.WEST, super.hideTimerButton);
@@ -391,7 +415,7 @@ public class OrderedMode extends FunctionalFrame {
                 vdList.getInput().setContent(I.getText());
 
                 //judge
-                if (!OrderedMode.vocabularyQ) {
+                if (!vdList.isVQ) {
                     if (!I.getText().equals(VDConstants.EMPTY)) {
                         vdList.setInput(vdList.judgeEn());
                     }
@@ -442,7 +466,7 @@ public class OrderedMode extends FunctionalFrame {
         }
     }
 
-    private class TableMouseLisener extends MouseAdapter {
+    private class TableMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {

@@ -7,6 +7,7 @@ import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +15,17 @@ import java.util.Objects;
 
 public class VDList {
 
+    private final List<String> Qs = new ArrayList<>();
+    private final List<String> As = new ArrayList<>();
+    private final List<Input> Is = new ArrayList<>();
+    public boolean isVQ = true;
     /**
      * type : the folder contains the list
      * e.g. SAT/SAT3000/
      */
     private String type;
-    private File VDList;
-
-    private final List<String> Qs = new ArrayList<>();
-    private final List<String> As = new ArrayList<>();
-
+    private File file;
     private int index = 0;
-
-    private final List<Input> Is = new ArrayList<>();
 
     /**
      * auto create an instance by identifying the internal or external path
@@ -48,7 +47,7 @@ public class VDList {
         }
         int index = temp.lastIndexOf("\\");
         this.type = temp.substring(1, index + 1);
-        this.VDList = list;
+        this.file = list;
     }
 
     public boolean next() {
@@ -79,6 +78,7 @@ public class VDList {
 
     public void interconvertQAList() {
         VDUtils.interconvertList(this.Qs, this.As);
+        this.isVQ = false;
     }
 
     /**
@@ -88,12 +88,11 @@ public class VDList {
      */
     public boolean toQAList() {
         try {
-            JSONObject jsonObject = (JSONObject) JSONUtils.fromFile(this.VDList, "UTF-8");
+            JSONObject jsonObject = (JSONObject) JSONUtils.fromFile(this.file);
             List<Object> questions = jsonObject.getJSONArray("questions").toList();
             List<Object> answers = jsonObject.getJSONArray("answers").toList();
             for (Object question : questions) {
                 this.Qs.add(question.toString());
-                this.Is.add(new Input(VDConstants.EMPTY));
             }
             for (Object answer : answers) {
                 this.As.add(answer.toString());
@@ -103,6 +102,62 @@ public class VDList {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void loadInput() {
+        try {
+            JSONObject jsonObject = (JSONObject) JSONUtils.fromFile(this.file);
+            List<Object> inputs;
+            if (this.isVQ) {
+                inputs = jsonObject.getJSONArray(VDConstants.KEY_INPUT_MEANINGS).toList();
+            } else {
+                inputs = jsonObject.getJSONArray(VDConstants.KEY_INPUT_VOCABULARIES).toList();
+            }
+            this.Is.clear();
+            for (Object inputContent : inputs) {
+                Input input = new Input(inputContent.toString());
+                this.Is.add(input);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void save() throws IOException {
+        List<String> saveList = new ArrayList<>(110);
+        for (Input input : this.Is) {
+            saveList.add(input.getContent());
+        }
+        if (this.isVQ) {
+            JSONUtils.replaceByKey(this.file, VDConstants.KEY_INPUT_MEANINGS, saveList);
+        } else {
+            JSONUtils.replaceByKey(this.file, VDConstants.KEY_INPUT_VOCABULARIES, saveList);
+        }
+    }
+
+    public void clear() throws IOException {
+        List<String> emptyList = new ArrayList<>();
+        for (int i = 0; i < this.Qs.size(); i++) {
+            emptyList.add(VDConstants.EMPTY);
+        }
+        if (this.isVQ) {
+            JSONUtils.replaceByKey(this.file, VDConstants.KEY_INPUT_MEANINGS, emptyList);
+        } else {
+            JSONUtils.replaceByKey(this.file, VDConstants.KEY_INPUT_VOCABULARIES, emptyList);
+        }
+    }
+
+    public List<String> splitType() {
+        List<String> list = new ArrayList<>();
+        int index = 0;
+        int start = 0;
+        while ((index = this.type.indexOf("\\", index)) != -1) {
+            String temp = this.type.substring(start, index);
+            list.add(temp.replace("\\", VDConstants.EMPTY));
+            start = index;
+            index++;
+        }
+        return list;
     }
 
     /**
@@ -122,19 +177,6 @@ public class VDList {
         return null;
     }
 
-    public List<String> splitType() {
-        List<String> list = new ArrayList<>();
-        int index = 0;
-        int start = 0;
-        while ((index = this.type.indexOf("\\", index)) != -1) {
-            String temp = this.type.substring(start, index);
-            list.add(temp.replace("\\", VDConstants.EMPTY));
-            start = index;
-            index++;
-        }
-        return list;
-    }
-
     public int getIndex() {
         return this.index;
     }
@@ -144,11 +186,11 @@ public class VDList {
     }
 
     public String getName() {
-        return this.VDList.getName();
+        return this.file.getName();
     }
 
     public String getSimpleName() {
-        return this.VDList.getName().replace(".vd", VDConstants.EMPTY);
+        return this.file.getName().replace(".vd", VDConstants.EMPTY);
     }
 
     public String getType() {
@@ -159,12 +201,12 @@ public class VDList {
         this.type = type;
     }
 
-    public File getVDList() {
-        return VDList;
+    public File getFile() {
+        return file;
     }
 
-    public void setVDList(File VDList) {
-        this.VDList = VDList;
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public String getQuestion() {
@@ -187,12 +229,12 @@ public class VDList {
         return this.Is.get(this.index);
     }
 
-    public Input getInput(int index) {
-        return this.Is.get(index);
-    }
-
     public void setInput(Input input) {
         this.Is.set(this.index, input);
+    }
+
+    public Input getInput(int index) {
+        return this.Is.get(index);
     }
 
     public void setInputContent(String input) {

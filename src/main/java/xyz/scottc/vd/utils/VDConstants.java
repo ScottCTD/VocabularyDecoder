@@ -13,6 +13,10 @@ public class VDConstants {
     public static final String HELP = "Common Mode:\nAnswer the meaning of a vocabulary \nor the correspond vocabulary of it's \nmeaning. You can check the answer \nwhen you are answering.";
     public static final String EMPTY = "";
     public static final String SPACE = " ";
+    public static final String KEY_QUESTIONS = "questions";
+    public static final String KEY_ANSWERS = "answers";
+    public static final String KEY_INPUT_VOCABULARIES = "inputV";
+    public static final String KEY_INPUT_MEANINGS = "inputM";
 
     public static final Font MICROSOFT_YAHEI_PLAIN_15 = new Font("Microsoft YaHei UI", Font.PLAIN, 15);
     public static final Font MICROSOFT_YAHEI_PLAIN_20 = new Font("Microsoft YaHei UI", Font.PLAIN, 20);

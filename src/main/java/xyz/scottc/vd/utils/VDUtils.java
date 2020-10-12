@@ -3,6 +3,7 @@ package xyz.scottc.vd.utils;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VDUtils {
 
@@ -59,5 +60,13 @@ public class VDUtils {
             count++;
         }
         return count;
+    }
+
+    public static java.util.List<String> toStringList(java.util.List<Object> objectList) {
+        List<String> stringList = new ArrayList<>();
+        for (Object o : objectList) {
+            stringList.add(o.toString());
+        }
+        return stringList;
     }
 }

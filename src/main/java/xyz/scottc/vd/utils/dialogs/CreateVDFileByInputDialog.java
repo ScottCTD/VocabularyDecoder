@@ -65,9 +65,14 @@ public class CreateVDFileByInputDialog extends JDialog {
             }
         }
 
-        ArrayList<String> IList = new ArrayList<>();
+        ArrayList<String> VIList = new ArrayList<>();
         for (int i = 0; i < QList.size(); i++) {
-            IList.add(VDConstants.EMPTY);
+            VIList.add(VDConstants.EMPTY);
+        }
+
+        ArrayList<String> MIList = new ArrayList<>();
+        for (int i = 0; i < QList.size(); i++) {
+            MIList.add(VDConstants.EMPTY);
         }
 
         JFileChooser fileChooser = new JFileChooser();
@@ -78,7 +83,8 @@ public class CreateVDFileByInputDialog extends JDialog {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("questions", QList);
             jsonObject.put("answers", AList);
-            jsonObject.put("input", IList);
+            jsonObject.put("inputV", VIList);
+            jsonObject.put("inputM", MIList);
             JSONUtils.toFile(jsonObject, output);
             this.AInputArea.setText(VDConstants.EMPTY);
             this.QInputArea.setText(VDConstants.EMPTY);
