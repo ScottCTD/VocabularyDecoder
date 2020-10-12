@@ -81,10 +81,10 @@ public class CreateVDFileByInputDialog extends JDialog {
             File output = new File(fileChooser.getSelectedFile().getAbsolutePath().endsWith(".vd") ?
                     fileChooser.getSelectedFile().getAbsolutePath() : fileChooser.getSelectedFile().getAbsolutePath() + ".vd");
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("questions", QList);
-            jsonObject.put("answers", AList);
-            jsonObject.put("inputV", VIList);
-            jsonObject.put("inputM", MIList);
+            jsonObject.put(VDConstants.KEY_QUESTIONS, QList);
+            jsonObject.put(VDConstants.KEY_ANSWERS, AList);
+            jsonObject.put(VDConstants.KEY_INPUT_VOCABULARIES, VIList);
+            jsonObject.put(VDConstants.KEY_INPUT_MEANINGS, MIList);
             JSONUtils.toFile(jsonObject, output);
             this.AInputArea.setText(VDConstants.EMPTY);
             this.QInputArea.setText(VDConstants.EMPTY);
