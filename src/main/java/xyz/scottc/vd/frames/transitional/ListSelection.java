@@ -356,8 +356,18 @@ public class ListSelection extends TransitionalFrame {
             } else {
                 this.setIcon(this.textFile);
             }
-            if (text.contains(".vd")) {
-                text = text.replace(".vd", VDConstants.EMPTY);
+            if (text.contains(VDConstants.VD_FILE_EXTENTION)) {
+                text = text.replace(VDConstants.VD_FILE_EXTENTION, VDConstants.EMPTY);
+                for (File file : Main.INTERNAL_LISTS) {
+                    if (file.getName().contains(text)) {
+                        VDList vdList = new VDList(file);
+                        vdList.toQAList();
+                        vdList.loadInput();
+                        text = text + " | " + vdList.getPercentAnswered(VDConstants.KEY_INPUT_MEANINGS) + "%" +
+                                " : " + vdList.getPercentAnswered(VDConstants.KEY_INPUT_VOCABULARIES) + "%";
+                        break;
+                    }
+                }
                 this.setIcon(this.vdList);
                 this.setToolTipText("Double click to continue!");
             } else {

@@ -298,6 +298,10 @@ public class OrderedMode extends FunctionalFrame {
             this.nextButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/next.png"));
             this.preButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/pre.png"));
             this.suspendButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/suspend.png"));
+            this.answerButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/answer.png"));
+            this.reviewButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/review.png"));
+            this.saveButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/save.png"));
+            this.clearButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/clear.png"));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -396,6 +400,13 @@ public class OrderedMode extends FunctionalFrame {
                 if (e.getModifiers() == InputEvent.ALT_MASK && e.getKeyCode() == KeyEvent.VK_A) {
                     answer();
                 }
+                if (e.getModifiers() == InputEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_S) {
+                    try {
+                        vdList.save();
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
             }
         }
 
@@ -423,6 +434,11 @@ public class OrderedMode extends FunctionalFrame {
 
                 //save
                 vdList.getInput().setContent(I.getText());
+                try {
+                    vdList.save();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
 
                 //judge
                 vdList.updateState();

@@ -255,16 +255,27 @@ public class VDList {
         this.Is.get(this.index).setContent(input);
     }
 
-    public int getPercentAnswered() {
-        int answered = 0;
-        for (Input input : this.Is) {
-            if (input.getState() != Input.InputState.NOT_ANSWERED) {
-                answered++;
+    /**
+     * @param key should be VDConstants.KEY_INPUT_VOCABULARIES or VDConstants.KEY_INPUT_MEANINGS
+     * @return the percentage answered
+     */
+    public int getPercentAnswered(String key) {
+        try {
+            double answered = 0;
+            JSONObject jsonObject = (JSONObject) JSONUtils.fromFile(this.file);
+            List<String> inputList;
+            inputList = VDUtils.toStringList(jsonObject.getJSONArray(key).toList());
+            for (String input : inputList) {
+                if (!input.equals(VDConstants.EMPTY)) {
+                    answered++;
+                }
             }
+            double total = inputList.size();
+            return (int) ((answered / total) * 100);
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
-        int total = this.Qs.size();
-        System.out.println((answered * 100) / (total * 100));
-        return (answered * 100) / (total * 100);
+        return -1;
     }
 
     public List<String> getQs() {
