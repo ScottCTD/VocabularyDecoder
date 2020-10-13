@@ -1,3 +1,5 @@
+**Please use java -Dfile.encoding=UTF-8 -jar "JarName"**
+
 # What is "Vocabulary Decoder"?
 
 As the word "Decoder" implies, vocabulary decoder (VD) is a tool, aiming to help non-native English learner effectively memorize English Vocabularies. This small tool was created by ScottCTD who was a senior high school student when he coded it.
