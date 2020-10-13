@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -85,7 +86,7 @@ public class Main {
 
     private static void initInternalLibraryInJar() throws IOException {
         String sourceDir = "internalLibrary/";
-        String jarPath = FileUtils.getJarFilePath(Main.class);
+        String jarPath = URLDecoder.decode(FileUtils.getJarFilePath(Main.class), "UTF-8");
         JarFile jarFile = new JarFile(jarPath);
         Enumeration<JarEntry> entries = jarFile.entries();
         while (entries.hasMoreElements()) {
@@ -95,7 +96,7 @@ public class Main {
                 InputStream inputStream = Main.class.getResourceAsStream("/" + filePath);
                 String fileName = filePath.substring(sourceDir.length());
                 File targetFile = new File(internalLibrary.getAbsolutePath() + "/" + fileName);
-                if (!targetFile.isDirectory()) {
+                if (fileName.contains(".")) {
                     //ignore whether the file exists, add it to the list if it is a regular file
                     if (!targetFile.exists()) {
                         Files.copy(inputStream, targetFile.toPath());

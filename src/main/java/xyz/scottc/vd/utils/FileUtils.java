@@ -5,6 +5,7 @@ import xyz.scottc.vd.Main;
 import javax.swing.*;
 import java.io.*;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class FileUtils {
@@ -32,6 +33,7 @@ public class FileUtils {
 
     public static String getJarFilePath(Class<?> object) {
         if (object != null) {
+
             return object.getProtectionDomain().getCodeSource().getLocation().getPath();
         }
         return null;
@@ -89,6 +91,22 @@ public class FileUtils {
             exception.printStackTrace();
         } finally {
             closeStream(inputStream, outputStream);
+        }
+    }
+
+    public static void copyTextFile(InputStream inputStream, File target) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(target)
+            ));
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                writer.write(new String(buffer, 0, length, StandardCharsets.UTF_8));
+            }
+            writer.flush();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 

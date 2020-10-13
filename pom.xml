@@ -6,27 +6,13 @@
 
     <groupId>xyz.socttc</groupId>
     <artifactId>VocabularyDecoder</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.7</version>
     <dependencies>
 
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20200518</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin -->
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>3.3.0</version>
         </dependency>
 
 
@@ -69,6 +55,7 @@
                             <mainClass>xyz.scottc.vd.Main</mainClass>
                         </manifest>
                     </archive>
+                    <encoding>UTF-8</encoding>
                 </configuration>
                 <executions>
                     <execution>
@@ -77,25 +64,13 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.*</include>
-                </includes>
-            </resource>
-        </resources>
 
     </build>
 
