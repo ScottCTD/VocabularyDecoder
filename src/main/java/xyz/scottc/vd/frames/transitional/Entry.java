@@ -6,10 +6,6 @@ import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.UtilJButton;
 import xyz.scottc.vd.utils.components.UtilJLabel;
-import xyz.scottc.vd.utils.components.VDMenu;
-import xyz.scottc.vd.utils.components.VDMenuItem;
-import xyz.scottc.vd.utils.dialogs.CreateVDFileByInputDialog;
-import xyz.scottc.vd.utils.dialogs.VDFileConverter01Dialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,16 +20,11 @@ public class Entry extends TransitionalFrame {
     private final JScrollPane modeListScrollPane = new JScrollPane(this.modeList);
     private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_BOLD_60);
 
-    private final JMenuBar menuBar = new JMenuBar();
-    private final VDMenu toolsMenu = new VDMenu("Tools");
-    private final VDMenuItem createVDFile01MenuItem = new VDMenuItem("Create VD File by .txt");
-    private final VDMenuItem createVDFile02MenuItem = new VDMenuItem("Create VD File by Input");
 
     public Entry() throws HeadlessException {
         super("VD Entry");
         this.rootPanelHandler();
         this.layoutHandler();
-        this.menuHandler();
     }
 
     @Override
@@ -59,20 +50,6 @@ public class Entry extends TransitionalFrame {
         this.modeList.setCellRenderer(new ModeListCellRenderer());
         this.modeListHandler();
         this.modeList.addMouseListener(new SelectModeMouseListener());
-    }
-
-    private void menuHandler() {
-        this.setJMenuBar(this.menuBar);
-
-        this.menuBar.add(this.toolsMenu);
-        this.toolsMenu.add(this.createVDFile01MenuItem);
-        this.createVDFile01MenuItem.addActionListener(e -> VDFileConverter01Dialog.show(this));
-        this.toolsMenu.add(this.createVDFile02MenuItem);
-        this.createVDFile02MenuItem.addActionListener(e -> {
-            CreateVDFileByInputDialog dialog = new CreateVDFileByInputDialog(Entry.this);
-            dialog.setVisible(true);
-        });
-
     }
 
     private void modeListHandler() {

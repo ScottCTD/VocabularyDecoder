@@ -10,6 +10,9 @@ import xyz.scottc.vd.utils.layouts.AfRowLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -17,16 +20,20 @@ public class CreateVDFileByInputDialog extends JDialog {
 
     private final UtilJPanel rootPanel = new UtilJPanel(new AfRowLayout());
 
-    private final VDTextArea QInputArea = new VDTextArea(10, 10, VDConstants.MICROSOFT_YAHEI_PLAIN_15, true, false);
+    private final VDTextArea QInputArea = new VDTextArea(10, 10, VDConstants.MICROSOFT_YAHEI_PLAIN_20, true, false);
     private final JScrollPane QInputAreaScrollPane = new JScrollPane(this.QInputArea);
 
-    private final VDTextArea AInputArea = new VDTextArea(10, 10, VDConstants.MICROSOFT_YAHEI_PLAIN_15, true, false);
+    private final VDTextArea AInputArea = new VDTextArea(10, 10, VDConstants.MICROSOFT_YAHEI_PLAIN_20, true, false);
     private final JScrollPane AInputAreaScrollPane = new JScrollPane(this.AInputArea);
 
     private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
+    private final String Qinit = "Please input vocabularies here!";
+    private final String Ainit = "Please input meanings here!";
+
     public CreateVDFileByInputDialog(Frame owner) {
         super(owner);
+        this.setSize(720, 720);
         this.setTitle("Create Vocabulary List by Input");
         this.setModal(false);
         this.rootPanelHandler();
@@ -35,8 +42,15 @@ public class CreateVDFileByInputDialog extends JDialog {
     private void rootPanelHandler() {
         this.setContentPane(this.rootPanel);
 
+        MouseListener inputMouseLisener = new InputMosueListener();
+
         this.rootPanel.add(this.QInputAreaScrollPane, "1w");
+        this.QInputArea.setText(Qinit);
+        this.QInputArea.addMouseListener(inputMouseLisener);
+
         this.rootPanel.add(this.AInputAreaScrollPane, "1w");
+        this.AInputArea.setText(Ainit);
+        this.AInputArea.addMouseListener(inputMouseLisener);
 
         this.rootPanel.add(this.confirmButton);
         this.confirmButton.addActionListener(e -> this.generateFile());
@@ -78,8 +92,8 @@ public class CreateVDFileByInputDialog extends JDialog {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showSaveDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            File output = new File(fileChooser.getSelectedFile().getAbsolutePath().endsWith(".vd") ?
-                    fileChooser.getSelectedFile().getAbsolutePath() : fileChooser.getSelectedFile().getAbsolutePath() + ".vd");
+            File output = new File(fileChooser.getSelectedFile().getAbsolutePath().endsWith(VDConstants.VD_FILE_EXTENTION) ?
+                    fileChooser.getSelectedFile().getAbsolutePath() : fileChooser.getSelectedFile().getAbsolutePath() + VDConstants.VD_FILE_EXTENTION);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(VDConstants.KEY_QUESTIONS, QList);
             jsonObject.put(VDConstants.KEY_ANSWERS, AList);
@@ -88,6 +102,18 @@ public class CreateVDFileByInputDialog extends JDialog {
             JSONUtils.toFile(jsonObject, output);
             this.AInputArea.setText(VDConstants.EMPTY);
             this.QInputArea.setText(VDConstants.EMPTY);
+        }
+    }
+
+    private class InputMosueListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (AInputArea.getText().equals(Ainit)) {
+                AInputArea.setText(VDConstants.EMPTY);
+            }
+            if (QInputArea.getText().equals(Qinit)) {
+                QInputArea.setText(VDConstants.EMPTY);
+            }
         }
     }
 

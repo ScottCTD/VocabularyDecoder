@@ -32,6 +32,11 @@ public class VDFileConverter01Dialog extends VDDialog {
     public VDFileConverter01Dialog(Frame owner) {
         super(owner, "Convert .txt file to .vd file", ENText.CONVERTER_01_INFO, VDConstants.MICROSOFT_YAHEI_PLAIN_20);
         this.setSize(width, height - (90 - MARGIN));
+        try {
+            this.setIcon(FileUtils.createImageIcon("/images/icons/ConverterDialog/converter.png"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         this.rootPanelHandler();
         this.layoutHandler();
     }
@@ -50,7 +55,7 @@ public class VDFileConverter01Dialog extends VDDialog {
 
         super.rootPanel.add(this.importButton);
         this.importButton.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser(new File("C:\\Synchronization\\Code\\VocabularyDecoder\\dev\\InternalListSource\\SAT\\SAT3000"));
+            JFileChooser fileChooser = new JFileChooser();
             fileChooser.setMultiSelectionEnabled(true);
             int result = fileChooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {

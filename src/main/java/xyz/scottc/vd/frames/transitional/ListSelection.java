@@ -8,10 +8,10 @@ import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
-import xyz.scottc.vd.utils.components.LineSeparator;
-import xyz.scottc.vd.utils.components.UtilJButton;
-import xyz.scottc.vd.utils.components.UtilJLabel;
+import xyz.scottc.vd.utils.components.*;
+import xyz.scottc.vd.utils.dialogs.CreateVDFileByInputDialog;
 import xyz.scottc.vd.utils.dialogs.VDConfirmDialog;
+import xyz.scottc.vd.utils.dialogs.VDFileConverter01Dialog;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -33,6 +33,12 @@ public class ListSelection extends TransitionalFrame {
     private final UtilJButton importButton = new UtilJButton("Import", VDConstants.MICROSOFT_YAHEI_BOLD_32);
     private final UtilJButton deleteButton = new UtilJButton("Delete", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
+    private final JMenuBar menuBar = new JMenuBar();
+    private final VDMenu toolsMenu = new VDMenu("Tools");
+    private final VDMenuItem createVDFile01MenuItem = new VDMenuItem("Create VD File by .txt");
+    private final VDMenuItem createVDFile02MenuItem = new VDMenuItem("Create VD File by Input");
+
+
     private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstants.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultMutableTreeNode inListRoot = new DefaultMutableTreeNode(ENText.INTERNAL_VD_LISTS);
     private final JTree inList = new JTree(this.inListRoot);
@@ -49,6 +55,7 @@ public class ListSelection extends TransitionalFrame {
 
     public ListSelection() throws HeadlessException {
         super("VD List Selection");
+        this.menuHandler();
         this.rootPanelHandler();
         this.layoutHandler();
         this.treeHandler();
@@ -91,6 +98,20 @@ public class ListSelection extends TransitionalFrame {
 
         super.rootPanel.add(this.lineHelper01);
         this.lineHelper01.setVisible(false);
+    }
+
+    private void menuHandler() {
+        this.setJMenuBar(this.menuBar);
+
+        this.menuBar.add(this.toolsMenu);
+        this.toolsMenu.add(this.createVDFile01MenuItem);
+        this.createVDFile01MenuItem.addActionListener(e -> VDFileConverter01Dialog.show(this));
+        this.toolsMenu.add(this.createVDFile02MenuItem);
+        this.createVDFile02MenuItem.addActionListener(e -> {
+            CreateVDFileByInputDialog dialog = new CreateVDFileByInputDialog(ListSelection.this);
+            dialog.setVisible(true);
+        });
+
     }
 
     private void treeHandler() {

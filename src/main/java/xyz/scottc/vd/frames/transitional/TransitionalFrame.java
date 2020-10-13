@@ -1,5 +1,6 @@
 package xyz.scottc.vd.frames.transitional;
 
+import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.LineSeparator;
@@ -8,6 +9,7 @@ import xyz.scottc.vd.utils.components.UtilJPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class TransitionalFrame extends JFrame {
 
@@ -37,6 +39,11 @@ public class TransitionalFrame extends JFrame {
         this.rootPanel.add(this.titleLabel);
 
         this.rootPanel.add(this.aboutLabel);
+        try {
+            this.aboutLabel.setIcon(FileUtils.createImageIcon("/images/icons/TransitionalFrame/email.png"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
 
         this.rootPanel.add(this.separator01);
 
@@ -45,6 +52,7 @@ public class TransitionalFrame extends JFrame {
         this.rootPanel.add(this.separator03);
 
         this.rootPanel.add(this.introLabel);
+        this.introLabel.setVerticalTextPosition(SwingConstants.TOP);
     }
 
     protected void layoutHandler() {

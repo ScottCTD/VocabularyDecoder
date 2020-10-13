@@ -5,7 +5,17 @@ public class ENText {
     //Entry
     public static final String MAIN_INTRODUCTION = "<html>\n" +
             "<body>\n" +
-            "<div><h1><span>What is &quot;Vocabulary Decoder&quot;?</span></h1><p><span>As the word &quot;Decoder&quot; implies, vocabulary decoder (VD) is a tool, aiming to help non-native English learner effectively memorize English Vocabularies. This small tool was created by ScottCTD who was a senior high school student when he coded it.</span></p><h1><span>How to use it?</span></h1><p><span>Choose a VD mode from the </span><strong><span>&quot;VD Mode Selection&quot;</span></strong><span>, and then hit </span><strong><span>&quot;Confirm&quot;</span></strong><span> to continue.</span></p><p><span>VD has many </span><strong><span>internal vocabulary lists</span></strong><span>, ranging from TOEFL vocabularies to SAT vocabularies, and more lists will be added in the future.</span></p><p><span>If you want to create </span><strong><span>your customized vocabulary lists</span></strong><span>, just go to the </span><strong><span>&quot;tools&quot;</span></strong><span> menu at the </span><strong><span>top</span></strong><span> of this windows. </span></p><p><strong><span>Thanks for using!</span></strong></p><p>&nbsp;</p></div>\n" +
+            "<h1>What is &quot;Vocabulary Decoder&quot;?</h1>\n" +
+            "<p>As the word &quot;Decoder&quot; implies, vocabulary decoder (VD) is a tool, aiming to help non-native English learner effectively memorize English Vocabularies. ScottCTD created this small tool.</p>\n" +
+            "<h2>How to use it?</h2>\n" +
+            "<p>Choose a VD mode from the <strong>&quot;VD Mode Selection&quot;</strong>, and then hit <strong>&quot;Confirm&quot;</strong> to continue.</p>\n" +
+            "<p>VD has many <strong>internal vocabulary lists</strong>, ranging from TOEFL vocabularies to SAT vocabularies, and more lists will be added in the future.</p>\n" +
+            "<p>If you want to create <strong>your customized vocabulary lists</strong>, just go to the <strong>&quot;tools&quot;</strong> menu at the <strong>top</strong> of the Lists Selection windows. </p>\n" +
+            "<p><strong>Thanks for using!</strong></p>\n" +
+            "<p>Still don&#39;t know how to use? Go to the wiki page to get detailed introduction</p>\n" +
+            "<h2>Help Me</h2>\n" +
+            "<p>If you really want to help me, please contact me through my email.</p>\n" +
+            "<p>&nbsp;</p>\n" +
             "</body>\n" +
             "</html>";
     public static final String MODE_SELECTION = "VD Mode Selection";
@@ -15,8 +25,34 @@ public class ENText {
             "No time limit.\n";
 
     //List Selection
+    public static final String LIST_SELECTION_INTRODUCTION = "<html>\n" +
+            "<body>\n" +
+            "    <div>\n" +
+            "        <h1>Please choose a VD list to continue!</h1>\n" +
+            "        Double click the item in the file tree on the right side.\n" +
+            "        <h1>Internal VD Lists</h1>\n" +
+            "        Internal VD Lists are prepared by Scott, including common SAT and TOEFL vocabularies\n" +
+            "        <h1>External VD Lists</h1>\n" +
+            "        You can make <b>you own VD Lists</b> and memorize your own vocabularies!\n" +
+            "        <br>\n" +
+            "        <br>\n" +
+            "        Go to the <b>\"tools\"</b> menu at the top of the windows, and then you can choose the way you want to make your own lists.\n" +
+            "        <br>\n" +
+            "        <br>\n" +
+            "        If everything goes right, you will get a file with extension <b>\".vd\"</b>.\n" +
+            "        <br>\n" +
+            "        <br>\n" +
+            "        Then, you should hit the <b>\"import\"</b> button on the right side to make your list appear in the file tree.\n" +
+            "        <br>\n" +
+            "        <br>\n" +
+            "        If you have any question, please <font color=\"#dc143c\">firstly</font> check the official instruction in the GitHub page.\n" +
+            "        <br>\n" +
+            "        <br>\n" +
+            "        If you get a bug, please submit it as an issue in the GitHub! <b>I really appreciate it! Thanks!</b>\n" +
+            "    </div>\n" +
+            "</body>\n" +
+            "</html>";
     public static final String LIST_SELECTION = "VD Lists Selection";
-    public static final String LIST_SELECTION_INTRODUCTION = "";
     public static final String INTERNAL_VD_LISTS = "Internal VD Lists";
     public static final String EXTERNAL_VD_LISTS = "External VD Lists";
 
@@ -43,5 +79,13 @@ public class ENText {
             "</html>";
 
     //VDFileConverter01Dialog
-    public static final String CONVERTER_01_INFO = "";
+    public static final String CONVERTER_01_INFO = "<html>\n" +
+            "<body>\n" +
+            "    The first way for creating .vd file.\n" +
+            "    <br>\n" +
+            "    Format: [vocabularies]\\t[meanings]\\n\n" +
+            "    <br>\n" +
+            "    For more info, go to the GitHub wiki!\n" +
+            "</body>\n" +
+            "</html>";
 }
