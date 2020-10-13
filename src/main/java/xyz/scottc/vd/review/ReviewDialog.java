@@ -59,7 +59,7 @@ public class ReviewDialog extends JDialog {
         this.setContentPane(this.rootPanel);
 
         this.rootPanel.add(this.switcher);
-        this.switcher.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_30);
+        this.switcher.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_32);
         this.switcher.addActionListener(e -> this.update());
 
         this.rootPanel.add(this.tableView);
@@ -149,6 +149,7 @@ public class ReviewDialog extends JDialog {
         List<String> As = list.getAs();
         List<Input> Is = list.getIs();
         for (int i = 0; i < Qs.size(); i++) {
+            list.updateState(i);
             Vector<Object> buffer = new Vector<>(5);
             buffer.add(i + 1);
             buffer.add(Qs.get(i));

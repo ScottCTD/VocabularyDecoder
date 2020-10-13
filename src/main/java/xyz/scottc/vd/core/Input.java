@@ -68,7 +68,7 @@ public class Input {
                 case INCORRECT:
                     return "INCORRECT";
                 case UNSURE:
-                    return "ANSWERED";
+                    return "UNSURE";
                 case NOT_ANSWERED:
                     return "NOT ANSWERED";
             }

@@ -30,8 +30,8 @@ import java.util.List;
 public class ListSelection extends TransitionalFrame {
 
     private final UtilJButton backButton = new UtilJButton("Back", VDConstants.MICROSOFT_YAHEI_BOLD_40);
-    private final UtilJButton importButton = new UtilJButton("Import", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton deleteButton = new UtilJButton("Delete", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton importButton = new UtilJButton("Import", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton deleteButton = new UtilJButton("Delete", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
     private final UtilJLabel inListLabel = new UtilJLabel(ENText.INTERNAL_VD_LISTS, VDConstants.MICROSOFT_YAHEI_BOLD_60);
     private final DefaultMutableTreeNode inListRoot = new DefaultMutableTreeNode(ENText.INTERNAL_VD_LISTS);
@@ -94,10 +94,8 @@ public class ListSelection extends TransitionalFrame {
     }
 
     private void treeHandler() {
-        for (File file : Main.INTERNAL_LISTS) {
-            this.addNode(this.inListRoot, new VDList(file));
-        }
         try {
+            this.updateInternalLists();
             this.updateExternalLists();
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -111,6 +109,15 @@ public class ListSelection extends TransitionalFrame {
             this.addNode(this.exListRoot, new VDList(file));
         }
         DefaultTreeModel model = (DefaultTreeModel) exList.getModel();
+        model.reload();
+    }
+
+    private void updateInternalLists() throws IOException {
+        Main.updateInternalFiles();
+        for (File file : Main.INTERNAL_LISTS) {
+            this.addNode(this.inListRoot, new VDList(file));
+        }
+        DefaultTreeModel model = (DefaultTreeModel) inList.getModel();
         model.reload();
     }
 
@@ -301,6 +308,7 @@ public class ListSelection extends TransitionalFrame {
                     if (list.toQAList()) {
                         VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
                     } else {
+                        // TODO new error dialog
                         VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
                     }
                 }
@@ -335,7 +343,7 @@ public class ListSelection extends TransitionalFrame {
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-            this.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+            this.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_32.deriveFont(Font.PLAIN));
         }
 
         @Override

@@ -69,4 +69,17 @@ public class VDUtils {
         }
         return stringList;
     }
+
+    public static String removeALLESC(String target) {
+        if (target.contains("\n")) {
+            target = target.replaceAll("\n", VDConstants.EMPTY);
+        }
+        if (target.contains("\t")) {
+            target = target.replaceAll("\t", VDConstants.EMPTY);
+        }
+        if (target.contains("\r")) {
+            target = target.replaceAll("\r", VDConstants.EMPTY);
+        }
+        return target;
+    }
 }

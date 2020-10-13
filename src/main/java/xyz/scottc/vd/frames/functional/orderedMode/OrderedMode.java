@@ -3,6 +3,7 @@ package xyz.scottc.vd.frames.functional.orderedMode;
 import xyz.scottc.vd.core.Input;
 import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.frames.functional.FunctionalFrame;
+import xyz.scottc.vd.frames.transitional.ListSelection;
 import xyz.scottc.vd.review.ReviewDialog;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
@@ -23,27 +24,27 @@ public class OrderedMode extends FunctionalFrame {
 
     private final ReviewDialog review = new ReviewDialog(this);
 
-    private final UtilJLabel readyLabel = new UtilJLabel(ENText.ORDERED_MODE_READY_TEXT, VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton VQButton = new UtilJButton("Vocabularies as Questions", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton MQButton = new UtilJButton("Meanings as Questions", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJLabel readyLabel = new UtilJLabel(ENText.ORDERED_MODE_READY_TEXT, VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton VQButton = new UtilJButton("Vocabularies as Questions", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton MQButton = new UtilJButton("Meanings as Questions", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
-    private final UtilJButton nextButton = new UtilJButton("Next", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton preButton = new UtilJButton("Previous", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton answerButton = new UtilJButton("Answer", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton reviewButton = new UtilJButton("Review", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton saveButton = new UtilJButton("Save", VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJButton clearButton = new UtilJButton("Clear", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton nextButton = new UtilJButton("Next", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton preButton = new UtilJButton("Previous", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton answerButton = new UtilJButton("Answer", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton reviewButton = new UtilJButton("Review", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton saveButton = new UtilJButton("Save", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJButton clearButton = new UtilJButton("Clear", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
-    private final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
-    private final UtilJLabel preLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
-    private final UtilJLabel nextLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJLabel preLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    private final UtilJLabel nextLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
     private final VDTextArea Q = new VDTextArea(2, 10, VDConstants.MICROSOFT_YAHEI_BOLD_120, false, false);
     private final JScrollPane QView = new JScrollPane(this.Q, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     private final VDTextArea I = new VDTextArea(1, 10, VDConstants.MICROSOFT_YAHEI_BOLD_120, true, false);
     private final JScrollPane IView = new JScrollPane(this.I, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    private final UtilJLabel ALabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJLabel ALabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_32);
     private final VDTextArea A = new VDTextArea(1, 10, VDConstants.MICROSOFT_YAHEI_BOLD_120, false, false);
     private final JScrollPane AView = new JScrollPane(this.A, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
@@ -97,6 +98,14 @@ public class OrderedMode extends FunctionalFrame {
         });
 
         super.rootPanel.add(this.clearButton);
+        this.clearButton.addActionListener(e -> {
+            try {
+                this.vdList.clear();
+                VDUtils.switchFrame(this, new ListSelection());
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        });
 
 
         super.rootPanel.add(this.suspendButton);
@@ -218,6 +227,7 @@ public class OrderedMode extends FunctionalFrame {
         this.I.setText(this.vdList.getInput().getContent());
         this.I.grabFocus();
 
+        this.vdList.updateState();
         if (this.isAnswerShown) {
             if (this.vdList.getInput().getState() != Input.InputState.NOT_ANSWERED) {
                 this.updateAnswer();
@@ -415,15 +425,7 @@ public class OrderedMode extends FunctionalFrame {
                 vdList.getInput().setContent(I.getText());
 
                 //judge
-                if (!vdList.isVQ) {
-                    if (!I.getText().equals(VDConstants.EMPTY)) {
-                        vdList.setInput(vdList.judgeEn());
-                    }
-                } else {
-                    if (!I.getText().equals(VDConstants.EMPTY)) {
-                        //To do Chinese Correction
-                    }
-                }
+                vdList.updateState();
 
                 //update answer if needed
                 if (isAnswerShown) updateAnswer();

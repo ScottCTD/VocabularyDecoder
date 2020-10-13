@@ -150,4 +150,13 @@ public class Main {
         });
     }
 
+    public static void updateInternalFiles() throws IOException {
+        INTERNAL_LISTS.clear();
+        Files.walk(internalLibrary.toPath()).filter(Files::isRegularFile).forEach(path -> {
+            if (!path.toString().equals(externalLibrary.getAbsolutePath())) {
+                INTERNAL_LISTS.add(path.toFile());
+            }
+        });
+    }
+
 }

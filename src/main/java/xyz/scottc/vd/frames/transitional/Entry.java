@@ -9,7 +9,7 @@ import xyz.scottc.vd.utils.components.UtilJLabel;
 import xyz.scottc.vd.utils.components.VDMenu;
 import xyz.scottc.vd.utils.components.VDMenuItem;
 import xyz.scottc.vd.utils.dialogs.CreateVDFileByInputDialog;
-import xyz.scottc.vd.utils.dialogs.CreateVDFileByTXTDialog;
+import xyz.scottc.vd.utils.dialogs.VDFileConverter01Dialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,10 +66,7 @@ public class Entry extends TransitionalFrame {
 
         this.menuBar.add(this.toolsMenu);
         this.toolsMenu.add(this.createVDFile01MenuItem);
-        this.createVDFile01MenuItem.addActionListener(e -> {
-            CreateVDFileByTXTDialog dialog = new CreateVDFileByTXTDialog(Entry.this);
-            dialog.setVisible(true);
-        });
+        this.createVDFile01MenuItem.addActionListener(e -> VDFileConverter01Dialog.show(this));
         this.toolsMenu.add(this.createVDFile02MenuItem);
         this.createVDFile02MenuItem.addActionListener(e -> {
             CreateVDFileByInputDialog dialog = new CreateVDFileByInputDialog(Entry.this);

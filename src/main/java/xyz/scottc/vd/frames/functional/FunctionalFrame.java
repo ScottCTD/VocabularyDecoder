@@ -24,12 +24,12 @@ public class FunctionalFrame extends JFrame {
     protected final UtilJPanel readyPanel = new UtilJPanel();
     protected final SpringLayout readyPanelLayout = new SpringLayout();
 
-    protected final VDBackButton backButton = new VDBackButton(VDConstants.MICROSOFT_YAHEI_BOLD_30, 32);
+    protected final VDBackButton backButton = new VDBackButton(VDConstants.MICROSOFT_YAHEI_BOLD_32, 32);
     protected final UtilJButton hideTimerButton = new UtilJButton("Hide Timer", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
 
-    protected final UtilJLabel currentListLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    protected final UtilJLabel currentListLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
-    protected final VDAmountDisplay amount = new VDAmountDisplay(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+    protected final VDAmountDisplay amount = new VDAmountDisplay(VDConstants.MICROSOFT_YAHEI_BOLD_32.deriveFont(Font.PLAIN));
     protected final VDTimer timer = new VDTimer();
 
     protected final LineSeparator separator01 = new LineSeparator(LineSeparator.HORIZONTAL, VDUtils.getScreenRectangle().width);
@@ -61,10 +61,10 @@ public class FunctionalFrame extends JFrame {
         this.rootPanel.add(this.separator01);
 
         this.rootPanel.add(this.timer);
-        this.timer.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+        this.timer.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_32.deriveFont(Font.PLAIN));
 
         this.rootPanel.add(this.hideTimerButton);
-        this.hideTimerButton.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_30.deriveFont(Font.PLAIN));
+        this.hideTimerButton.setFont(VDConstants.MICROSOFT_YAHEI_BOLD_32.deriveFont(Font.PLAIN));
         this.hideTimerButton.addActionListener(e -> {
             String hide = "Hide Timer";
             String display = "Display Timer";

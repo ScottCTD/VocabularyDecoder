@@ -36,7 +36,7 @@ public class CreateVDFileByTXTDialog extends JDialog {
     private final UtilJButton chooseAnswerFile = new UtilJButton("Choose", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
     private final JTextField answerFilePath = new JTextField(19);
     private final JScrollPane answerFilePathScrollPane = new JScrollPane(this.answerFilePath);
-    private final UtilJButton generate = new UtilJButton("Generate", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton generate = new UtilJButton("Generate", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
     private final List<String> vocabList = new ArrayList<>(100);
     private final List<String> answerList = new ArrayList<>(100);
@@ -130,20 +130,27 @@ public class CreateVDFileByTXTDialog extends JDialog {
             fileChooser.setFileFilter(new FileNameExtensionFilter("JSON File", "json"));
             int result = fileChooser.showSaveDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
-                ArrayList<String> IList = new ArrayList<>();
+                ArrayList<String> VIList = new ArrayList<>();
                 for (int i = 0; i < this.vocabList.size(); i++) {
-                    IList.add(VDConstants.EMPTY);
+                    VIList.add(VDConstants.EMPTY);
+                }
+
+                ArrayList<String> MIList = new ArrayList<>();
+                for (int i = 0; i < this.vocabList.size(); i++) {
+                    MIList.add(VDConstants.EMPTY);
                 }
 
                 File output = fileChooser.getSelectedFile();
                 String path = output.getAbsolutePath();
-                if (!path.endsWith(".json")) {
-                    output = new File(path + ".json");
+                if (!path.endsWith(VDConstants.VD_FILE_EXTENTION)) {
+                    output = new File(path + VDConstants.VD_FILE_EXTENTION);
                 }
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("questions", this.vocabList);
-                jsonObject.put("answers", this.answerList);
-                jsonObject.put("input", IList);
+                jsonObject.put(VDConstants.KEY_QUESTIONS, this.vocabList);
+                jsonObject.put(VDConstants.KEY_ANSWERS, this.answerList);
+                jsonObject.put(VDConstants.KEY_INPUT_VOCABULARIES, VIList);
+                jsonObject.put(VDConstants.KEY_INPUT_MEANINGS, MIList);
+
                 JSONUtils.toFile(jsonObject, output);
             }
         }

@@ -9,6 +9,14 @@ import java.util.Arrays;
 
 public class FileUtils {
 
+    public static byte[] readFromFile(File file) throws IOException {
+        InputStream inputStream = new FileInputStream(file);
+        byte[] buffer = new byte[inputStream.available() + 1024];
+        int length;
+        length = inputStream.read(buffer);
+        return Arrays.copyOf(buffer, length);
+    }
+
     public static ImageIcon createImageIcon(String resourceName) throws IOException {
         return new ImageIcon(FileUtils.readFromInputStream(
                 Main.class.getResourceAsStream(resourceName)

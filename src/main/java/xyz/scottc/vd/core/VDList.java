@@ -66,14 +66,24 @@ public class VDList {
         return false;
     }
 
-    public Input judgeEn() {
-        Input input = this.getInput();
-        if (input.toString().equals(this.getAnswer())) {
-            input.setState(Input.InputState.CORRECT);
+    public void updateState(int index) {
+        if (isVQ) {
+            // TODO Chinese Correction
         } else {
-            input.setState(Input.InputState.INCORRECT);
+            if (!this.getInput(index).getContent().equals(VDConstants.EMPTY)) {
+                Input input = this.getInput(index);
+                if (input.getContent().equals(this.getAnswer(index))) {
+                    input.setState(Input.InputState.CORRECT);
+                } else {
+                    input.setState(Input.InputState.INCORRECT);
+                }
+                this.setInput(index, input);
+            }
         }
-        return input;
+    }
+
+    public void updateState() {
+        this.updateState(this.index);
     }
 
     public void interconvertQAList() {
@@ -231,6 +241,10 @@ public class VDList {
 
     public void setInput(Input input) {
         this.Is.set(this.index, input);
+    }
+
+    public void setInput(int index, Input input) {
+        this.Is.set(index, input);
     }
 
     public Input getInput(int index) {

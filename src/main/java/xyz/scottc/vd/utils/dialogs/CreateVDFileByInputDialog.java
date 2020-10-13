@@ -23,7 +23,7 @@ public class CreateVDFileByInputDialog extends JDialog {
     private final VDTextArea AInputArea = new VDTextArea(10, 10, VDConstants.MICROSOFT_YAHEI_PLAIN_15, true, false);
     private final JScrollPane AInputAreaScrollPane = new JScrollPane(this.AInputArea);
 
-    private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_BOLD_30);
+    private final UtilJButton confirmButton = new UtilJButton("Confirm", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
     public CreateVDFileByInputDialog(Frame owner) {
         super(owner);
