@@ -1,8 +1,7 @@
-package xyz.scottc.vd.frames.functional.orderedMode;
+package xyz.scottc.vd.frames.functional;
 
 import xyz.scottc.vd.core.Input;
 import xyz.scottc.vd.core.VDList;
-import xyz.scottc.vd.frames.functional.FunctionalFrame;
 import xyz.scottc.vd.frames.transitional.ListSelection;
 import xyz.scottc.vd.review.ReviewDialog;
 import xyz.scottc.vd.utils.ENText;
@@ -32,8 +31,6 @@ public class OrderedMode extends FunctionalFrame {
     private final UtilJButton preButton = new UtilJButton("Previous", VDConstants.MICROSOFT_YAHEI_BOLD_32);
     private final UtilJButton answerButton = new UtilJButton("Answer", VDConstants.MICROSOFT_YAHEI_BOLD_32);
     private final UtilJButton reviewButton = new UtilJButton("Review", VDConstants.MICROSOFT_YAHEI_BOLD_32);
-    private final UtilJButton saveButton = new UtilJButton("Save", VDConstants.MICROSOFT_YAHEI_BOLD_32);
-    private final UtilJButton clearButton = new UtilJButton("Clear", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
     private final UtilJButton suspendButton = new UtilJButton("Suspend", VDConstants.MICROSOFT_YAHEI_BOLD_32);
 
@@ -88,8 +85,7 @@ public class OrderedMode extends FunctionalFrame {
         this.reviewButton.addActionListener(e -> this.review());
         this.review.addTableMouseLisener(new TableMouseListener());
 
-        super.rootPanel.add(this.saveButton);
-        this.saveButton.addActionListener(e -> {
+        super.saveButton.addActionListener(e -> {
             try {
                 this.vdList.save();
             } catch (IOException exception) {
@@ -97,8 +93,7 @@ public class OrderedMode extends FunctionalFrame {
             }
         });
 
-        super.rootPanel.add(this.clearButton);
-        this.clearButton.addActionListener(e -> {
+        super.clearButton.addActionListener(e -> {
             try {
                 this.vdList.clear();
                 VDUtils.switchFrame(this, new ListSelection());
@@ -106,7 +101,6 @@ public class OrderedMode extends FunctionalFrame {
                 exception.printStackTrace();
             }
         });
-
 
         super.rootPanel.add(this.suspendButton);
         this.suspendButton.addActionListener(e -> this.suspend());
@@ -293,15 +287,14 @@ public class OrderedMode extends FunctionalFrame {
         }
     }
 
-    private void iconHandler() {
+    @Override
+    protected void iconHandler() {
         try {
             this.nextButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/next.png"));
             this.preButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/pre.png"));
             this.suspendButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/suspend.png"));
             this.answerButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/answer.png"));
             this.reviewButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/review.png"));
-            this.saveButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/save.png"));
-            this.clearButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/clear.png"));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -324,14 +317,8 @@ public class OrderedMode extends FunctionalFrame {
         super.layout.putConstraint(SpringLayout.NORTH, this.reviewButton, 0, SpringLayout.NORTH, this.nextButton);
         super.layout.putConstraint(SpringLayout.EAST, this.reviewButton, -MARGIN, SpringLayout.WEST, this.answerButton);
 
-        super.layout.putConstraint(SpringLayout.EAST, this.saveButton, -MARGIN, SpringLayout.WEST, this.reviewButton);
-        super.layout.putConstraint(SpringLayout.NORTH, this.saveButton, 0, SpringLayout.NORTH, this.nextButton);
-
-        super.layout.putConstraint(SpringLayout.EAST, this.clearButton, -MARGIN, SpringLayout.WEST, this.saveButton);
-        super.layout.putConstraint(SpringLayout.NORTH, this.clearButton, 0, SpringLayout.NORTH, this.nextButton);
-
-        super.layout.putConstraint(SpringLayout.NORTH, this.suspendButton, 0, SpringLayout.NORTH, super.hideTimerButton);
-        super.layout.putConstraint(SpringLayout.EAST, this.suspendButton, -MARGIN, SpringLayout.WEST, super.hideTimerButton);
+        super.layout.putConstraint(SpringLayout.NORTH, this.suspendButton, 0, SpringLayout.NORTH, super.backButton);
+        super.layout.putConstraint(SpringLayout.WEST, this.suspendButton, MARGIN, SpringLayout.EAST, super.saveButton);
 
         super.layout.putConstraint(SpringLayout.NORTH, this.suspendPanel, 0, SpringLayout.SOUTH, super.separator02);
         super.layout.putConstraint(SpringLayout.SOUTH, this.suspendPanel, 0, SpringLayout.SOUTH, super.rootPanel);

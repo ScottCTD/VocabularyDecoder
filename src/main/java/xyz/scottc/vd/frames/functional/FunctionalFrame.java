@@ -25,10 +25,11 @@ public class FunctionalFrame extends JFrame {
     protected final SpringLayout readyPanelLayout = new SpringLayout();
 
     protected final VDBackButton backButton = new VDBackButton(VDConstants.MICROSOFT_YAHEI_BOLD_32, 32);
+    protected final UtilJButton saveButton = new UtilJButton("Save", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+    protected final UtilJButton clearButton = new UtilJButton("Clear", VDConstants.MICROSOFT_YAHEI_BOLD_32);
+
     protected final UtilJButton hideTimerButton = new UtilJButton("Hide Timer", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
-
     protected final UtilJLabel currentListLabel = new UtilJLabel(VDConstants.MICROSOFT_YAHEI_BOLD_32);
-
     protected final VDAmountDisplay amount = new VDAmountDisplay(VDConstants.MICROSOFT_YAHEI_BOLD_32.deriveFont(Font.PLAIN));
     protected final VDTimer timer = new VDTimer();
 
@@ -50,12 +51,12 @@ public class FunctionalFrame extends JFrame {
         this.rootPanel.add(this.backButton);
         this.backButton.addActionListener(e -> VDUtils.switchFrame(this, new ListSelection()));
 
+        this.rootPanel.add(this.saveButton);
+
+        this.rootPanel.add(this.clearButton);
+
         this.rootPanel.add(this.currentListLabel);
-        try {
-            this.currentListLabel.setIcon(FileUtils.createImageIcon("/images/icons/FunctionalFrame/vdList.png"));
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+
         this.currentListLabel.setBackground(this.rootPanel.getBackground());
 
         this.rootPanel.add(this.separator01);
@@ -95,16 +96,30 @@ public class FunctionalFrame extends JFrame {
         }
     }
 
+    protected void iconHandler() {
+        try {
+            this.saveButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/save.png"));
+            this.clearButton.setIcon(FileUtils.createImageIcon("/images/icons/OrderedMode/clear.png"));
+            this.currentListLabel.setIcon(FileUtils.createImageIcon("/images/icons/FunctionalFrame/vdList.png"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
     protected void layoutHandler() {
         this.rootPanel.setLayout(this.layout);
 
         this.layout.putConstraint(SpringLayout.NORTH, this.backButton, MARGIN, SpringLayout.NORTH, this.rootPanel);
         this.layout.putConstraint(SpringLayout.WEST, this.backButton, MARGIN, SpringLayout.WEST, this.rootPanel);
+        this.layout.putConstraint(SpringLayout.WEST, this.clearButton, MARGIN, SpringLayout.EAST, this.backButton);
+        this.layout.putConstraint(SpringLayout.NORTH, this.clearButton, 0, SpringLayout.NORTH, this.backButton);
+        this.layout.putConstraint(SpringLayout.WEST, this.saveButton, MARGIN, SpringLayout.EAST, this.clearButton);
+        this.layout.putConstraint(SpringLayout.NORTH, this.saveButton, 0, SpringLayout.NORTH, this.backButton);
 
         this.layout.putConstraint(SpringLayout.NORTH, this.separator01, MARGIN, SpringLayout.SOUTH, this.backButton);
 
-        this.layout.putConstraint(SpringLayout.WEST, this.currentListLabel, MARGIN, SpringLayout.EAST, this.backButton);
-        this.layout.putConstraint(SpringLayout.NORTH, this.currentListLabel, MARGIN + 4, SpringLayout.NORTH, this.rootPanel);
+        this.layout.putConstraint(SpringLayout.WEST, this.currentListLabel, MARGIN, SpringLayout.WEST, this.rootPanel);
+        this.layout.putConstraint(SpringLayout.NORTH, this.currentListLabel, 0, SpringLayout.NORTH, this.timer);
 
         this.layout.putConstraint(SpringLayout.EAST, this.timer, -MARGIN * 2, SpringLayout.EAST, this.rootPanel);
         this.layout.putConstraint(SpringLayout.NORTH, this.timer, SUB_MARGIN + 6, SpringLayout.SOUTH, this.separator01);

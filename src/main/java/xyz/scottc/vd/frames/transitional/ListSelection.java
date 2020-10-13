@@ -3,7 +3,7 @@ package xyz.scottc.vd.frames.transitional;
 import xyz.scottc.vd.Main;
 import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.exceptions.FileDeletingException;
-import xyz.scottc.vd.frames.functional.orderedMode.OrderedMode;
+import xyz.scottc.vd.frames.functional.OrderedMode;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
 import xyz.scottc.vd.utils.VDConstants;
@@ -230,14 +230,14 @@ public class ListSelection extends TransitionalFrame {
     };
 
     private final ActionListener deleteListener = e -> {
-        int result = VDConfirmDialog.show(this, "Delete Selected File",
-                "Do you really want to delete this file?", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
-        if (result == VDConfirmDialog.CONFIRM) {
-            TreePath[] treePaths = this.exList.getSelectionPaths();
-            if (treePaths != null) {
-                for (TreePath treePath : treePaths) {
-                    File file = this.getFileFromTreePath(treePath, Main.EXTERNAL_LISTS);
-                    if (file != null) {
+        TreePath[] treePaths = this.exList.getSelectionPaths();
+        if (treePaths != null) {
+            for (TreePath treePath : treePaths) {
+                File file = this.getFileFromTreePath(treePath, Main.EXTERNAL_LISTS);
+                if (file != null) {
+                    int result = VDConfirmDialog.show(this, "Delete Selected File",
+                            "Do you really want to delete this file?", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
+                    if (result == VDConfirmDialog.CONFIRM) {
                         try {
                             if (!file.delete()) throw new FileDeletingException(file);
                         } catch (FileDeletingException exception) {
