@@ -258,16 +258,20 @@ public class OrderedMode extends FunctionalFrame {
         switch (this.vdList.getInput().getState()) {
             case CORRECT:
                 this.IView.setBorder(BorderFactory.createLineBorder(Input.CORRECT_COLOR, 3));
-
-                this.ALabel.setText(this.vdList.getInput().getState().toString());
                 this.ALabel.setForeground(Input.CORRECT_COLOR);
                 break;
             case INCORRECT:
                 this.IView.setBorder(BorderFactory.createLineBorder(Input.INCORRECT_COLOR, 3));
-                this.ALabel.setText(this.vdList.getInput().getState().toString());
                 this.ALabel.setForeground(Input.INCORRECT_COLOR);
                 break;
+            case UNSURE:
+                this.IView.setBorder(BorderFactory.createLineBorder(Input.UNSURE_COLOR, 3));
+                this.ALabel.setForeground(Input.UNSURE_COLOR);
+                break;
+
         }
+        this.ALabel.setText(this.vdList.getInput().getState().toString());
+
         this.AView.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.isAnswerShown = true;
     }

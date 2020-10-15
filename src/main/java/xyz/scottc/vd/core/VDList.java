@@ -2,6 +2,7 @@ package xyz.scottc.vd.core;
 
 import org.json.JSONObject;
 import xyz.scottc.vd.Main;
+import xyz.scottc.vd.utils.ChineseCorrection;
 import xyz.scottc.vd.utils.JSONUtils;
 import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
@@ -68,7 +69,7 @@ public class VDList {
 
     public void updateState(int index) {
         if (isVQ) {
-            // TODO Chinese Correction
+            this.getInput().setState(ChineseCorrection.judge(this, index));
         } else {
             if (!this.getInput(index).getContent().equals(VDConstants.EMPTY)) {
                 Input input = this.getInput(index);

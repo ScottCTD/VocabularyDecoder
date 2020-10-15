@@ -12,6 +12,7 @@ public class Input {
 
     public static final Color CORRECT_COLOR = new Color(0x00A74A);
     public static final Color INCORRECT_COLOR = new Color(0xFE4365);
+    public static final Color UNSURE_COLOR = new Color(0xf7c600);
 
     public Input(String content) {
         if (content.equals(VDConstants.EMPTY)) {
