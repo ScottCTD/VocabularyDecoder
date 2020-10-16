@@ -11,6 +11,7 @@ import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.*;
 import xyz.scottc.vd.utils.dialogs.CreateVDFileByInputDialog;
 import xyz.scottc.vd.utils.dialogs.VDConfirmDialog;
+import xyz.scottc.vd.utils.dialogs.VDErrorDialog;
 import xyz.scottc.vd.utils.dialogs.VDFileConverter01Dialog;
 
 import javax.swing.*;
@@ -23,8 +24,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class ListSelection extends TransitionalFrame {
@@ -169,75 +172,91 @@ public class ListSelection extends TransitionalFrame {
     }
 
     private final ActionListener importListener = e -> {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter(VDConstants.FILE_TYPE, "vd"));
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        fileChooser.setMultiSelectionEnabled(true);
-        int result = fileChooser.showSaveDialog(ListSelection.this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File[] selectedFiles = fileChooser.getSelectedFiles();
-            File sourceDir = fileChooser.getCurrentDirectory();
-            for (File file : selectedFiles) {
-                if (file.isDirectory()) {
-                    try {
-                        Files.walk(file.toPath()).filter(Files::isDirectory).forEach(path -> {
-                            File sourceDir2 = path.toFile();
-                            String targetDirName = sourceDir2.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
-                            String targetDirPath = Main.externalLibrary.getAbsolutePath() + "\\" + targetDirName;
-                            try {
-                                Files.createDirectory(Paths.get(targetDirPath));
-                            } catch (IOException exception) {
-                                exception.printStackTrace();
-                            }
-                        });
-                        Files.walk(file.toPath()).filter(Files::isRegularFile).forEach(path -> {
-                            File sourceFile = path.toFile();
-                            String targetFileName = sourceFile.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileNameExtensionFilter(VDConstants.FILE_TYPE, "vd"));
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            fileChooser.setMultiSelectionEnabled(true);
+            int result = fileChooser.showSaveDialog(ListSelection.this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File[] selectedFiles = fileChooser.getSelectedFiles();
+                File sourceDir = fileChooser.getCurrentDirectory();
+                for (File file : selectedFiles) {
+                    if (file.isDirectory()) {
+                        try {
+                            Files.walk(file.toPath()).filter(Files::isDirectory).forEach(path -> {
+                                File sourceDir2 = path.toFile();
+                                String targetDirName = sourceDir2.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
+                                String targetDirPath = Main.externalLibrary.getAbsolutePath() + "\\" + targetDirName;
+                                try {
+                                    Files.createDirectory(Paths.get(targetDirPath));
+                                } catch (FileAlreadyExistsException ignored) {
+
+                                } catch (IOException exception) {
+                                    exception.printStackTrace();
+                                }
+                            });
+                            Files.walk(file.toPath()).filter(Files::isRegularFile).forEach(path -> {
+                                File sourceFile = path.toFile();
+                                String targetFileName = sourceFile.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
+                                String targetFilePath = Main.externalLibrary.getAbsolutePath() + "\\" + targetFileName;
+                                try {
+                                    Files.copy(sourceFile.toPath(), Paths.get(targetFilePath), StandardCopyOption.REPLACE_EXISTING);
+                                } catch (IOException exception) {
+                                    exception.printStackTrace();
+                                }
+                            });
+                        } catch (IOException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
+                }
+                // Create the dirs first, avoiding potential problems, although performance consuming
+                for (File file : selectedFiles) {
+                    if (file.isFile()) {
+                        try {
+                            String targetFileName = file.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
                             String targetFilePath = Main.externalLibrary.getAbsolutePath() + "\\" + targetFileName;
-                            try {
-                                Files.copy(sourceFile.toPath(), Paths.get(targetFilePath));
-                            } catch (IOException exception) {
-                                exception.printStackTrace();
-                            }
-                        });
-                    } catch (IOException exception) {
-                        exception.printStackTrace();
+                            Files.copy(file.toPath(), Paths.get(targetFilePath));
+                        } catch (IOException exception) {
+                            exception.printStackTrace();
+                        }
                     }
                 }
-            }
-            for (File file : selectedFiles) {
-                if (file.isFile()) {
-                    try {
-                        String targetFileName = file.getAbsolutePath().substring(sourceDir.getAbsolutePath().length());
-                        String targetFilePath = Main.externalLibrary.getAbsolutePath() + "\\" + targetFileName;
-                        Files.copy(file.toPath(), Paths.get(targetFilePath));
-                    } catch (IOException exception) {
-                        exception.printStackTrace();
-                    }
+                try {
+                    Main.updateExternalFiles();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+                try {
+                    this.updateExternalLists();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
                 }
             }
-            try {
-                Main.updateExternalFiles();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-            try {
-                this.updateExternalLists();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            VDErrorDialog.show(this, "<html>Fail to import customized VD<br>list(s)!</html>",
+                    VDConstants.MICROSOFT_YAHEI_BOLD_32);
         }
     };
 
     private final ActionListener deleteListener = e -> {
-        TreePath[] treePaths = this.exList.getSelectionPaths();
-        if (treePaths != null) {
-            for (TreePath treePath : treePaths) {
-                File file = this.getFileFromTreePath(treePath, Main.EXTERNAL_LISTS);
-                if (file != null) {
-                    int result = VDConfirmDialog.show(this, "Delete Selected File",
-                            "Do you really want to delete this file?", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
-                    if (result == VDConfirmDialog.CONFIRM) {
+        try {
+            TreePath[] treePaths = this.exList.getSelectionPaths();
+            if (treePaths != null) {
+                boolean confirm = false;
+                int result = VDConfirmDialog.CANCEL;
+                for (TreePath treePath : treePaths) {
+                    File file = this.getFileFromTreePath(treePath, Main.EXTERNAL_LISTS);
+                    if (!confirm) {
+                        result = VDConfirmDialog.show(this, "Delete Selected File",
+                                "Do you really want to delete this file?", VDConstants.MICROSOFT_YAHEI_PLAIN_20);
+                        if (result == VDConfirmDialog.CONFIRM) {
+                            confirm = true;
+                        }
+                    }
+                    if (confirm && file != null) {
                         try {
                             if (!file.delete()) throw new FileDeletingException(file);
                         } catch (FileDeletingException exception) {
@@ -255,6 +274,10 @@ public class ListSelection extends TransitionalFrame {
                     }
                 }
             }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            VDErrorDialog.show(this, "<html>Fail to delete selected VD<br>list(s)!</html>",
+                    VDConstants.MICROSOFT_YAHEI_BOLD_32);
         }
     };
 
@@ -329,11 +352,10 @@ public class ListSelection extends TransitionalFrame {
                     if (list.toQAList()) {
                         VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
                     } else {
-                        // TODO new error dialog
-                        VDUtils.showErrorMessage(ListSelection.this, "Failed to process!");
+                        VDErrorDialog.show(ListSelection.this, "Failed to start!", VDConstants.MICROSOFT_YAHEI_BOLD_32);
                     }
                 }
-                }
+            }
         }
 
         @Override
@@ -379,15 +401,10 @@ public class ListSelection extends TransitionalFrame {
             }
             if (text.contains(VDConstants.VD_FILE_EXTENTION)) {
                 text = text.replace(VDConstants.VD_FILE_EXTENTION, VDConstants.EMPTY);
-                for (File file : Main.INTERNAL_LISTS) {
-                    if (file.getName().contains(text)) {
-                        VDList vdList = new VDList(file);
-                        vdList.toQAList();
-                        vdList.loadInput();
-                        text = text + " | " + vdList.getPercentAnswered(VDConstants.KEY_INPUT_MEANINGS) + "%" +
-                                " : " + vdList.getPercentAnswered(VDConstants.KEY_INPUT_VOCABULARIES) + "%";
-                        break;
-                    }
+                if (tree.getModel().getRoot().toString().equals(ENText.INTERNAL_VD_LISTS)) {
+                    text = this.loadProgressPercentage(text, Main.INTERNAL_LISTS);
+                } else {
+                    text = this.loadProgressPercentage(text, Main.EXTERNAL_LISTS);
                 }
                 this.setIcon(this.vdList);
                 this.setToolTipText("Double click to continue!");
@@ -400,6 +417,20 @@ public class ListSelection extends TransitionalFrame {
                 this.setIcon(this.openedFolder);
             }
             return this;
+        }
+
+        private String loadProgressPercentage(String name, List<File> fileList) {
+            for (File file : fileList) {
+                if (file.getName().contains(name)) {
+                    VDList vdList = new VDList(file);
+                    vdList.toQAList();
+                    vdList.loadInput();
+                    name = name + " | " + vdList.getPercentAnswered(VDConstants.KEY_INPUT_MEANINGS) + "%" +
+                            " : " + vdList.getPercentAnswered(VDConstants.KEY_INPUT_VOCABULARIES) + "%";
+                    return name;
+                }
+            }
+            return null;
         }
     }
 

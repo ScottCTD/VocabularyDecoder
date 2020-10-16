@@ -28,6 +28,7 @@ public class VDDialog extends JDialog {
 
     protected VDDialog(Frame owner, String title) {
         super(owner, title);
+        this.setResizable(false);
         this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         this.setSize(width, height);
         this.setLocation(owner.getX() + (owner.getWidth() - width) / 2,
