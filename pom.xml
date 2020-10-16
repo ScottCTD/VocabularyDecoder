@@ -6,11 +6,7 @@
 
     <groupId>xyz.socttc</groupId>
     <artifactId>VocabularyDecoder</artifactId>
-    <packaging>pom</packaging>
-    <version>0.7</version>
-    <modules>
-        <module>VDServer</module>
-    </modules>
+    <version>1.0</version>
     <dependencies>
 
         <dependency>
