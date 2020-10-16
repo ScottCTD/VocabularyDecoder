@@ -7,6 +7,7 @@ import xyz.scottc.vd.utils.components.LineSeparator;
 import xyz.scottc.vd.utils.components.UtilJLabel;
 import xyz.scottc.vd.utils.components.UtilJPanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -28,6 +29,11 @@ public class TransitionalFrame extends JFrame {
 
     public TransitionalFrame(String title) throws HeadlessException {
         super(title);
+        try {
+            this.setIconImage(ImageIO.read(FileUtils.getInputStream("/images/icons/WindowsIcon.png")));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(VDUtils.getScreenRectangle());
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);

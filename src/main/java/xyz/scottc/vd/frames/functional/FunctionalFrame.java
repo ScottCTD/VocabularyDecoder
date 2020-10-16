@@ -6,6 +6,7 @@ import xyz.scottc.vd.utils.VDConstants;
 import xyz.scottc.vd.utils.VDUtils;
 import xyz.scottc.vd.utils.components.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -40,6 +41,11 @@ public class FunctionalFrame extends JFrame {
     protected boolean suspend = false;
 
     public FunctionalFrame() throws HeadlessException {
+        try {
+            this.setIconImage(ImageIO.read(FileUtils.getInputStream("/images/icons/WindowsIcon.png")));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(VDUtils.getScreenRectangle());
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);

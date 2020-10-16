@@ -21,6 +21,8 @@ public class IndexCellRenderer extends UniversalCellRenderer {
                 this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Input.INCORRECT_COLOR));
                 break;
             case UNSURE:
+                this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Input.UNSURE_COLOR));
+                break;
             case NOT_ANSWERED:
                 this.setBorder(BorderFactory.createEmptyBorder());
                 break;

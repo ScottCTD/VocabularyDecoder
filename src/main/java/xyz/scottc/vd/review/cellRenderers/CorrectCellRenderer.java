@@ -26,7 +26,7 @@ public class CorrectCellRenderer extends UniversalCellRenderer {
                 break;
             case UNSURE:
                 this.label.setText("Unsure");
-                this.setBorder(BorderFactory.createEmptyBorder());
+                this.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 2, Input.UNSURE_COLOR));
                 break;
 
         }

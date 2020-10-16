@@ -10,6 +10,10 @@ import java.util.Arrays;
 
 public class FileUtils {
 
+    public static InputStream getInputStream(String resourceName) {
+        return Main.class.getResourceAsStream(resourceName);
+    }
+
     public static byte[] readFromFile(File file) throws IOException {
         InputStream inputStream = new FileInputStream(file);
         byte[] buffer = new byte[inputStream.available() + 1024];
