@@ -4,6 +4,9 @@ import java.awt.*;
 
 public class VDConstants {
 
+    public static final String ORDERED_MODE_NAME = "Ordered Mode";
+    public static final String EXAM_MODE_NAME = "Exam Mode";
+
     public static final String LIBRARY_NAME = "VocabularyDecoder";
     public static final String EXTERNAL_LIBRARY_NAME = "ExternalLibrary";
     public static final String INTERNAL_LIBRARY_NAME = "InternalLibrary";

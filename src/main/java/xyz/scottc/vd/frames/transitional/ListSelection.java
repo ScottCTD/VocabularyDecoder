@@ -1,8 +1,10 @@
 package xyz.scottc.vd.frames.transitional;
 
 import xyz.scottc.vd.Main;
+import xyz.scottc.vd.core.Mode;
 import xyz.scottc.vd.core.VDList;
 import xyz.scottc.vd.exceptions.FileDeletingException;
+import xyz.scottc.vd.frames.functional.ExamMode;
 import xyz.scottc.vd.frames.functional.OrderedMode;
 import xyz.scottc.vd.utils.ENText;
 import xyz.scottc.vd.utils.FileUtils;
@@ -246,7 +248,7 @@ public class ListSelection extends TransitionalFrame {
             TreePath[] treePaths = this.exList.getSelectionPaths();
             if (treePaths != null) {
                 boolean confirm = false;
-                int result = VDConfirmDialog.CANCEL;
+                int result;
                 for (TreePath treePath : treePaths) {
                     File file = this.getFileFromTreePath(treePath, Main.EXTERNAL_LISTS);
                     if (!confirm) {
@@ -350,7 +352,14 @@ public class ListSelection extends TransitionalFrame {
                 if (file != null) {
                     VDList list = new VDList(file);
                     if (list.toQAList()) {
-                        VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                        switch (Mode.getSelectedMode().toString()) {
+                            case VDConstants.ORDERED_MODE_NAME:
+                                VDUtils.switchFrame(ListSelection.this, new OrderedMode(list));
+                                break;
+                            case VDConstants.EXAM_MODE_NAME:
+                                VDUtils.switchFrame(ListSelection.this, new ExamMode());
+                                break;
+                        }
                     } else {
                         VDErrorDialog.show(ListSelection.this, "Failed to start!", VDConstants.MICROSOFT_YAHEI_BOLD_32);
                     }

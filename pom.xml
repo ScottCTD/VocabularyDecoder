@@ -15,6 +15,11 @@
             <version>20200518</version>
         </dependency>
 
+        <dependency>
+            <groupId>xyz.scottc</groupId>
+            <artifactId>SCUtils</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
     </dependencies>
 
