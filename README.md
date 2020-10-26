@@ -1,4 +1,4 @@
-**Please use java -Dfile.encoding=UTF-8 -jar "JarName"**
+**If you use command line to start vd directly, Please use java -Dfile.encoding=UTF-8 -jar "JarName"**
 
 # What is "Vocabulary Decoder"?
 
