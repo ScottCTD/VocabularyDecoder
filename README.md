@@ -18,7 +18,7 @@ Still don't know how to use? Go to the wiki page to get detailed introduction ->
 
 ## Download
 
-**VD1.0Release! [Download01](http://scott.scottc.xyz:10423/#s/6T6gQGxw) [Download02](https://github.com/ScottCTD/VocabularyDecoder/releases/tag/v1.0) [Download03](https://www.jianguoyun.com/p/DXkWhDUQteSXCBioycUD)**
+**VD1.0Release! [Download01](http://scott.scottc.xyz:81/#s/6T6gQGxw) [Download02](https://github.com/ScottCTD/VocabularyDecoder/releases/tag/v1.0) [Download03](https://www.jianguoyun.com/p/DXkWhDUQteSXCBioycUD)**
 
 Go to the [Release Page](https://github.com/ScottCTD/VocabularyDecoder/releases) to download the latest version of VD!
 
